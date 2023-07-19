@@ -1,0 +1,70 @@
+﻿@using Nop.Core
+
+@inject IWorkContext workContext
+
+@{
+        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.rtl.css");
+         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.rtl.css");
+         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.rtl.css");
+        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/768.rtl.css");
+         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/480.rtl.css");
+         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/mobile.rtl.css");
+        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/tables.rtl.css");
+       // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/styles.rtl.css");
+
+        
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/main.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/font.css");
+
+
+    @* var supportRtl = (await workContext.GetWorkingLanguageAsync()).Rtl;
+    if (supportRtl)
+    {
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/768.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/480.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/mobile.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/tables.rtl.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/styles.rtl.css");
+
+        /////////////////////////////////////////////////////////////////////// new Css
+    }
+    else
+    {
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/768.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/480.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/mobile.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/tables.css");
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/styles.css");
+        /////////////////////////////////////////////////////////////////////// new Css
+
+        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/main.css");
+
+    } *@
+
+    @* NopHtml.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/slick-slider-1.6.0.css"); *@
+    @* NopHtml.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/perfect-scrollbar.min.css"); *@
+    @* *@
+    @* <script src="~/Plugins/SevenSpikes.Core/Scripts/footable.min.js" asp-location="Footer"></script> *@
+    @* <script src="~/Plugins/SevenSpikes.Core/Scripts/perfect-scrollbar.min.js" asp-location="Footer"></script> *@
+    @* <script src="~/Plugins/SevenSpikes.Core/Scripts/slick-slider-1.6.0.min.js" asp-location="Footer"></script> *@
+    @* <script src="~/Plugins/SevenSpikes.Core/Scripts/sevenspikes.core.min.js" asp-location="Footer"></script> *@
+    @* <script src="~/Plugins/SevenSpikes.Core/Scripts/sevenspikes.theme.min.js" asp-location="Footer"></script> *@
+    @* *@
+    @* <script src="~/Themes/Emporium/Content/scripts/emporium.js" asp-location="Footer"></script> *@
+
+   /////////////////////////////////////////////////////////////////////// new Js
+    <script src="~/Themes/Emporium/Content/scripts/script.min.js" asp-location="Footer"></script>
+
+    
+ 
+    
+    <script type="module" crossorigin src="/assets/index.7cff7bb4.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.a63941c7.js"/>
+    <link rel="stylesheet" href="/assets/index.55a3ba0a.css"/>
+}

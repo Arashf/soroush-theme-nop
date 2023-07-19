@@ -1,0 +1,334 @@
+﻿@using Nop.Core
+@using Nop.Core.Configuration
+@using Nop.Core.Domain.Common
+@using Nop.Core.Domain.Seo
+@using Nop.Core.Events
+@using Nop.Services.Security
+
+@inject CommonSettings commonSettings
+@inject IEventPublisher eventPublisher
+@inject IPermissionService permissionService
+@inject IWorkContext workContext
+@inject IThemeContext themeContext
+@inject SeoSettings seoSettings
+@inject AppSettings appSettings
+
+@{
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.countryselect.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.ajaxcart.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.js");
+    //when jQuery migrate script logging is active you will see the log in the browser console
+    if (commonSettings.JqueryMigrateScriptLoggingActive)
+    {
+        NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-migrate/jquery-migrate.js");
+    }
+    else
+    {
+        NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-migrate/jquery-migrate.min.js");
+    }
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-ui-dist/jquery-ui.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-validation/jquery.validate.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
+
+    //custom tag(s);
+    if (!string.IsNullOrEmpty(seoSettings.CustomHeadTags))
+    {
+        NopHtml.AppendHeadCustomParts(seoSettings.CustomHeadTags);
+    }
+
+    var displayMiniProfiler = appSettings.Get<CommonConfig>().MiniProfilerEnabled && await permissionService.AuthorizeAsync(StandardPermissionProvider.AccessProfiling);
+
+    //event
+    await eventPublisher.PublishAsync(new PageRenderingEvent(NopHtml));
+
+    var currentPageClass = (await (await Html.PartialAsync("_CurrentPageClass")).RenderHtmlContentAsync()).Trim();
+
+    var title = await NopHtml.GenerateTitleAsync();
+    var description = await @NopHtml.GenerateMetaDescriptionAsync();
+    var keywords = await NopHtml.GenerateMetaKeywordsAsync();
+}
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" dir="@Html.GetUIDirection(!await Html.ShouldUseRtlThemeAsync())" class="@NopHtml.GeneratePageCssClasses()">
+<head>
+    <title>@title</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta name="description" content="@description" />
+    <meta name="keywords" content="@keywords" />
+    <meta name="generator" content="nopCommerce" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0" />
+    <!link rel="preload" as="font" href="@Url.Content($"~/Themes/{await themeContext.GetWorkingThemeNameAsync()}/Content/icons/emporium-icons.woff")" crossorigin />
+    <!link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic-ext,greek-ext&display=swap" rel="stylesheet" />
+    @NopHtml.GenerateHeadCustom()
+    @*This is used so that themes can inject content into the header*@
+    @await Html.PartialAsync("Head")
+    @await Component.InvokeAsync("Widget", new { widgetZone = "head_html_tag_after_css_files_emporium" })
+    @NopHtml.GenerateCssFiles()
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeadHtmlTag })
+    @NopHtml.GenerateCanonicalUrls()
+    @await Component.InvokeAsync("NewsRssHeaderLink")
+    @await Component.InvokeAsync("BlogRssHeaderLink")
+    @*Insert favicon and app icons head code*@
+    @await Component.InvokeAsync("Favicon")
+    @if (displayMiniProfiler)
+    {
+        <mini-profiler />
+    }
+    @NopHtml.GenerateScripts(ResourceLocation.Head)
+    @NopHtml.GenerateInlineScripts(ResourceLocation.Head)
+    <!--Powered by nopCommerce - https://www.nopCommerce.com-->
+</head>
+<body class="@currentPageClass">
+    @RenderBody()
+    <div class="scroll-back-button" id="goToTop"></div>
+    @NopHtml.GenerateScripts(ResourceLocation.Footer)
+    @NopHtml.GenerateInlineScripts(ResourceLocation.Footer)
+
+
+    @* pwa *@
+    @* <div id="android"> *@
+    @*     <div class="pwa"> *@
+    @*         <div class="logo"> *@
+    @*             <img src="https://soroush.app/images/thumbs/001/0013634_LogoTop.png"/> *@
+    @*         </div> *@
+    @*         <h1>وب اپلیکیشن سروش را به صفحه اصلی خود اضافه کنید.</h1> *@
+    @*         <div class="setup"> *@
+    @*             <p> *@
+    @*                 <svg width="20" *@
+    @*                      viewBox="0 0 32 32" *@
+    @*                      xmlns="http://www.w3.org/2000/svg"> *@
+    @*                     <g data-name="Layer 2" id="Layer_2"> *@
+    @*                         <path d="M16,7a2,2,0,1,1,2-2A2,2,0,0,1,16,7Zm0-2h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Z"/> *@
+    @*                         <path d="M16,18a2,2,0,1,1,2-2A2,2,0,0,1,16,18Zm0-2h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Z"/> *@
+    @*                         <path d="M16,29a2,2,0,1,1,2-2A2,2,0,0,1,16,29Zm0-2h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Zm0,0h0Z"/> *@
+    @*                     </g> *@
+    @*                     <g id="frame"> *@
+    @*                         <rect fill="none" class="cls-1" height="32" width="32"/> *@
+    @*                     </g> *@
+    @*                 </svg> *@
+    @*                 <span>1- در نوار بالا روی سه نقطه مروگر خود کلیک کنید.</span> *@
+    @*             </p> *@
+    @*             <p> *@
+    @*                 <svg width="20" *@
+    @*                      enable-background="new 0 0 48 48" *@
+    @*                      id="Layer_4" *@
+    @*                      version="1.1" *@
+    @*                      viewBox="0 0 48 48" *@
+    @*                      xml:space="preserve" *@
+    @*                      xmlns="http://www.w3.org/2000/svg" *@
+    @*                      xmlns:xlink="http://www.w3.org/1999/xlink"> *@
+    @*                     <g> *@
+    @*                         <polygon fill="#241F20" *@
+    @*                                  points="44,37.984 44,44 4,44 4,37.984 0,37.984 0,44 0,48 4,48 44,48 48,48 48,44 48,37.984  "/> *@
+    @*                         <polygon fill="#241F20" *@
+    @*                                  points="29,25 29,0 27,0 21,0 19,0 19,25 13.046,25 24,40 34.954,25  "/> *@
+    @*                     </g> *@
+    @*                 </svg> *@
+    @*                 <span>2- بر روی گزینه Add to Home screen کلیک کنید.</span> *@
+    @*             </p> *@
+    @*         </div> *@
+    @*         <a href="#" class="understood">متوجه شدم</a> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <div id="ios"> *@
+    @*     <div class="pwa"> *@
+    @*         <div class="logo"> *@
+    @*             <img src="https://soroush.app/images/thumbs/001/0013634_LogoTop.png"/> *@
+    @*         </div> *@
+    @*         <h1>وب اپلیکیشن سروش را به صفحه اصلی خود اضافه کنید.</h1> *@
+    @*         <div class="setup"> *@
+    @*             <p> *@
+    @*                 <svg width="20" *@
+    @*                      enable-background="new 0 0 48 48" *@
+    @*                      id="Layer_1" *@
+    @*                      version="1.1" *@
+    @*                      viewBox="0 0 48 48" *@
+    @*                      xml:space="preserve" *@
+    @*                      xmlns="http://www.w3.org/2000/svg" *@
+    @*                      xmlns:xlink="http://www.w3.org/1999/xlink"> *@
+    @*                     <path clip-rule="evenodd" *@
+    @*                           d="M34,47H14c-2.762,0-5-2.238-5-5V24c0-2.761,2.238-5,5-5h4c0.553,0,1,0.448,1,1  s-0.447,1-1,1h-4c-1.656,0-3,1.344-3,3v18c0,1.657,1.344,3,3,3h20c1.657,0,3-1.343,3-3V24c0-1.656-1.343-3-3-3h-4  c-0.553,0-1-0.448-1-1s0.447-1,1-1h4c2.762,0,5,2.239,5,5v18C39,44.762,36.762,47,34,47z M31.334,10.715L25,4.381V30  c0,0.553-0.447,1-1,1s-1-0.447-1-1V4.381l-6.334,6.334c-0.381,0.381-0.999,0.381-1.381,0c-0.381-0.381-0.381-1,0-1.381l7.905-7.905  c0.032-0.047,0.053-0.101,0.095-0.144c0.195-0.194,0.451-0.287,0.705-0.283C23.994,1.002,23.996,1,24,1s0.007,0.002,0.01,0.002  c0.256-0.003,0.511,0.089,0.705,0.283c0.041,0.042,0.06,0.094,0.091,0.14l7.909,7.909c0.381,0.381,0.381,1,0,1.381  C32.333,11.096,31.715,11.096,31.334,10.715z" *@
+    @*                           fill-rule="evenodd"/> *@
+    @*                 </svg> *@
+    @*                 <span>۱ - در نوار پایین روی دکمه Share بزنید.</span> *@
+    @*             </p> *@
+    @*             <p> *@
+    @*                 <svg width="20" *@
+    @*                      viewBox="0 0 32 32" *@
+    @*                      xmlns="http://www.w3.org/2000/svg"> *@
+    @*                     <g id="plus"> *@
+    @*                         <line fill="none" *@
+    @*                               stroke="#000" *@
+    @*                               stroke-width="2px" *@
+    @*                               stroke-linejoin="round" *@
+    @*                               stroke-linecap="round" *@
+    @*                               class="cls-1" *@
+    @*                               x1="16" *@
+    @*                               x2="16" *@
+    @*                               y1="7" *@
+    @*                               y2="25"/> *@
+    @*                         <line fill="none" *@
+    @*                               stroke="#000" *@
+    @*                               stroke-width="2px" *@
+    @*                               stroke-linejoin="round" *@
+    @*                               stroke-linecap="round" *@
+    @*                               class="cls-1" *@
+    @*                               x1="7" *@
+    @*                               x2="25" *@
+    @*                               y1="16" *@
+    @*                               y2="16"/> *@
+    @*                     </g> *@
+    @*                 </svg> *@
+    @*                 <span> *@
+    @*                     ۲ - در منوی بازشده در قسمت پایین گزینه Add to Home screen را *@
+    @*                     انتخاب کنید. *@
+    @*                 </span> *@
+    @*             </p> *@
+    @*             <p> *@
+    @*                 <i class="add">Add</i> *@
+    @*                 <span>3- در مرحله بعد در قسمت بالا روی Add بزنید.</span> *@
+    @*             </p> *@
+    @*         </div> *@
+    @*         <a href="#" class="understood">متوجه شدم</a> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <style> *@
+    @*         html { *@
+    @*             height: 100%; *@
+    @*         } *@
+    @* *@
+    @*         #android:not(.active), *@
+    @*         #ios:not(.active) { *@
+    @*             display: none; *@
+    @*         } *@
+    @* *@
+    @*         .pwa { *@
+    @*             position: fixed; *@
+    @*             margin: 0 auto; *@
+    @*             display: flex; *@
+    @*             flex-direction: column; *@
+    @*             align-items: center; *@
+    @*             /* justify-content: center; */ *@
+    @*             transform: translateY(140%); *@
+    @*             transition: 0.7s; *@
+    @*             background-color: #ffffff; *@
+    @*             width: 100%; *@
+    @*             height: 100%; *@
+    @*             top: 0; *@
+    @*             padding: 35px 20px; *@
+    @*             z-index: 99999; *@
+    @*             left: 0; *@
+    @*         } *@
+    @* *@
+    @*             .pwa.active { *@
+    @*                 visibility: visible; *@
+    @*                 opacity: 1; *@
+    @*                 transform: translateY(0); *@
+    @*             } *@
+    @* *@
+    @*             .pwa .logo { *@
+    @*                 text-align: center; *@
+    @*                 /* margin-bottom: 20px; */ *@
+    @*             } *@
+    @* *@
+    @*                 .pwa .logo img { *@
+    @*                     width: 200px; *@
+    @*                 } *@
+    @* *@
+    @*             .pwa h1 { *@
+    @*                 font-size: 18px; *@
+    @*                 /* width: 70%; */ *@
+    @*                 font-weight: 800; *@
+    @*                 color: #1a2448dc; *@
+    @*                 line-height: 40px; *@
+    @*                 text-align: center; *@
+    @*                 padding-bottom: 10px; *@
+    @*             } *@
+    @* *@
+    @*         .setup { *@
+    @*             color: #000; *@
+    @*             padding: 0 17px; *@
+    @*             /* margin-top: 50px; */ *@
+    @*         } *@
+    @* *@
+    @*             .setup p { *@
+    @*                 display: flex; *@
+    @*                 align-content: center; *@
+    @*                 /* margin-bottom: 20px; */ *@
+    @*             } *@
+    @* *@
+    @*             .setup span { *@
+    @*                 font-size: 14px; *@
+    @*                 margin-right: 10px; *@
+    @*                 display: flex; *@
+    @*                 align-items: center; *@
+    @*                 line-height: 35px; *@
+    @*             } *@
+    @* *@
+    @*             .setup i.add { *@
+    @*                 font-size: 15px; *@
+    @*                 color: #18628d; *@
+    @*                 display: flex; *@
+    @*                 align-items: center; *@
+    @*                 justify-content: center; *@
+    @*             } *@
+    @* *@
+    @*         .understood { *@
+    @*             left: auto; *@
+    @*             right: auto; *@
+    @*             margin: auto; *@
+    @*             position: absolute; *@
+    @*             bottom: 20px; *@
+    @*             color: #fff; *@
+    @*             background-color: #ff0900; *@
+    @*             border-radius: 100px; *@
+    @*             text-decoration: none; *@
+    @*             padding: 17px 40px; *@
+    @*             box-shadow: 0 0 10px -6px rgb(243, 2, 53, 10); *@
+    @*             margin: 40px auto 0 auto; *@
+    @*         } *@
+    @* *@
+    @*         @@media all and (display-mode: standalone) { *@
+    @*             .pwa { *@
+    @*                 display: none; *@
+    @*             } *@
+    @*         } *@
+    @*     </style> *@
+    @* <script> *@
+    @*         window.addEventListener('load', function () { *@
+    @*             const android = document.getElementById('android') *@
+    @*             const ios = document.getElementById('ios') *@
+    @* *@
+    @*             if (localStorage.getItem('pwa_shown') != null) { *@
+    @*                 android.style.display = 'none' *@
+    @*                 ios.style.display = 'none' *@
+    @*             } *@
+    @*             var userAgent = navigator.userAgent || navigator.vendor || window.opera; *@
+    @*             if (/android/i.test(userAgent)) { *@
+    @*                 android.classList.add('active') *@
+    @*                 setTimeout(() => { *@
+    @*                     android.getElementsByClassName('pwa')[0].classList.add('active') *@
+    @*                 }, 100) *@
+    @*             } *@
+    @*             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { *@
+    @*                 ios.classList.add('active') *@
+    @*                 setTimeout(() => { *@
+    @*                     ios.getElementsByClassName('pwa')[0].classList.add('active') *@
+    @*                 }, 100) *@
+    @*             } *@
+    @* *@
+    @*             var understood = document.querySelectorAll('.understood') *@
+    @*             understood.forEach((btn) => { *@
+    @*                 btn.addEventListener('click', function (e) { *@
+    @*                     e.preventDefault() *@
+    @*                     document.getElementsByClassName('active')[0].querySelector('.pwa.active').classList.remove('active') *@
+    @*                     if (localStorage.getItem('pwa_shown') == null) { *@
+    @*                         localStorage.setItem('pwa_shown', 1) *@
+    @*                     } *@
+    @*                 }) *@
+    @*             }) *@
+    @*         }) *@
+    @*     </script> *@
+</body>
+</html>

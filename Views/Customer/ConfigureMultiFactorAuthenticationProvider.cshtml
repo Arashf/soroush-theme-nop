@@ -1,0 +1,39 @@
+﻿@model MultiFactorAuthenticationProviderModel
+
+@using Nop.Core
+@using Nop.Services.Customers
+@inject IWorkContext workContext
+@inject ICustomerService customerService
+
+@{  
+    Layout = "_ColumnsTwo";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.MultiFactorAuthentication").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-account-page");
+}
+
+
+@section left
+{
+    @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.MultiFactorAuthentication })
+} 
+ 
+
+@section accountPageTitle
+    {
+    <div class="page-title">
+
+        <h1>@T("PageTitle.MultiFactorAuthentication") - @Model.Name</h1> }
+
+    </div>
+}
+
+<div class="page account-page multi-factor-authentication-config-page">
+    <div class="page-body">
+        <div class="configure-provider">
+            @(await Component.InvokeAsync(Model.ViewComponent))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,282 @@
+﻿@model FooterModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Services.Configuration
+@inject IStoreContext storeContext
+@inject IWorkContext workContext
+@inject ISettingService settingService
+
+@{
+    var storeId = (await storeContext.GetCurrentStoreAsync()).Id;
+    var removeCopyright = await settingService.GetSettingByKeyAsync("emporiumthemesettings.removecopyright", false, storeId, true);
+    var removeDesignedBy = await settingService.GetSettingByKeyAsync("emporiumthemesettings.removedesignedby", false, storeId, true);
+    var footerLogoUrl = await Component.InvokeAsync("Widget", new { widgetZone = "emporium_footer_logo" });
+}
+
+<div class="footer">
+    @await Component.InvokeAsync("Widget", new { widgetZone = "footer_top" })
+    
+    @* <div class="footer-upper"> *@
+    @*     @if (!String.IsNullOrEmpty(await footerLogoUrl.RenderHtmlContentAsync())) *@
+    @*     { *@
+    @*         <div class="footer-logo"> *@
+    @*             <img src="@footerLogoUrl" alt="footer_logo" /> *@
+    @*         </div> *@
+    @*     } *@
+    @*     @await Component.InvokeAsync("NewsletterBox") *@
+@* </div> *@
+    <footer class="desktopFooter">
+
+    <div class="container-base">
+        <div class="flex items-center justify-between mb-[50px]">
+            <div class="flex items-center newsLetter">
+                <div class="flex flex-col">
+                    <h3>عضویت در خبرنامه</h3>
+                    <p class="colorPSecond">
+                        جهت عضویت در خبرنامه ایمیل لطفا ایمیل خود را وارد کنید
+                    </p>
+                </div>
+                <form class="flex">
+                    <input
+                        class="w-[80%] h-[40px] bg-[#f0f0f1] border-none outline-none rounded-tr-[100px] rounded-br-[100px] px-[20px]"
+                        type="email" placeholder="آدرس ایمیل" />
+                    <button class="w-[20%]">اشتراک</button>
+                </form>
+            </div>
+            <div onclick="scrollToTop()" class="flex items-center gap-2
+                             border-[1px] border-solid border-zinc-300
+                             px-[10px] py-[6px] rounded-[10px] cursor-pointer">
+                <span class="text-[13px] text-textSecondary">
+                    برگشت به بالا
+                </span>
+                <svg class="!fill-zinc-300 !stroke-zinc-300" width="23px" height="23px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px;}</style>
+                    </defs><title/>
+                    <g id="chevron-top"><line class="cls-1" x1="16" x2="25" y1="11.5" y2="20.5"/>
+                        <line class="cls-1" x1="7" x2="16" y1="20.5" y2="11.5"/></g>
+                </svg>
+            </div>
+        </div>
+        <div class="flex">
+            <div class="footerBox">
+                <h3>@T("Footer.Information")</h3>
+                <ul>
+                    @if (Model.SitemapEnabled && Model.DisplaySitemapFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
+                    }
+                    @if (Model.DisplayContactUsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                    }
+                            
+                    @if (Model.SearchEnabled && Model.DisplayProductSearchFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
+                    }
+                    @if (Model.NewsEnabled && Model.DisplayNewsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
+                    }
+                    @if (Model.BlogEnabled && Model.DisplayBlogFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+                    }
+                    @if (Model.ForumEnabled && Model.DisplayForumsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+                    }
+                    @if (Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="footerBox">
+                <h3>@T("Footer.MyAccount")</h3>
+                <ul>
+                    @if (Model.DisplayCustomerInfoFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+                    }
+                    <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                    @if (Model.DisplayCustomerAddressesFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                    }
+                    @if (Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+                    }
+                    @if (Model.AllowCustomersToCheckGiftCardBalance)
+                    {
+                        <li><a href="@Url.RouteUrl("CheckGiftCardBalance")">@T("CheckGiftCardBalance")</a></li>
+                    }
+                    @if (Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
+                    }
+                    @if (Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
+                    }
+                    @if (Model.WishlistEnabled && Model.DisplayWishlistFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="footerBox">
+                <h3>@T("Footer.CustomerService") </h3>
+                <ul>
+                    @if (Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem)
+                    {
+                        <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="footerBox flex">
+                <div class="mobileApps flex justify-between flex-col">
+                    <h3>اپلیکیشن موبایل</h3>
+                    <div class="w-100 flex justify-between">
+                        <div class="flex items-center justify-between -mr-4 -mt-8">
+                            @* <Link href="#" class="flex items-center justify-center w-20 h-20"> *@
+                            @* <FaBan></FaBan> *@
+                            @* </Link> *@
+                            @* <Link href="#" class="flex items-center justify-center w-20 h-20 ml-14"> *@
+                            @* <FaBan></FaBan> *@
+                            @* </Link> *@
+                        </div>
+                        <div class="flex items-center -mt-10">
+                            @* <div class="blur-load w-[100px]" *@
+                            @*     style="background-image: url(../Content/img/mobile-app.png)"> *@
+                            @*     <img src="../Content/img/mobile-app.png" alt="mobile-app" loading="lazy" /> *@
+                            @* </div> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footerContact flex justify-between">
+            <div class="flex justify-between flex-row-reverse">
+                <div class="flex align-center flex-row-reverse">
+                    <Link href="#" class="colorPSecond flex items-center">
+                    support@souroush.app
+        
+                    <HiOutlineMail class="overflow-hidden w-6 text-zinc-500"></HiOutlineMail>
+                    </Link>
+                    <Link href="#" class="colorPSecond flex items-center">
+                    0713397
+                    <BsTelephone class="overflow-hidden w-6 text-zinc-500"></BsTelephone>
+                    </Link>
+                    <Link href="#" class="social">
+                    <FaBan class="overflow-hidden w-6 text-zinc-500"></FaBan>
+                    </Link>
+                    <Link href="#" class="social">
+                    <FaBan class="overflow-hidden w-6 text-zinc-500"></FaBan>
+                    </Link>
+                </div>
+                <div class="flex items-center">
+                    <p class="colorPSecond">
+                        نشانی : شیراز، بلوار پرستار، مجتمع تجاری تفریحی نگین فارس،
+                        طبقه 1-، واحد 60
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="container-base">
+         <div class="flex justify-between">
+             <div class="aboutText">
+                 <p>
+                     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                     استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+                     در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
+                     نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
+                     کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
+                     جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
+                     برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در
+                     زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
+                     دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد
+                     وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات
+                     پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                 </p>
+             </div>
+             <div class="namads flex items-center">
+                 <div class="ml-10">
+                     <div class="blur-load w-[60px]" style="background-image: url(../Content/img/etehadie.png)">
+                         <img src="../Content/img/etehadie.png" alt="etehadieh" />
+                     </div>
+                 </div>
+                 <div class="blur-load w-[80px]" style="background-image: url(../Content/img/samandehiLogo.png)">
+                     <img width="90" height="90" src="../Content/img/samandehiLogo.png" alt="etehadieh" />
+                 </div>
+             </div>
+         </div>
+         @* ////////////////////////////////////// Social Peymwnt *@
+        <div class="socials-and-payments">
+                     <div class="social-icons">
+                         <div class="title">
+                             <strong>@T("SevenSpikes.Themes.Emporium.Footer.Follow")</strong>
+                         </div>
+                         @await Component.InvokeAsync("SocialButtons")
+                     </div>
+        
+                     <div class="">
+                         <h3 class="title">مجوزها</h3>
+                     <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=303418&amp;Code=EDeDH9urNbc5szeo9Qvd"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=303418&amp;Code=EDeDH9urNbc5szeo9Qvd" alt="" style="cursor:pointer" id="EDeDH9urNbc5szeo9Qvd"></a>
+        
+                         <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=303418&amp;Code=EDeDH9urNbc5szeo9Qvd">
+                             <img referrerpolicy="origin" src="/images/enamad.png" width="50%" height="50%" alt="" style="cursor:pointer" id="P3aUpoNl6SSFWK9zyAEP" />
+                         </a>
+        
+        
+                     </div>
+                 </div>
+         @* //////////////////////////////////////////////// *@
+        </div>
+    <div class="text-[14px] text-center font-bold bg-[#ccc3] p-3">
+    @* footer-lower *@
+        @if (!removeCopyright)
+        {
+            <div class="footer-powered-by">
+                Powered by <a href="@(OfficialSite.Main)" target="_blank" @(Model.IsHomePage ? string.Empty : "rel=nofollow")>nopCommerce</a>
+                @*Would you like to remove the "Powered by nopCommerce" link in the bottom of the footer?
+                            Find more info here https://www.nopcommerce.com/nopcommerce-copyright-removal-key*@
+            </div>
+        }
+        @if (!removeDesignedBy)
+        {
+            <div class="footer-designed-by">
+                Designed by <a href="https://www.nop-templates.com/" target="_blank">Nop-Templates.com</a>
+            </div>
+        }
+        <div class="footer-disclaimer">
+            @T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)
+        </div>
+        @if (Model.DisplayTaxShippingInfoFooter)
+        {
+            var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
+            <div class="footer-tax-shipping">
+                @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))
+            </div>
+        }
+
+        @await Component.InvokeAsync("StoreThemeSelector")
+    </div>
+    </footer>
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.Footer, additionalData = Model })
+</div>
