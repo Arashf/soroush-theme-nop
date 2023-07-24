@@ -1,5 +1,6 @@
 ﻿@using Nop.Core
 @using Nop.Services.Configuration
+@using DocumentFormat.OpenXml.Wordprocessing
 
 @inject IStoreContext storeContext
 @inject ISettingService settingService
@@ -68,35 +69,53 @@
 
 @await RenderSectionAsync("Breadcrumb", false)
 
+
 @if (!isAccountPage)
 {
-    <div class="center-2">
+    // side-2
+    <div class="container-base" style="display: flex;margin-top: 20px;">
+        <div class="stickyFilterBox">
+            @if (IsSectionDefined("left"))
+            {
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+                @await RenderSectionAsync("left")
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+            }
+            else
+            {
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+            // class="block-wrapper"
+               
+                <div id="filterSidenav" class="sidenav">
+                     <div class="filterHeader-mobile lg:hidden">
+                                            <span>فیلترها</span>
+                                            <div class="closebtn" onclick="closeSidenavFilter()">
+                                                <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" height="16px" width="16px"
+                                                    id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1"
+                                                    viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <path
+                                                        d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                    @await RenderSectionAsync("CatalogFilters", false)
+                    @await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+                    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfterCategoryNavigation })
+                    @await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId })
+                    @await Component.InvokeAsync("VendorNavigation")
+                    @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 80 })
+                    @await Component.InvokeAsync("PopularProductTags")
+                    @await Component.InvokeAsync("PollBlock", new { systemKeyword = "LeftColumnPoll" })
+                </div>
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+            }
+        </div>
+    <div class="center-2" style="width:100%">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.MainColumnBefore })
         @RenderBody()
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.MainColumnAfter })
     </div>
-    <div class="side-2">
-        @if (IsSectionDefined("left"))
-        {
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
-            @await RenderSectionAsync("left")
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
-        }
-        else
-        {
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
-            <div class="block-wrapper">
-                @await RenderSectionAsync("CatalogFilters", false)
-                @await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
-                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfterCategoryNavigation })
-                @await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId })
-                @await Component.InvokeAsync("VendorNavigation")
-                @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 80 })
-                @await Component.InvokeAsync("PopularProductTags")
-                @await Component.InvokeAsync("PollBlock", new { systemKeyword = "LeftColumnPoll" })
-            </div>
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
-        }
     </div>
 }
 else
@@ -112,7 +131,7 @@ else
             @RenderSection("left")
         }
     </div>
-    <div class="center-2">
+    <div class="center-2" style="width:100%">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.MainColumnBefore })
         @RenderBody()
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.MainColumnAfter })

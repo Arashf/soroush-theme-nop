@@ -1,0 +1,61 @@
+﻿@model ManufacturerFilterModel
+
+@* class="product-filter product-manufacturer-filter" *@
+<div class="optionContainer w-[90%] m-auto border-b-[1px] border-solid border-borderPrimary">
+    @* filter-title *@
+    <div class="optionHead" onclick="opentogglefilterOption(this)">
+            @* <strong>@T("Filtering.ManufacturerFilter")</strong> *@
+            <span class="headMenu">@T("Filtering.ManufacturerFilter")</span>
+            <div>
+                <svg class="fill-iconLightColor stroke-iconLightColor stroke-2" width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <title></title>
+                    <g id="chevron-bottom">
+                        <line class="cls-1" x1="16" x2="7" y1="20.5" y2="11.5"></line>
+                        <line class="cls-1" x1="25" x2="16" y1="11.5" y2="20.5"></line>
+                    </g>
+                </svg>
+            </div>
+    </div>
+    @* class="filter-content " *@
+    <div class="optionBody">
+        @* class="group product-manufacturer-group" *@
+        @* overflow-y-auto max-h-[150px] *@
+        <ul id="brandFilter" class="optionContainer h-auto transition-all duration-300">
+            @foreach (var manufacturer in Model.Manufacturers)
+            {
+                // item
+                <li class="subMenu checkbox-design brand-item">
+                    @* <input id="attribute-manufacturer-@manufacturer.Value" type="checkbox" data-manufacturer-id="@manufacturer.Value" checked="@manufacturer.Selected"/> *@
+                    @* <label for="attribute-manufacturer-@manufacturer.Value"> *@
+                    @*     @manufacturer.Text *@
+                    @* </label> *@
+                    <label class="checkbox-item">
+                        <input id="attribute-manufacturer-@manufacturer.Value" type="checkbox" data-manufacturer-id="@manufacturer.Value" checked="@manufacturer.Selected">
+                        <span for="attribute-manufacturer-@manufacturer.Value"> @manufacturer.Text</span>
+                    </label>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<script asp-location="Footer">
+    $(document).ready(function () {
+        var $msEls = $('[data-manufacturer-id]');
+        $msEls.on('change', function () {
+            CatalogProducts.getProducts();
+        });
+
+        $(CatalogProducts).on('before', function (e) {
+            var selectedMs = $.map($msEls, function (el) {
+                var $mEl = $(el);
+                if ($mEl.is(':checked')) return $mEl.data('manufacturer-id')
+                return null;
+            });
+
+            if (selectedMs && selectedMs.length > 0) {
+                e.payload.urlBuilder
+                    .addParameter('ms', selectedMs.join(','));
+            }
+        });
+    });
+</script>

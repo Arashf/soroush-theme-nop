@@ -8,7 +8,7 @@
 @inject CatalogSettings catalogSettings
 @inject SeoSettings seoSettings
 @inject ISettingService settingService
-@inject IStoreContext  storeContext
+@inject IStoreContext storeContext
 
 @{
     Layout = "_ColumnsOne";
@@ -58,181 +58,309 @@
 
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsAfterBreadcrumb, additionalData = Model })
 <div class="page product-details-page">
-    <div class="page-body">
-        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
-        <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
-	    @if (seoSettings.MicrodataEnabled)
+<div class="page-body">
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
+<form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+@if (seoSettings.MicrodataEnabled)
+{
+    @await Html.PartialAsync("_Microdata", Model)
+}
+<div data-productid="@Model.Id">
+                @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
+<div class="container-base product-essential grid grid-cols-1 lg:grid-cols-8 lg:gap-3 mt-4">
+@* <div class="mobile-name-holder"></div> *@
+@* <div class="mobile-prev-next-holder"></div> *@
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsEssentialTop, additionalData = Model })
+@{
+    var cloudZoom = await Component.InvokeAsync("Widget", new { widgetZone = "sevenspikes_cloud_zoom", additionalData = Model });
+}
+<div class="col-span-3 relative mt-[10px] mb-[15px]">
+
+    @if (!String.IsNullOrEmpty(await cloudZoom.RenderHtmlContentAsync()))
+    {
+        @cloudZoom
+    }
+    else
+    {
+        <!--product pictures-->
+        @await Html.PartialAsync("_ProductDetailsPictures", Model)
+    }
+</div>
+<div class="product-content col-span-3">
+    <div class="flex flex-col lg:mt-[10px] lg:mb-[20px] top-3 p-1 lg:px-5 lg:p-2">
+        <div class="prev-next-holder">
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
+        </div>
+        <!--product breadcrumb-->
+        @* @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb) *@
+        @* @await Html.PartialAsync("_Discontinued", Model) *@
+        <div class="product-content-details">
+            <div class="product-name">
+                <h1>
+                    @Model.Name
+                </h1>
+
+                <!--manufacturers-->
+                @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
+            </div>
+            <div class="reviews-and-compare">
+                <!--product reviews-->
+                @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
+                <!--compare button-->
+                @await Html.PartialAsync("_CompareProductsButton", Model)
+            </div>
+            <!--short description-->
+            @if (!string.IsNullOrEmpty(Model.ShortDescription))
             {
-                @await Html.PartialAsync("_Microdata", Model)
+                <div class="short-description">
+                    @Html.Raw(Model.ShortDescription)
+                </div>
             }
-            <div data-productid="@Model.Id">
-                <div class="product-essential">
-                    <div class="mobile-name-holder"></div>
-                    <div class="mobile-prev-next-holder"></div>
-					@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsEssentialTop, additionalData = Model })
+            <!--SKU, MAN, GTIN, vendor-->
+            @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
+        </div>
+        <div class="attributes-wrapper">
+            <!--attributes-->
+            @{
+                var dataDictAttributes = new ViewDataDictionary(ViewData);
+                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                @await Html.PartialAsync("_ProductAttributes", Model, dataDictAttributes)
+            }
+            <!--gift card-->
+            @{
+                var dataDictGiftCard = new ViewDataDictionary(ViewData);
+                dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = $"giftcard_{Model.Id}";
+                @await Html.PartialAsync("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+            }
+            <!--rental info-->
+            @{
+                var dataDictRental = new ViewDataDictionary(ViewData);
+                dataDictRental.TemplateInfo.HtmlFieldPrefix = $"rental_{Model.Id}";
+                @await Html.PartialAsync("_RentalInfo", Model, dataDictRental)
+            }
+
+            @await Html.PartialAsync("_ProductTierPrices", Model.TierPrices)
+        </div>
+        @if (showShareButton)
+        {
+            @await Html.PartialAsync("_ShareButton", Model)
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
+    </div>
+</div>
+@* //////////////////////////////////////////////////////  product-prices-box *@
+<div class="col-span-2">
+    <div class=" bg-[#f9f9f9]  
+                                          border-[1px] border-solid border-borderPrimary 
+                                            rounded-[10px] px-[15px] pt-[15px] pb-[16px] w-full">
+        <div>
+            <div class="product-prices-box flex items-center justify-between">
+                <div class="w-[30%]">
+                    @await Component.InvokeAsync(typeof(LogoViewComponent))
+                </div>
+                <!--add to wishlist-->
+                <div>
+
                     @{
-                        var cloudZoom = await Component.InvokeAsync("Widget", new { widgetZone = "sevenspikes_cloud_zoom", additionalData = Model });
+                        var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+                        dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                        @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
                     }
-                    @if (!String.IsNullOrEmpty(await cloudZoom.RenderHtmlContentAsync()))
-                    {
-                        @cloudZoom
-                    }
-                    else
-                    {
-                        <!--product pictures-->
-                        @await Html.PartialAsync("_ProductDetailsPictures", Model)
-                    }
-                    <div class="overview">
-                        <div class="prev-next-holder">
-                            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
-                        </div>
-                        <!--product breadcrumb-->
-                        @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
-                        @await Html.PartialAsync("_Discontinued", Model)
-                        <div class="product-name">
-                            <h1>
-                                @Model.Name
-                            </h1>
-                            <!--manufacturers-->
-                            @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
-                        </div>
-                        <div class="reviews-and-compare">
-                            <!--product reviews-->
-                            @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
-                            <!--compare button-->
-                            @await Html.PartialAsync("_CompareProductsButton", Model)
-                        </div>
-                        <!--short description-->
-                        @if (!string.IsNullOrEmpty(Model.ShortDescription))
-                        {
-                            <div class="short-description">
-                                @Html.Raw(Model.ShortDescription)
-                            </div>
-                        }
-                        <!--SKU, MAN, GTIN, vendor-->
-                        @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
-                        <div class="attributes-wrapper">
-                            <!--attributes-->
-                            @{
-                                var dataDictAttributes = new ViewDataDictionary(ViewData);
-                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
-                                @await Html.PartialAsync("_ProductAttributes", Model, dataDictAttributes)
-                            }
-                            <!--gift card-->
-                            @{
-                                var dataDictGiftCard = new ViewDataDictionary(ViewData);
-                                dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = $"giftcard_{Model.Id}";
-                                @await Html.PartialAsync("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                            }
-                            <!--rental info-->
-                            @{
-                                var dataDictRental = new ViewDataDictionary(ViewData);
-                                dataDictRental.TemplateInfo.HtmlFieldPrefix = $"rental_{Model.Id}";
-                                 @await Html.PartialAsync("_RentalInfo", Model, dataDictRental)
-                            }
+                </div>
+            </div>
 
-                            @await Html.PartialAsync("_ProductTierPrices", Model.TierPrices)
-                        </div>
-                        @if (showShareButton)
-                        {
-                            @await Html.PartialAsync("_ShareButton", Model)
-                        }
-                        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
+            <div class="border-t-[1px] border-solid border-borderPrimary my-seperate"></div>
+            <div class="product-prices-box flex flex-col justify-start">
+                <div class="flex items-center">
+                    <!-- <MdOutlineEventAvailable class="text-secondary" size={25} /> -->
+                    <svg class="fill-secondary stroke-secondary stroke-0" width="25" height="25"
+                         data-name="Layer 1" id="Layer_1" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <title/>
+                        <path
+                            d="M18,5V3a1,1,0,0,0-2,0V5H8V3A1,1,0,0,0,6,3V5H2V21H22V5Zm2,14H4V7H20Zm-3.94-7.58-1.2-1.2L11.3,13.78,9.14,11.63l-1.2,1.2,3.36,3.36Z"/>
+                    </svg>
+                    <span class="text-[13px] font-medium pr-[9px]">
+                        موجود در انبار سروش
+                    </span>
+                </div>
 
-                        <div class="product-prices-box">
-                            <div>
-                                <!--availability-->
-                                @await Html.PartialAsync("_Availability", Model)
-                                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
-                                <!--price & add to cart-->
+                <div class="flex flex-col">
+                    <div class="flex relative h-[15px] pr-[11px] my-1">
+                        <div class="border-l-[2px] border-solid border-[#ced4da] h-[15px] ">
+                        </div>
+                    </div>
+                    <div class="flex items-center pr-[5px]">
+                        <svg class="fill-secondary stroke-secondary stroke-0" width="15"
+                             height="15" id="Layer_1_1_" style="enable-background:new 0 0 16 16;"
+                             version="1.1" viewBox="0 0 16 16" xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path
+                                d="M8.5,0C4.358,0,1,3.358,1,7.5S4.358,15,8.5,15S16,11.642,16,7.5S12.642,0,8.5,0z M8.5,13C5.468,13,3,10.533,3,7.5  S5.468,2,8.5,2S14,4.467,14,7.5S11.532,13,8.5,13z"/>
+                            <circle cx="8.5" cy="7.5" r="4.5"/>
+                        </svg>
+                        <!-- <TbPointFilled class="text-secondary" /> -->
+                        <div class="flex pr-[11px]">
+                            <TbTruckDelivery size={20} class="text-primary"/>
+                            <p class="text-[12px] pr-1">
+                                ارسال از انبار سروش
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex relative h-[20px] pr-[11px] my-1">
+                        <div class="border-l-[2px] border-dashed border-[#ced4da] h-[20px] ">
+                        </div>
+                    </div>
+                    <div class="flex items-center pr-[5px]">
+                        <svg class="fill-secondary stroke-secondary stroke-0" width="14"
+                             height="14" id="Layer_1_1_" style="enable-background:new 0 0 16 16;"
+                             version="1.1" viewBox="0 0 16 16" xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path
+                                d="M8.5,0C4.358,0,1,3.358,1,7.5S4.358,15,8.5,15S16,11.642,16,7.5S12.642,0,8.5,0z M8.5,13C5.468,13,3,10.533,3,7.5  S5.468,2,8.5,2S14,4.467,14,7.5S11.532,13,8.5,13z"/>
+                            <circle cx="8.5" cy="7.5" r="4.5"/>
+                        </svg>
+                        <div class="flex pr-[11px]">
+                            <BsFillRocketFill size={18} class="text-[#1028ff]"/>
+                            @* <p class="text-[12px] pr-1">ارسال فوری</p> *@
+                            <p class="text-[12px] limitation-delivery pr-1"> @await Html.PartialAsync("_DeliveryInfo", Model)</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--availability-->
+            
+                    @* @await Html.PartialAsync("_Availability", Model) *@
+            
+            @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model }) *@
+
+            <!--sample download-->
+            @await Html.PartialAsync("_DownloadSample", Model)
+
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+            <!--delivery-->
+            @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
+            @* /////////////////////////////////////////////////////// *@
+            <div class="product-prices-box border-t-[1px] border-solid border-borderPrimary my-seperate"></div>
+            <!--price & add to cart-->
+            <div class="addToCardStickyBox">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-textSecondary text-[12px]">
+                            <svg class="fill-iconLightColor stroke-iconLightColor stroke-0" width="20"
+                                 height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12,23 C5.92486775,23 1,18.0751322 1,12 C1,5.92486775 5.92486775,1 12,1 C18.0751322,1 23,5.92486775 23,12 C23,18.0751322 18.0751322,23 12,23 Z M12,21 C16.9705627,21 21,16.9705627 21,12 C21,7.02943725 16.9705627,3 12,3 C7.02943725,3 3,7.02943725 3,12 C3,16.9705627 7.02943725,21 12,21 Z M12.0003283,17.9983464 C11.4478622,17.9983464 11,17.5506311 11,16.9983464 C11,16.4460616 11.4478622,15.9983464 12.0003283,15.9983464 C12.5527943,15.9983464 13.0006565,16.4460616 13.0006565,16.9983464 C13.0006565,17.5506311 12.5527943,17.9983464 12.0003283,17.9983464 Z M11.0029544,5.99834639 L13.0036109,5.99834639 L13.0036109,13.9983464 L11.0029544,13.9983464 L11.0029544,5.99834639 Z"
+                                    fill-rule="evenodd"/>
+                            </svg>
+                            <span class="pr-1">قیمت محصول</span>
+                        </div>
+                        <div class="flex flex-col justify-center items-center gap-4 p-2">
+                            @* <div class="flex justify-between items-center gap-3"> *@
+                            @*     <span class="line-through text-[12px] text-zinc-400 font-semibold pr-2"> *@
+                            @*         43,500 *@
+                            @*     </span> *@
+                            @*     <span *@
+                            @*         class="text-white bg-primary text-[13px] px-[5px] pt-[4px] pb-[2px] font-bold rounded-[40px]"> *@
+                            @*         17% *@
+                            @*     </span> *@
+                            @* </div> *@
+                            <div class="text-zinc-600 text-[16px] font-semibold">
                                 @{
                                     var dataDictPrice = new ViewDataDictionary(ViewData);
                                     dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";
                                     @await Html.PartialAsync("_ProductPrice", Model.ProductPrice, dataDictPrice)
-
-                                    var dataDictAddToCart = new ViewDataDictionary(ViewData);
-                                    dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                    @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
                                 }
-                                <!--sample download-->
-                                @await Html.PartialAsync("_DownloadSample", Model)
-                                <!--add to wishlist-->
-                                @{
-                                    var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
-                                    dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                    @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
-                                }
-                                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
-                                <!--delivery-->
-                                @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
-                                @await Html.PartialAsync("_DeliveryInfo", Model)
+                                @* <span class="pr-1 text-[11px]">تومان</span> *@
                             </div>
                         </div>
                     </div>
-                    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsEssentialBottom, additionalData = Model })
                 </div>
-
-                @{
-                    var productTabs = await Component.InvokeAsync("Widget", new { widgetZone = "seven_spikes_product_tabs", additionalData = Model });
-                    var storeId = (await storeContext.GetCurrentStoreAsync()).Id;
-
-                    var productsTabAreEnabled = !string.IsNullOrEmpty(await productTabs.RenderHtmlContentAsync());
-
-                    var isDescriptionTabEnabled = await settingService.GetSettingByKeyAsync("tabsettings.enableproductfulldescriptiontab", false, storeId, true);
-                    var isSpecificationsTabEnabled = await settingService.GetSettingByKeyAsync("tabsettings.enableproductspecificationstab", false, storeId, true);
-
-                    var shouldShowDescription = !string.IsNullOrEmpty(Model.FullDescription) && (!productsTabAreEnabled || !isDescriptionTabEnabled);
-                    var shouldShowSpecifications = !productsTabAreEnabled || !isSpecificationsTabEnabled;
-                }
-
-                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBeforeCollateral, additionalData = Model })
-
-                @if (productsTabAreEnabled)
-                {
-                    @productTabs
-                }
-
-                @if (shouldShowDescription)
-                {
-                    <div class="full-description">
-                        @Html.Raw(Model.FullDescription)
-                    </div>
-                }
-
-                @if (shouldShowSpecifications)
-                {
-                    <div class="product-collateral">
-                        @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecificationModel)
-                    </div>
-                }
-                @await Html.PartialAsync("_ProductTags", Model.ProductTags)
-                @{
-                    var relatedProducts = await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_related_carosuel" });
-                    var alsoPurchased = await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_purchased_carosuel" });
-                
-                    if (String.IsNullOrEmpty(await relatedProducts.RenderHtmlContentAsync()))
-                    {
-                        <!-- related products grid -->
-                        @await Component.InvokeAsync("RelatedProducts", new { productId = Model.Id })    
-                    }
-                    if (String.IsNullOrEmpty(await alsoPurchased.RenderHtmlContentAsync()))
-                    {
-                        <!-- also purchsed products grid -->
-                        @await Component.InvokeAsync("ProductsAlsoPurchased", new { productId = Model.Id })
-                    }
-                }
-                <div class="carousel-wrapper">
-                    @if (!String.IsNullOrEmpty(await relatedProducts.RenderHtmlContentAsync()))
-                    {
-                        @relatedProducts
-                    }
-                    @if (!String.IsNullOrEmpty(await alsoPurchased.RenderHtmlContentAsync()))
-                    {
-                        @alsoPurchased
+                <div class="border-t-[1px] border-solid border-borderPrimary my-seperate"></div>
+                <div>
+                    @{
+                        var dataDictAddToCart = new ViewDataDictionary(ViewData);
+                        dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                        @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
                     }
                 </div>
+                   
             </div>
-        </form>
-        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
+                
+        </div>
     </div>
+</div>
+@* <div class="overview w-full flex col-span-5 mt-2"> *@
+@*    *@
+@* </div> *@
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsEssentialBottom, additionalData = Model })
+</div>
+ 
+
+@{
+    var productTabs = await Component.InvokeAsync("Widget", new { widgetZone = "seven_spikes_product_tabs", additionalData = Model });
+    var storeId = (await storeContext.GetCurrentStoreAsync()).Id;
+
+    var productsTabAreEnabled = !string.IsNullOrEmpty(await productTabs.RenderHtmlContentAsync());
+
+    var isDescriptionTabEnabled = await settingService.GetSettingByKeyAsync("tabsettings.enableproductfulldescriptiontab", false, storeId, true);
+    var isSpecificationsTabEnabled = await settingService.GetSettingByKeyAsync("tabsettings.enableproductspecificationstab", false, storeId, true);
+
+    var shouldShowDescription = !string.IsNullOrEmpty(Model.FullDescription) && (!productsTabAreEnabled || !isDescriptionTabEnabled);
+    var shouldShowSpecifications = !productsTabAreEnabled || !isSpecificationsTabEnabled;
+}
+
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBeforeCollateral, additionalData = Model })
+
+@* @if (productsTabAreEnabled) *@
+@* { *@
+@*     @productTabs *@
+@* } *@
+<div style="width: 100%;height: 100px"></div>
+@if (shouldShowDescription)
+{
+    <div class="full-description">
+        @Html.Raw(Model.FullDescription)
+    </div>
+}
+
+@if (shouldShowSpecifications)
+{
+    <div class="product-collateral">
+        @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecificationModel)
+    </div>
+}
+@await Html.PartialAsync("_ProductTags", Model.ProductTags)
+@{
+    var relatedProducts = await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_related_carosuel" });
+    var alsoPurchased = await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_purchased_carosuel" });
+
+    if (String.IsNullOrEmpty(await relatedProducts.RenderHtmlContentAsync()))
+    {
+        <!-- related products grid -->
+        @await Component.InvokeAsync("RelatedProducts", new { productId = Model.Id })
+    }
+    if (String.IsNullOrEmpty(await alsoPurchased.RenderHtmlContentAsync()))
+    {
+        <!-- also purchsed products grid -->
+        @await Component.InvokeAsync("ProductsAlsoPurchased", new { productId = Model.Id })
+    }
+}
+<div class="carousel-wrapper">
+    @if (!String.IsNullOrEmpty(await relatedProducts.RenderHtmlContentAsync()))
+    {
+        @relatedProducts
+    }
+    @if (!String.IsNullOrEmpty(await alsoPurchased.RenderHtmlContentAsync()))
+    {
+        @alsoPurchased
+    }
+</div>
+</div>
+</form>
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
+</div>
 </div>

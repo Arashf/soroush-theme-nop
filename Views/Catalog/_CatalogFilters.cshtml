@@ -8,23 +8,31 @@
 }
 
 <div class="block product-filters">
-    <div class="title">
-        <strong>@T("SevenSpikes.NopAjaxFilters.Client.Common.FilterBy")</strong>
+    <div class="flex items-center justify-between px-4 pt-4 text-right">
+        <div class="filter-header text-[20px] text-zinc-600 font-semibold">فیلتر ها</div>
     </div>
-    <div class="listbox">
-        @if (Model.PriceRangeFilter.Enabled)
-        {
-            @await Html.PartialAsync("_FilterPriceBox", Model.PriceRangeFilter)
-        }
+    <div class="lg:border-t-[2px] lg:border-solid border-borderPrimary my-seperate"></div>
+    @* <div class="title"> *@
+    @*     <strong>@T("SevenSpikes.NopAjaxFilters.Client.Common.FilterBy")</strong> *@
+    @* </div> *@
+    @* listbox *@
+    <div class="MainContainer">
+        <div class="MenuContainer">
+            @if (Model.PriceRangeFilter.Enabled)
+            
+            @* { *@
+            @*     @await Html.PartialAsync("_FilterPriceBox", Model.PriceRangeFilter) *@
+            @* } *@
 
-        @if (Model.SpecificationFilter.Enabled)
-        {
-            @await Html.PartialAsync("_FilterSpecsBox", Model.SpecificationFilter)
-        }
+            @if (Model.SpecificationFilter.Enabled)
+            {
+                @await Html.PartialAsync("_FilterSpecsBox", Model.SpecificationFilter)
+            }
 
-        @if (Model.ManufacturerFilter.Enabled)
-        {
-            @await Html.PartialAsync("_FilterManufacturerBox", Model.ManufacturerFilter)
-        }
+            @if (Model.ManufacturerFilter.Enabled)
+            {
+                @await Html.PartialAsync("_FilterManufacturerBox", Model.ManufacturerFilter)
+            }
+        </div>
     </div>
 </div>

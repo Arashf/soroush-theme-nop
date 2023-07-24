@@ -1,0 +1,31 @@
+{
+  "name": "emporium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./Content/css/input.css -o ./Content/css/main.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hivasd/soroush-theme-nop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hivasd/soroush-theme-nop/issues"
+  },
+  "homepage": "https://github.com/hivasd/soroush-theme-nop#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-newer": "^1.4.0",
+    "gulp-run": "^1.7.1",
+    "gulp-uglify": "^3.0.2",
+    "gulp-watch": "^5.0.1",
+    "tailwindcss": "^3.3.3"
+  }
+}

@@ -25,12 +25,15 @@
        <div class="min-qty-notification">@Model.MinimumQuantityNotification</div>
     }
     <div class="add-to-cart">
+        
         @if (!Model.DisableBuyButton)
         {
             <div class="add-to-cart-panel">
-                <label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label>
+
+                @* <label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label> *@
                 @if (Model.AllowedQuantities.Count > 0)
                 {
+                   
                     <select asp-for="EnteredQuantity" asp-items="Model.AllowedQuantities" id="product_enteredQuantity_@Model.ProductId" class="qty-dropdown" aria-label=@T("Products.Qty.AriaLabel")></select>
                     <script asp-location="Footer">
                         $(document).ready(function () {
