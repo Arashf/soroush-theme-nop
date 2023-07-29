@@ -8,7 +8,7 @@
 }
 
 <div class="block product-filters">
-    <div class="flex items-center justify-between px-4 pt-4 text-right">
+    <div class="deskCategory-headerFilter flex items-center justify-between px-4 pt-4 text-right">
         <div class="filter-header text-[20px] text-zinc-600 font-semibold">فیلتر ها</div>
     </div>
     <div class="lg:border-t-[2px] lg:border-solid border-borderPrimary my-seperate"></div>
@@ -17,7 +17,7 @@
     @* </div> *@
     @* listbox *@
     <div class="MainContainer">
-        <div class="MenuContainer">
+        <div id="filterContainer" class="MenuContainer">
             @if (Model.PriceRangeFilter.Enabled)
             
             @* { *@

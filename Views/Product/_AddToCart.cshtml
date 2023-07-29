@@ -4,9 +4,10 @@
 {
     <input asp-for="UpdatedShoppingCartItemId" type="hidden" />
 }
-
-@if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
+                  
+ @if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
 {
+    
     @if (Model.CustomerEntersPrice)
     {
         <div class="customer-entered-price">
@@ -49,30 +50,31 @@
                 }
                 else
                 {
-                    <div class="add-to-cart-qty-wrapper">
-                        <input asp-for="EnteredQuantity" id="product_enteredQuantity_@Model.ProductId" class="qty-input" type="text" aria-label=@T("Products.Qty.AriaLabel")/>
-                        <span class="plus">&#x69;</span>
-                        <span class="minus">&#x68;</span>
-                    </div>
-                    <script asp-location="Footer">
-                        //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
-                        $(document).ready(function() {
-                            $("#@Html.IdFor(model => model.EnteredQuantity)").on("keydown", function(event) {
-                                if (event.keyCode == 13) {
-                                    $("#add-to-cart-button-@Model.ProductId").trigger("click");
-                                    return false;
-                                }
-                            });
-
-                            $("#product_enteredQuantity_@Model.ProductId").on("input propertychange paste", function () {
-                                var data = {
-                                    productId: @Model.ProductId,
-                                    quantity: $('#product_enteredQuantity_@Model.ProductId').val()
-                                };
-                                $(document).trigger({ type: "product_quantity_changed", changedData: data });
-                            });
-                        });
-                    </script>
+                    @* <div class="add-to-cart-qty-wrapper"> *@
+                    @*     <input asp-for="EnteredQuantity" id="product_enteredQuantity_@Model.ProductId" class="qty-input" type="text" aria-label=@T("Products.Qty.AriaLabel")/> *@
+                    @*     <span class="plus">&#x69;</span> *@
+                    @*     <span class="minus">&#x68;</span> *@
+                    @* </div> *@
+                    @* <script asp-location="Footer"> *@
+                    @*     //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible) *@
+                    @*     $(document).ready(function() { *@
+                    @*         $("#@Html.IdFor(model => model.EnteredQuantity)").on("keydown", function(event) { *@
+                    @*             if (event.keyCode == 13) { *@
+                    @*                 $("#add-to-cart-button-@Model.ProductId").trigger("click"); *@
+                    @*                 return false; *@
+                    @*             } *@
+                    @*         }); *@
+                    @* *@
+                    @*         $("#product_enteredQuantity_@Model.ProductId").on("input propertychange paste", function () { *@
+                    @*             var data = { *@
+                    @*                 productId: @Model.ProductId, *@
+                    @*                 quantity: $('#product_enteredQuantity_@Model.ProductId').val() *@
+                    @*             }; *@
+                    @*             $(document).trigger({ type: "product_quantity_changed", changedData: data }); *@
+                    @*         }); *@
+                    @*     }); *@
+                    @* </script> *@
+                   
                 }
                 @{
                     var addToCartText = "";
@@ -93,7 +95,36 @@
                         }
                     }
                     <button type="button" id="add-to-cart-button-@Model.ProductId" class="button-1 add-to-cart-button" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.ProductId, shoppingCartTypeId = (int) ShoppingCartType.ShoppingCart})', '#product-details-form');return false;">@addToCartText</button>
+                    @* <form method="post" enctype="multipart/form-data" asp-controller="ShoppingCart"  asp-action="cart"> *@
+                    @*     <input name="itemquantity@(Model.ProductId)" id="itemquantity@(Model.ProductId)" type="text" value="1" class="qty-input" aria-label="@T("ShoppingCart.Quantity")" /> *@
+                    @*     <button type="submit" name="updatecart" id="updatecart" class="button-2 update-cart-button">minus</button> *@
+                    @* </form> *@
+                
+                @*     <script type="text/javascript"> *@
+                @*     var frm = $('#contactForm1'); *@
+                @* *@
+                @*     frm.submit(function (e) { *@
+                @*         e.preventDefault(); *@
+                @*         $.ajax({ *@
+                @*             type: frm.attr('post'), *@
+                @*             url: frm.attr('/cart'), *@
+                @*             data: frm.serialize(), *@
+                @*             success: function (data) { *@
+                @*                 console.log('Submission was successful.'); *@
+                @*                 console.log(data); *@
+                @*             }, *@
+                @*             error: function (data) { *@
+                @*                 console.log('An error occurred.'); *@
+                @*                 console.log(data); *@
+                @*             }, *@
+                @*         }); *@
+                @*     }); *@
+                @* </script>                                                                                                                                                                                                                                                                                                                                                                              *@
+
                 }
+               
+                
+              
             </div>
             if (!string.IsNullOrEmpty(Model.PreOrderAvailabilityStartDateTimeUserTime))
             {
@@ -104,5 +135,11 @@
             }
         }
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsAddInfo, additionalData = Model })
+    </div>
+}
+else
+{
+    <div>
+        کالا موجود نیست
     </div>
 }

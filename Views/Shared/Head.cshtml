@@ -3,6 +3,7 @@
 @inject IWorkContext workContext
 
 @{
+    
         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.rtl.css");
          // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.rtl.css");
          // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.rtl.css");
@@ -15,6 +16,7 @@
         
         NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/main.css");
         NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/font.css");
+    <script src="~/Themes/Emporium/Content/scripts/script.min.js" asp-location="Footer"></script>
 
 
     @* var supportRtl = (await workContext.GetWorkingLanguageAsync()).Rtl;
@@ -59,10 +61,47 @@
     @* <script src="~/Themes/Emporium/Content/scripts/emporium.js" asp-location="Footer"></script> *@
 
    /////////////////////////////////////////////////////////////////////// new Js
-    <script src="~/Themes/Emporium/Content/scripts/script.min.js" asp-location="Footer"></script>
+    @* <script src="~/Themes/Emporium/Content/scripts/global.js" asp-location="Footer"></script> *@
 
-    
- 
+ @*    <script> *@
+ @*      $(document).ready(function () { *@
+ @*          var $priceRangeEl = $("#price-range-slider"); *@
+ @*          $priceRangeEl.slider({ *@
+ @*              range: true, *@
+ @*              min: 1, *@
+ @*              max: 10000, *@
+ @*              values: [ *@
+ @*            0, *@
+ @*            10, *@
+ @*              ], *@
+ @*              slide: function (event, ui) { *@
+ @*                  setSelectedPriceRange(ui.values[0], ui.values[1]); *@
+ @*              }, *@
+ @*              stop: function () { *@
+ @*                  CatalogProducts.getProducts(); *@
+ @*              } *@
+ @*          }); *@
+ @* *@
+ @*          setSelectedPriceRange( *@
+ @*              $priceRangeEl.slider("values", 0), *@
+ @*              $priceRangeEl.slider("values", 1) *@
+ @*          ); *@
+ @* *@
+ @*          $(CatalogProducts).on('before', function (e) { *@
+ @*              var priceRange = $priceRangeEl.slider('values'); *@
+ @*              if (priceRange && priceRange.length > 0) { *@
+ @*                  e.payload.urlBuilder *@
+ @*                      .addParameter('price', priceRange.join('-')); *@
+ @*              } *@
+ @*          }); *@
+ @*      }); *@
+ @* *@
+ @*      function setSelectedPriceRange(from, to) { *@
+ @*          var $selectedPriceRangeEl = $('.selected-price-range'); *@
+ @*          $('.from', $selectedPriceRangeEl).html(from); *@
+ @*          $('.to', $selectedPriceRangeEl).html(to); *@
+ @*      } *@
+ @* </script> *@
     
     <script type="module" crossorigin src="/assets/index.7cff7bb4.js"></script>
     <link rel="modulepreload" href="/assets/vendor.a63941c7.js"/>

@@ -60,7 +60,7 @@
 <div class="page product-details-page">
 <div class="page-body">
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
-<form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+@*<form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">*@
 @if (seoSettings.MicrodataEnabled)
 {
     @await Html.PartialAsync("_Microdata", Model)
@@ -121,11 +121,13 @@
         </div>
         <div class="attributes-wrapper">
             <!--attributes-->
+            
             @{
                 var dataDictAttributes = new ViewDataDictionary(ViewData);
                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
                 @await Html.PartialAsync("_ProductAttributes", Model, dataDictAttributes)
             }
+            
             <!--gift card-->
             @{
                 var dataDictGiftCard = new ViewDataDictionary(ViewData);
@@ -160,7 +162,6 @@
                 </div>
                 <!--add to wishlist-->
                 <div>
-
                     @{
                         var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
                         dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
@@ -360,7 +361,7 @@
     }
 </div>
 </div>
-</form>
+@*</form>*@
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
 </div>
 </div>

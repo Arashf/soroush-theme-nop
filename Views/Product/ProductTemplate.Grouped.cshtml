@@ -58,7 +58,7 @@
 <div class="page product-details-page">
     <div class="page-body">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
-        <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+        @* <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form"> *@
 	    @if (seoSettings.MicrodataEnabled)
             {
                 @await Html.PartialAsync("_Microdata", Model)
@@ -281,7 +281,7 @@
                     }
                 </div>
             </div>
-        </form>
+        @* </form> *@
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
     </div>
 </div>

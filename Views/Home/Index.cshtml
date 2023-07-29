@@ -32,34 +32,267 @@
     var carouselsWrapperClass = enableHomePageCarousels ? "two-row-carousels small-products" : string.Empty;
 }
 
-<input id="home-page-carousel-breakpoints" type="hidden" value="@homePageProductsCarouselBreakPoints" />
+<input id="home-page-carousel-breakpoints" type="hidden" value="@homePageProductsCarouselBreakPoints"/>
 
 <div class="page home-page">
-    <div class="page-body">
-        <div style="width: 100%;height:1000px"></div>
-        <div style="width: 100%;height:500px">This is Test</div>
-        <div style="width: 100%;height:1000px"></div>
-        <div style="width: 100%;height:500px">This is Test</div>
-        <div style="width: 100%;height:1000px"></div>
-        
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_info_boxes" }) *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageTop }) *@
-        @* @await Component.InvokeAsync("TopicBlock", new { systemName = "HomepageText" }) *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeCategories }) *@
-        @* @await Component.InvokeAsync("HomepageCategories") *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeNews }) *@
-        @* @await Component.InvokeAsync("HomepageNews") *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforePoll }) *@
-        @* @await Component.InvokeAsync("HomepagePolls") *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBottom }) *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_sale_of_the_day" }) *@
-        @* *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeProducts }) *@
-        @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeBestSellers }) *@
-        @* *@
-        @* <div class="@carouselsWrapperClass"> *@
-        @*     @await Component.InvokeAsync("HomepageProducts") *@
-        @*     @await Component.InvokeAsync("HomepageBestSellers") *@
-        @* </div> *@
+<div class="page-body">
+@* <section id="HomePageSlider" class="w-full"> *@
+@*     <div class="flex flex-col items-center justify-center"> *@
+@*         <div class="w-full"> *@
+@*             <div id="bannerSwiper" class="swiper mySwiper relative"> *@
+@*                 <!-- Additional required wrapper --> *@
+@*                 <div class="swiper-wrapper "> *@
+@*                     <!-- Slides --> *@
+@*                     <div class="swiper-slide"> *@
+@*                         <picture> *@
+@*                             <source media="(min-width: 768px)" *@
+@*                                     srcSet="https://soroush.app/images/thumbs/003/0031177_BD1.jpeg"> *@
+@*                             </source> *@
+@*                             <source media="(max-width: 767px)" *@
+@*                                     srcSet="https://soroush.app/images/thumbs/003/0031178_BM1.jpeg"> *@
+@*                             </source> *@
+@*                             <!-- <div class="blur-load" *@
+@*                                       style="background-image: url(../Content/img/HomePageSlider/homeSliderDesk.webp);"> --> *@
+@*                             <img src="https://soroush.app/images/thumbs/003/0031177_BD1.jpeg" alt="soroush" *@
+@*                                  loading="lazy"/> *@
+@*                             <!-- </div> --> *@
+@*                         </picture> *@
+@*                     </div> *@
+@*                     *@
+@*                     <div class="swiper-slide"> *@
+@*                         <picture> *@
+@*                             <source media="(min-width: 768px)" *@
+@*                                     srcSet="~/freeDeliveryDesktop.jpg"> *@
+@*                             </source> *@
+@*                             <source media="(max-width: 767px)" *@
+@*                                     srcSet="~/freeDeliveryMobile.jpg"> *@
+@*                             </source> *@
+@*                             $1$ <div class="blur-load" #1# *@
+@*                             $1$     style="background-image: url(../Content/img/HomePageSlider/finishDesktop.webp);"> #1# *@
+@*                             <img src="~/freeDeliveryMobile.jpg" alt="soroush" *@
+@*                                  loading="lazy"/> *@
+@*                             $1$ </div> #1# *@
+@*                         </picture> *@
+@*                     </div> *@
+@* *@
+@*                 </div> *@
+@*                 <!-- If we need pagination --> *@
+@*                 <div class="swiper-pagination"></div> *@
+@* *@
+@*                 <!-- If we need navigation buttons --> *@
+@*                 <div class="swiper-button-prev"></div> *@
+@*                 <div class="swiper-button-next"></div> *@
+@* *@
+@*                 <!-- If we need scrollbar --> *@
+@*                 <!-- <div class="swiper-scrollbar"></div> --> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </section> *@
+@* ////////////////////////////////////////////////////////////  Categories Items *@
+<section>
+    <div id="category" class="container">
+        <div id="categoryItem" class="mainIcon relative">
+            <div class="relative grid grid-cols-3 xs:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6
+                                         justify-items-center mt-[80px] mb-12 gap-3">
+
+                <a href="/%D8%AE%D9%88%D8%A7%D8%B1%D8%A8%D8%A7%D8%B1-%D9%88-%D9%86%D8%A7%D9%86"
+                   title="نمایش محصولات در دسته &nbsp;خواربار و نان" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                            rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014317_-_450.png" alt="category"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        خواربار و نان
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%84%D8%A8%D9%86%DB%8C%D8%A7%D8%AA"
+                   title="نمایش محصولات در دسته &nbsp;لبنیات" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                            rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014179_450.png" alt="تصویر برای دسته  صبحانه" title="نمایش محصولات در دسته &nbsp;صبحانه" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        لبنیات
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%84%D8%A8%D9%86%DB%8C%D8%A7%D8%AA"
+                   title="نمایش محصولات در دسته &nbsp;صبحانه" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                            rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014172_450.png"
+                         alt="تصویر برای دسته &nbsp;صبحانه" title="نمایش محصولات در دسته &nbsp;صبحانه" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        صبحانه
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%DA%A9%D9%86%D8%B3%D8%B1%D9%88-%D9%88-%DA%A9%D9%85%D9%BE%D9%88%D8%AA"
+                   title="نمایش محصولات در دسته &nbsp;کنسرو و غذای آماده" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                              rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014171_-_450.png" alt="تصویر برای دسته &nbsp;کنسرو و غذای آماده" title="نمایش محصولات در دسته &nbsp;کنسرو و غذای آماده" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        کنسرو و غذای آماده
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%85%D9%88%D8%A7%D8%AF-%D9%BE%D8%B1%D9%88%D8%AA%D8%A6%DB%8C%D9%86%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;مواد پروتئینی" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                                                                                                                                                     rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014332_-_450.png"
+                         alt="تصویر برای دسته &nbsp;مواد پروتئینی" title="نمایش محصولات در دسته &nbsp;مواد پروتئینی" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        مواد پروتئینی
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%86%D9%88%D8%B4%DB%8C%D8%AF%D9%86%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;نوشیدنی" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]
+                                                                                                                                                                                                     rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014174_450.png"
+                         alt="تصویر برای دسته &nbsp;نوشیدنی" title="نمایش محصولات در دسته &nbsp;نوشیدنی" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        نوشیدنی
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D8%AA%D9%86%D9%82%D9%84%D8%A7%D8%AA"
+                   title="نمایش محصولات در دسته &nbsp;تنقلات" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px] 
+                                                                                                                                                                                                     rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014332_-_450.png"
+                         alt="تصویر برای دسته &nbsp;مواد پروتئینی" title="نمایش محصولات در دسته &nbsp;مواد پروتئینی" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        تنقلات
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%DA%86%D8%A7%D8%B4%D9%86%DB%8C-%D9%88-%D8%A7%D9%81%D8%B2%D9%88%D8%AF%D9%86%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;چاشنی و افزودنی" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014350_-_450.png"
+                         alt="تصویر برای دسته &nbsp;چاشنی و افزودنی" title="نمایش محصولات در دسته &nbsp;چاشنی و افزودنی" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        چاشنی و افزودنی
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%85%DB%8C%D9%88%D9%87-%D9%88-%D8%B3%D8%A8%D8%B2%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;میوه و سبزیجات" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014382_-_450.png"
+                         alt="تصویر برای دسته &nbsp;میوه و سبزیجات" title="نمایش محصولات در دسته &nbsp;میوه و سبزیجات" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        میوه و سبزیجات
+                    </h2>
+                </a>
+                 @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%84%D9%88%D8%A7%D8%B2%D9%85-%D8%A2%D8%B1%D8%A7%DB%8C%D8%B4%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;لوازم آرایشی " tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014510_-_450.png"
+                         alt="تصویر برای دسته &nbsp;لوازم آرایشی " title="نمایش محصولات در دسته &nbsp;لوازم آرایشی " style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        لوازم آرایشی
+                    </h2>
+                </a>
+                 @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%84%D9%88%D8%A7%D8%B2%D9%85-%D8%A8%D9%87%D8%AF%D8%A7%D8%B4%D8%AA%DB%8C"
+                   title="نمایش محصولات در دسته &nbsp;لوازم بهداشتی" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014503_-_450.png"
+                         alt="تصویر برای دسته &nbsp;لوازم بهداشتی" title="نمایش محصولات در دسته &nbsp;لوازم بهداشتی" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                        لوازم بهداشتی
+                    </h2>
+                </a>
+                @* /////////////////////////////////////////////////////////////// *@
+                <a href="/%D9%85%D9%88%D8%A7%D8%AF-%D8%B4%D9%88%DB%8C%D9%86%D8%AF%D9%87"
+                   title="نمایش محصولات در دسته &nbsp;مواد شوینده" tabindex="0"
+                   class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
+
+                    <!-- <div class="blur-load"
+                              style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014386_-_450.png"
+                        alt="تصویر برای دسته &nbsp;مواد شوینده" title="نمایش محصولات در دسته &nbsp;مواد شوینده" style="opacity: 1;"
+                         loading="lazy"/>
+                    <!-- </div> -->
+                    <h2 class="text-center pb-3">
+                       مواد شوینده
+                    </h2>
+                </a>
+            </div>
+        </div>
     </div>
+</section>
+@* ////////////////////////////////////////////////////////////////////////////////////////// *@
+@await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_info_boxes" })
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageTop })
+@await Component.InvokeAsync("TopicBlock", new { systemName = "HomepageText" })
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeCategories })
+@await Component.InvokeAsync("HomepageCategories")
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeNews })
+@await Component.InvokeAsync("HomepageNews")
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforePoll })
+@await Component.InvokeAsync("HomepagePolls")
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBottom })
+@await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_sale_of_the_day" })
+
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeProducts })
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeBestSellers })
+
+<div class="@carouselsWrapperClass container-base">
+    @await Component.InvokeAsync("HomepageProducts")
+    @await Component.InvokeAsync("HomepageBestSellers")
+</div>
+<div style="width: 100%;height: 50px;"> </div>
+</div>
 </div>
