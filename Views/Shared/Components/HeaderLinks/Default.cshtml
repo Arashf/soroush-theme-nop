@@ -19,6 +19,7 @@
     var isLoginPage = controllerName.Equals("customer", StringComparison.InvariantCultureIgnoreCase) &&
                       actionName.Equals("login", StringComparison.InvariantCultureIgnoreCase);
 }
+
 <div class="header-links-mobile">
 
 <!-- <a href="/" class="flex items-center justify-center flex-col w-[45px] gap-1">
@@ -39,262 +40,297 @@
     </svg>
     <span class="text-[10px]">ورود</span>
 </a> -->
-    <!-- /////////////////////////////////////////////////// Profile Menu Btn -->
-<div 
-     class="mobile-HeaderLinksContainer flex items-center justify-center flex-col gap-1">
+<!-- /////////////////////////////////////////////////// Profile Menu Btn -->
+<div
+    class="mobile-HeaderLinksContainer flex items-center justify-center flex-col gap-1">
     <div class="mobile-HeaderLinksItems">
-        <div id="toggleProfileMenu" onclick="openProfileMenu()">
-            <svg class="fill-textSecondary stroke-textSecondary" width="26px" height="26px"
-                 style="enable-background:new 0 0 24 24;" version="1.1" viewBox="0 0 24 24" xml:space="preserve"
-                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g id="info"/>
-                <g id="icons">
-                    <g id="user">
-                        <ellipse cx="12" cy="8" rx="5" ry="6"/>
-                        <path
-                            d="M21.8,19.1c-0.9-1.8-2.6-3.3-4.8-4.2c-0.6-0.2-1.3-0.2-1.8,0.1c-1,0.6-2,0.9-3.2,0.9s-2.2-0.3-3.2-0.9    C8.3,14.8,7.6,14.7,7,15c-2.2,0.9-3.9,2.4-4.8,4.2C1.5,20.5,2.6,22,4.1,22h15.8C21.4,22,22.5,20.5,21.8,19.1z"/>
-                    </g>
-                </g>
-            </svg>
-        </div>
-        <a class="relative flex flex-col items-center cursor-pointer  gap-2" 
-           href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
-                    <span>
-                        <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
-                             xmlns="http://www.w3.org/2000/svg">
+        @if (Model.IsAuthenticated)
+        {
+            <div id="toggleProfileMenu">
+                <svg class="fill-textSecondary stroke-textSecondary" width="26px" height="26px"
+                     style="enable-background:new 0 0 24 24;" version="1.1" viewBox="0 0 24 24" xml:space="preserve"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="info"/>
+                    <g id="icons">
+                        <g id="user">
+                            <ellipse cx="12" cy="8" rx="5" ry="6"/>
                             <path
-                                d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
-                        </svg>
-                        <div class="absolute bg-[red] left-[3px] top-[-6px] text-[13px] font-semibold
-                                              text-white rounded-[5px]">
-                            <div class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
-                                <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
-        
-                            </div>
-                        </div>
-                    </span>
-        
-                    @* <span class="cart-label text-[13px]">@T("ShoppingCart")</span> *@
-                </a>
-        </div>
-</div>
-    @* //////////////////////////////////////////////////////////////////////  ProfileMenuBox *@
-    <div id="profileMenuBox" class="profileMenu-mobile overflow-y-auto">
-        <div class="lg:hidden sideNavHeader-mobile">
-            <div class="text-textSecondary font-semibold">
-                @if (@Model.CustomerName.StartsWith("0"))
-                {
-                    <div>
-                    سروشی عزیز
-                    </div>
-                }
-                else
-                {
-                    @Model.CustomerName    
-                }
-                
-            </div>
-            <div class="closebtn" onclick="closeProfileMenu()">
-                <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" height="16px" width="16px"
-                     id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"
-                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <path
-                        d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/>
+                                d="M21.8,19.1c-0.9-1.8-2.6-3.3-4.8-4.2c-0.6-0.2-1.3-0.2-1.8,0.1c-1,0.6-2,0.9-3.2,0.9s-2.2-0.3-3.2-0.9    C8.3,14.8,7.6,14.7,7,15c-2.2,0.9-3.9,2.4-4.8,4.2C1.5,20.5,2.6,22,4.1,22h15.8C21.4,22,22.5,20.5,21.8,19.1z"/>
+                        </g>
+                    </g>
                 </svg>
             </div>
-        </div>
-        <!-- ///////////////////////////////////  Navigation content -->
-        <div class="mainContainer-sideNav">
-            <div class="menuContainer-sideNav">
-                <!-- ///////////////////////////////////////////// Profile Menu -->
-                <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
-                    <a href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")" class="profileMenuItem w-full flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" width="23px"
-                                 height="23px" enable-background="new 0 0 32 32" id="Stock_cut" version="1.1"
-                                 viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <desc/>
-                                <g>
-                                    <circle cx="16" cy="16" fill="none" r="15" stroke="#000000"
-                                            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                    <path d="M26,27L26,27   c0-5.523-4.477-10-10-10h0c-5.523,0-10,4.477-10,10v0"
-                                          fill="none" stroke="#000000" stroke-linejoin="round"
-                                          stroke-miterlimit="10" stroke-width="2"/>
-                                    <circle cx="16" cy="11" fill="none" r="6" stroke="#000000"
-                                            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                </g>
-                            </svg>
-                            <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">
-                              @T("Account.MyAccount")
-                            </span>
-                        </div>
-                        <div>
-                            <svg class="stroke-iconLightColor" fill="none" height="24" width="24"
-                                 stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </a>
+        }
+        else
+        {
+                 @*  <a href="@Url.RouteUrl("Login", new { returnUrl })" class="ico-login">@T("Account.Login")</a> *@
+            var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+                ? url.ToString()
+                : webHelper.GetRawUrl(Context.Request);
+           
+                <a href="@Url.RouteUrl("Login", new { returnUrl })" data-loginUrl="@Url.Action("Login", "Customer")"
+                   class="flex items-center justify-center flex-col text-[13px] w-[55px] gap-2">
+                    <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 32 32" id="Layer_4"
+                         version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g>
+                            <line fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                                  stroke-width="2" x1="0" x2="27" y1="16" y2="16"/>
+                            <polyline fill="none" points="21,10 27,16    21,22  " stroke="#000000"
+                                      stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                            <path
+                                d="M9,8V3   c0-1.105,0.895-2,2-2h18c1.105,0,2,0.895,2,2v26c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2v-5"
+                                fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                                stroke-width="2"/>
+                        </g>
+                    </svg>
+                    @* <span class="text-[13px]">@T("Account.Register")</span> *@
+                </a>
+        }
+        <a class="relative flex flex-col items-center cursor-pointer  gap-2"
+           href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+            <span>
+                <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
+                </svg>
+                <div class="basket-mobile absolute bg-[red] top-[-6px] text-[13px] font-semibold
+                                              text-white rounded-[5px]">
+                    <div class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
+                        <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+
+                    </div>
                 </div>
-            </div>
+            </span>
+
+            @* <span class="cart-label text-[13px]">@T("ShoppingCart")</span> *@
+        </a>
+    </div>
+</div>
+@* //////////////////////////////////////////////////////////////////////  ProfileMenuBox *@
+@if (Model.IsAuthenticated)
+{
+    <div id="profileMenuBox" class="profileMenu-mobile overflow-y-auto">
+    <div class="lg:hidden sideNavHeader-mobile">
+        <div class="text-textSecondary font-semibold">
+            @* @if (@Model.CustomerName.StartsWith("0")) *@
+            @* { *@
+            @*     <div> *@
+            @*     سروشی عزیز *@
+            @*     </div> *@
+            @* } *@
+            @* else *@
+            @* { *@
+            @*     @Model.CustomerName     *@
+            @* } *@
+            <span> @Model.CustomerName.Substring(0, @Model.CustomerName.IndexOf("@"))</span>
+
         </div>
-        <div class="mainContainer-sideNav">
-            <div class="menuContainer-sideNav">
-                <!-- ///////////////////////////////////////////// Profile Menu -->
-                <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
-                    <a href="/order/history" class="profileMenuItem w-full flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                             <svg class="fill-iconLightColor stroke-iconLightColor " width="27px" height="27px"
-                                                    viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                   <g id="Order_confirmation">
-                                                       <path
-                                                           d="M228.2588,453.47l2.04-18.38H90.209a10.0033,10.0033,0,0,1-10-10V88.15a10.0033,10.0033,0,0,1,10-10h211.14a10.0036,10.0036,0,0,1,10,10V246.62a55.7953,55.7953,0,0,1,15.24-9.14V60.61a32.7,32.7,0,0,0-32.7-32.7H97.6689a32.7,32.7,0,0,0-32.7,32.7V453.17a32.7,32.7,0,0,0,32.7,32.7h139.5A45.4382,45.4382,0,0,1,228.2588,453.47Zm-9.6,12.18h-45.76v-12h45.76Z"/>
-                                                       <path
-                                                           d="M156.8589,166.84a23.8988,23.8988,0,1,1-23.82-25.82v-11a34.895,34.895,0,1,0,34.84,36.82Z"/>
-                                                       <path
-                                                           d="M123.3818,153.4585l-8.8574,8.0957,13.1875,14.4277a6.0015,6.0015,0,0,0,4.39,1.9522h.039a6.0023,6.0023,0,0,0,4.376-1.8945L164.5117,146.2l-8.7519-8.2109-23.5616,25.1142Z"/>
-                                                       <path
-                                                           d="M156.8589,261.9226a23.8988,23.8988,0,1,1-23.82-25.82v-11a34.8951,34.8951,0,1,0,34.84,36.82Z"/>
-                                                       <path
-                                                           d="M123.3818,248.541l-8.8574,8.0957,13.1875,14.4278a6.0018,6.0018,0,0,0,4.39,1.9521h.039a6.0019,6.0019,0,0,0,4.376-1.8945l27.9951-29.8393-8.7519-8.211L132.1982,258.186Z"/>
-                                                       <path
-                                                           d="M98.1387,355.0894a34.8967,34.8967,0,0,0,69.74,1.92h-11.02a23.8988,23.8988,0,1,1-23.82-25.82v-11A34.9381,34.9381,0,0,0,98.1387,355.0894Z"/>
-                                                       <path
-                                                           d="M123.3818,343.6279l-8.8574,8.0957,13.1875,14.4278a6.0014,6.0014,0,0,0,4.39,1.9521h.039a6.0019,6.0019,0,0,0,4.376-1.8945L164.5117,336.37l-8.7519-8.2109-23.5616,25.1142Z"/>
-                                                       <rect height="12" width="72.6846" x="192.8047" y="146.8691"/>
-                                                       <rect height="12" width="50.5986" x="192.8047" y="170.9619"/>
-                                                       <rect height="12" width="50.5986" x="192.8047" y="239.9688"/>
-                                                       <rect height="12" width="72.333" x="192.8047" y="264.0615"/>
-                                                       <path
-                                                           d="M453.917,454.3008,439.8076,327.4414A20.4882,20.4882,0,0,0,419.4238,309.2H391.39V289.85a44.365,44.365,0,0,0-43.5429-44.3063c-24.7925-.4248-45.084,20.2965-45.084,45.0926V309.2H274.7285a20.4883,20.4883,0,0,0-20.3838,18.2422l-14.164,127.35a33.3819,33.3819,0,0,0,33.1777,37.0737h146.94a33.8255,33.8255,0,0,0,33.6182-37.5649ZM314.7627,289.85a32.3513,32.3513,0,0,1,31.7559-32.3081c18.0766-.3076,32.871,14.8732,32.871,32.9524V309.2H314.7627ZM436.5635,472.5947a21.8536,21.8536,0,0,1-16.2647,7.271h-146.94a21.3834,21.3834,0,0,1-21.252-23.747l14.1641-127.35a8.5018,8.5018,0,0,1,8.458-7.5689h28.0342V345h12V321.2H379.39V345h12V321.2h28.0342a8.5017,8.5017,0,0,1,8.458,7.5684l14.1094,126.8593A21.8513,21.8513,0,0,1,436.5635,472.5947Z"/>
-                                                   </g>
-                                               </svg>
-                            <span class="pt-[1px] text-textSecondary text-[14px] font-semibold"> <span>@T("account.customerorders")</span> </span>
-                        </div>
-                        <div>
-                            <svg class="stroke-iconLightColor" fill="none" height="24" width="24"
-                                 stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </a>
-                </div>
-            </div>
+        <div id="closebtnProfileMenuMobile" class="closebtn">
+            <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" height="16px" width="16px"
+                 id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"
+                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path
+                    d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/>
+            </svg>
         </div>
-        <div class="mainContainer-sideNav">
-            <div class="menuContainer-sideNav">
-                <!-- ///////////////////////////////////////////// Profile Menu -->
-                <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
-                    <a href="/rewardpoints/history" class="profileMenuItem w-full flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                 <svg class="fill-iconLightColor stroke-iconLightColor stroke-2" width="20px"
-                                                                        height="20px" enable-background="new 0 0 48 48" height="48px" id="Layer_1"
-                                                                        version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
-                                                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                                       <path clip-rule="evenodd"
-                                                                             d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z"
-                                                                             fill-rule="evenodd"/>
-                                                                   </svg>
-                                                <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">
-                                                  @T("account.rewardpoints")
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <!-- <svg class=" !stroke-iconLightColor" fill="none" height="24" width="24"
-                                                          stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg> -->
-                                            </div>
-                                        </a>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="mainContainer-sideNav">
-            <div class="menuContainer-sideNav">
-                <!-- ///////////////////////////////////////////// Profile Menu -->
-                <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
-                    <a href="https://club.soroush.app/" class="profileMenuItem w-full flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <svg class="fill-iconLightColor stroke-iconLightColor" width="20px" height="20px"
-                                                     enable-background="new 0 0 24 24" id="Layer_1" version="1.1" viewBox="0 0 24 24"
-                                                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <g>
-                                                        <path
-                                                            d="M22,20.5H2   c-0.8284271,0-1.5-0.6715736-1.5-1.5V5c0-0.8284273,0.6715729-1.5,1.5-1.5h20c0.8284264,0,1.5,0.6715727,1.5,1.5v14   C23.5,19.8284264,22.8284264,20.5,22,20.5z"
-                                                            fill="none" stroke="#9a9a9a" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-miterlimit="10"/>
-                                                        <g>
-                                                            <path
-                                                                d="M9.5,8.5505371C7.8083496,8.7957764,6.5,10.2415161,6.5,12s1.3083496,3.2042236,3,3.4494629V8.5505371z"
-                                                                fill="#9a9a9a"/>
-                                                            <path
-                                                                d="M10.5,8.5505371v6.8989258c1.6916504-0.2452393,3-1.690979,3-3.4494629    S12.1916504,8.7957764,10.5,8.5505371z"
-                                                                fill="#9a9a9a"/>
-                                                            <path
-                                                                d="M14,7h-4c-2.7614136,0-5,2.2385864-5,5s2.2385864,5,5,5h4c2.7614136,0,5-2.2385864,5-5S16.7614136,7,14,7z     M10,16.5c-2.4814453,0-4.5-2.0185547-4.5-4.5S7.5185547,7.5,10,7.5s4.5,2.0185547,4.5,4.5S12.4814453,16.5,10,16.5z"
-                                                                fill="#9a9a9a"/>
-                                                        </g>
-                                                    </g>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                    <g/>
-                                                </svg>
-                                                <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">@T("account.clubsoroush")</span>
-                                            </div>
-                                            <div>
-                                                <!-- <svg class=" !stroke-iconLightColor" fill="none" height="24" width="24"
-                                                          stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg> -->
-                                            </div>
-                                        </a>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="mainContainer-sideNav">
-            <div class="menuContainer-sideNav">
-                <!-- ///////////////////////////////////////////// Profile Menu -->
-                <div class="m-auto">
-                    <a class="profileMenuItem w-full flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 32 32" id="Layer_4"
-                                            version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                                           <g>
-                                               <line fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
-                                                     stroke-width="2" x1="0" x2="27" y1="16" y2="16"/>
-                                               <polyline fill="none" points="21,10 27,16    21,22  " stroke="#000000"
-                                                         stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                               <path
-                                                   d="M9,8V3   c0-1.105,0.895-2,2-2h18c1.105,0,2,0.895,2,2v26c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2v-5"
-                                                   fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
-                                                   stroke-width="2"/>
-                                           </g>
-                                       </svg>
-                            <span class="pt-[1px] text-primary text-[15px]">@T("soroush.logout") </span>
-                        </div>
-                    </a>
-                </div>
+    </div>
+    <!-- ///////////////////////////////////  Navigation content -->
+    <div class="mainContainer-sideNav">
+        <div class="menuContainer-sideNav">
+            <!-- ///////////////////////////////////////////// Profile Menu -->
+            <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
+                <a href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")" class="profileMenuItem w-full flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" width="23px"
+                             height="23px" enable-background="new 0 0 32 32" id="Stock_cut" version="1.1"
+                             viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <desc/>
+                            <g>
+                                <circle cx="16" cy="16" fill="none" r="15" stroke="#000000"
+                                        stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                <path d="M26,27L26,27   c0-5.523-4.477-10-10-10h0c-5.523,0-10,4.477-10,10v0"
+                                      fill="none" stroke="#000000" stroke-linejoin="round"
+                                      stroke-miterlimit="10" stroke-width="2"/>
+                                <circle cx="16" cy="11" fill="none" r="6" stroke="#000000"
+                                        stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                            </g>
+                        </svg>
+                        <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">
+                            @T("Account.MyAccount")
+                        </span>
+                    </div>
+                    <div>
+                        <svg class="stroke-iconLightColor" fill="none" height="24" width="24"
+                             stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
+    <div class="mainContainer-sideNav">
+        <div class="menuContainer-sideNav">
+            <!-- ///////////////////////////////////////////// Profile Menu -->
+            <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
+                <a href="/order/history" class="profileMenuItem w-full flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="fill-iconLightColor stroke-iconLightColor " width="27px" height="27px"
+                             viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Order_confirmation">
+                                <path
+                                    d="M228.2588,453.47l2.04-18.38H90.209a10.0033,10.0033,0,0,1-10-10V88.15a10.0033,10.0033,0,0,1,10-10h211.14a10.0036,10.0036,0,0,1,10,10V246.62a55.7953,55.7953,0,0,1,15.24-9.14V60.61a32.7,32.7,0,0,0-32.7-32.7H97.6689a32.7,32.7,0,0,0-32.7,32.7V453.17a32.7,32.7,0,0,0,32.7,32.7h139.5A45.4382,45.4382,0,0,1,228.2588,453.47Zm-9.6,12.18h-45.76v-12h45.76Z"/>
+                                <path
+                                    d="M156.8589,166.84a23.8988,23.8988,0,1,1-23.82-25.82v-11a34.895,34.895,0,1,0,34.84,36.82Z"/>
+                                <path
+                                    d="M123.3818,153.4585l-8.8574,8.0957,13.1875,14.4277a6.0015,6.0015,0,0,0,4.39,1.9522h.039a6.0023,6.0023,0,0,0,4.376-1.8945L164.5117,146.2l-8.7519-8.2109-23.5616,25.1142Z"/>
+                                <path
+                                    d="M156.8589,261.9226a23.8988,23.8988,0,1,1-23.82-25.82v-11a34.8951,34.8951,0,1,0,34.84,36.82Z"/>
+                                <path
+                                    d="M123.3818,248.541l-8.8574,8.0957,13.1875,14.4278a6.0018,6.0018,0,0,0,4.39,1.9521h.039a6.0019,6.0019,0,0,0,4.376-1.8945l27.9951-29.8393-8.7519-8.211L132.1982,258.186Z"/>
+                                <path
+                                    d="M98.1387,355.0894a34.8967,34.8967,0,0,0,69.74,1.92h-11.02a23.8988,23.8988,0,1,1-23.82-25.82v-11A34.9381,34.9381,0,0,0,98.1387,355.0894Z"/>
+                                <path
+                                    d="M123.3818,343.6279l-8.8574,8.0957,13.1875,14.4278a6.0014,6.0014,0,0,0,4.39,1.9521h.039a6.0019,6.0019,0,0,0,4.376-1.8945L164.5117,336.37l-8.7519-8.2109-23.5616,25.1142Z"/>
+                                <rect height="12" width="72.6846" x="192.8047" y="146.8691"/>
+                                <rect height="12" width="50.5986" x="192.8047" y="170.9619"/>
+                                <rect height="12" width="50.5986" x="192.8047" y="239.9688"/>
+                                <rect height="12" width="72.333" x="192.8047" y="264.0615"/>
+                                <path
+                                    d="M453.917,454.3008,439.8076,327.4414A20.4882,20.4882,0,0,0,419.4238,309.2H391.39V289.85a44.365,44.365,0,0,0-43.5429-44.3063c-24.7925-.4248-45.084,20.2965-45.084,45.0926V309.2H274.7285a20.4883,20.4883,0,0,0-20.3838,18.2422l-14.164,127.35a33.3819,33.3819,0,0,0,33.1777,37.0737h146.94a33.8255,33.8255,0,0,0,33.6182-37.5649ZM314.7627,289.85a32.3513,32.3513,0,0,1,31.7559-32.3081c18.0766-.3076,32.871,14.8732,32.871,32.9524V309.2H314.7627ZM436.5635,472.5947a21.8536,21.8536,0,0,1-16.2647,7.271h-146.94a21.3834,21.3834,0,0,1-21.252-23.747l14.1641-127.35a8.5018,8.5018,0,0,1,8.458-7.5689h28.0342V345h12V321.2H379.39V345h12V321.2h28.0342a8.5017,8.5017,0,0,1,8.458,7.5684l14.1094,126.8593A21.8513,21.8513,0,0,1,436.5635,472.5947Z"/>
+                            </g>
+                        </svg>
+                        <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">
+                            <span>@T("account.customerorders")</span>
+                        </span>
+                    </div>
+                    @* <div> *@
+                    @*     <svg class="stroke-iconLightColor" fill="none" height="24" width="24" *@
+                    @*          stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> *@
+                    @*         <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round"/> *@
+                    @*     </svg> *@
+                    @* </div> *@
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="mainContainer-sideNav">
+        <div class="menuContainer-sideNav">
+            <!-- ///////////////////////////////////////////// Profile Menu -->
+            <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
+                <a href="/rewardpoints/history" class="profileMenuItem w-full flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="fill-iconLightColor stroke-iconLightColor stroke-2" width="20px"
+                             height="20px" enable-background="new 0 0 48 48" height="48px" id="Layer_1"
+                             version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path clip-rule="evenodd"
+                                  d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                        <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">
+                            @T("account.rewardpoints")
+                        </span>
+                    </div>
+                    <div>
+                        <!-- <svg class=" !stroke-iconLightColor" fill="none" height="24" width="24"
+                                  stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> -->
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="mainContainer-sideNav">
+        <div class="menuContainer-sideNav">
+            <!-- ///////////////////////////////////////////// Profile Menu -->
+            <div class="m-auto border-b-[1px] border-solid border-borderPrimary">
+                <a href="https://club.soroush.app/" class="profileMenuItem w-full flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="fill-iconLightColor stroke-iconLightColor" width="20px" height="20px"
+                             enable-background="new 0 0 24 24" id="Layer_1" version="1.1" viewBox="0 0 24 24"
+                             xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g>
+                                <path
+                                    d="M22,20.5H2   c-0.8284271,0-1.5-0.6715736-1.5-1.5V5c0-0.8284273,0.6715729-1.5,1.5-1.5h20c0.8284264,0,1.5,0.6715727,1.5,1.5v14   C23.5,19.8284264,22.8284264,20.5,22,20.5z"
+                                    fill="none" stroke="#9a9a9a" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10"/>
+                                <g>
+                                    <path
+                                        d="M9.5,8.5505371C7.8083496,8.7957764,6.5,10.2415161,6.5,12s1.3083496,3.2042236,3,3.4494629V8.5505371z"
+                                        fill="#9a9a9a"/>
+                                    <path
+                                        d="M10.5,8.5505371v6.8989258c1.6916504-0.2452393,3-1.690979,3-3.4494629    S12.1916504,8.7957764,10.5,8.5505371z"
+                                        fill="#9a9a9a"/>
+                                    <path
+                                        d="M14,7h-4c-2.7614136,0-5,2.2385864-5,5s2.2385864,5,5,5h4c2.7614136,0,5-2.2385864,5-5S16.7614136,7,14,7z     M10,16.5c-2.4814453,0-4.5-2.0185547-4.5-4.5S7.5185547,7.5,10,7.5s4.5,2.0185547,4.5,4.5S12.4814453,16.5,10,16.5z"
+                                        fill="#9a9a9a"/>
+                                </g>
+                            </g>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                            <g/>
+                        </svg>
+                        <span class="pt-[1px] text-textSecondary text-[14px] font-semibold">@T("account.clubsoroush")</span>
+                    </div>
+                    <div>
+                        <!-- <svg class=" !stroke-iconLightColor" fill="none" height="24" width="24"
+                                  stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 6L9 12L15 18" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> -->
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="mainContainer-sideNav">
+        <div class="menuContainer-sideNav">
+            <!-- ///////////////////////////////////////////// Profile Menu -->
+            <div class="m-auto">
+                <a href="@Url.RouteUrl("Logout")" class="profileMenuItem w-full flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 32 32" id="Layer_4"
+                             version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g>
+                                <line fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                                      stroke-width="2" x1="0" x2="27" y1="16" y2="16"/>
+                                <polyline fill="none" points="21,10 27,16    21,22  " stroke="#000000"
+                                          stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                <path
+                                    d="M9,8V3   c0-1.105,0.895-2,2-2h18c1.105,0,2,0.895,2,2v26c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2v-5"
+                                    fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                                    stroke-width="2"/>
+                            </g>
+                        </svg>
+                        <span class="pt-[1px] text-primary text-[15px]">@T("soroush.logout") </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+}
 </div>
 <div class="header-links-desktop">
 <div class="flex items-center justify-center gap-4">
@@ -319,12 +355,13 @@
             @*                 <span class="inbox-unread">@Model.UnreadPrivateMessages</span> *@
             @*             </a> *@
             @*         } *@
-            @*         <a href="@Url.Action("Index", "Club")" >@T("Account.ClubSoroush")</a> *@
+            @*         $1$ @Url.Action("Index", "Club") #1# *@
+            @*         <a @Url.Action("Index", "Club") >@T("Account.ClubSoroush")</a> *@
             @*         <a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a> *@
             @*     </div> *@
             @* </li> *@
-    
-    <div 
+
+    <div
         class="userMenuToggle flex flex-col items-center justify-center relative w-[90px] gap-2 cursor-pointer">
         <div class="flex items-center justify-between">
             <svg class="fill-textSecondary stroke-textSecondary" width="26px" height="26px"
@@ -352,8 +389,9 @@
         <div id="userMenu" class="userMenuclose absolute bg-white top-[50px] -right-[30px] h-[220px] w-[220px] text-[13px] font-semibold
                             transition-all z-[9999] shadow-custom rounded-[15px] px-[15px] py-[15px]">
             <div class="flex flex-col justify-start">
-                <a 
-                   class="flex items-center gap-1 justify-between transition-all">
+                <a
+                    href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")"
+                    class="flex items-center gap-1 justify-between transition-all">
                     <span class="flex items-center gap-1">
                         <svg class="fill-iconLightColor stroke-iconLightColor " width="27px"
                              height="27px" enable-background="new 0 0 32 32" id="Stock_cut" version="1.1"
@@ -371,7 +409,8 @@
                                         stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
                             </g>
                         </svg>
-                        <span>میلاد مجیدیان</span>
+                        @* @Model.CustomerName.Substring(0 ,@Model.CustomerName.IndexOf("@")+1) *@
+                        <span> @Model.CustomerName.Substring(0, @Model.CustomerName.IndexOf("@"))</span>
                     </span>
                     <svg class="stroke-iconLightColor" fill="none" height="22" width="22"
                          stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -379,7 +418,7 @@
                     </svg>
                 </a>
                 <div class="lg:border-t-[1px] lg:border-solid border-zinc-200 my-seperate"></div>
-                <a href="" class="flex items-center profileMenuItem-gap">
+                <a href="/order/history" class="flex items-center profileMenuItem-gap">
                     <svg class="fill-iconLightColor stroke-iconLightColor " width="27px" height="27px"
                          viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <g id="Order_confirmation">
@@ -411,7 +450,7 @@
                 <div class=" lg:border-t-[1px] lg:border-solid border-zinc-200 my-seperate">
                 </div>
 
-                <a href="" class="flex items-center profileMenuItem-gap">
+                <a href="/rewardpoints/history" class="flex items-center profileMenuItem-gap">
                     <svg class="fill-iconLightColor stroke-iconLightColor stroke-2" width="20px"
                          height="20px" enable-background="new 0 0 48 48" height="48px" id="Layer_1"
                          version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
@@ -423,7 +462,7 @@
                     <span>@T("account.rewardpoints")</span>
                 </a>
                 <div class="lg:border-t-[1px] lg:border-solid border-zinc-200 my-seperate"></div>
-                <a href="" class="flex items-center profileMenuItem-gap">
+                <a href="https://club.soroush.app/" class="flex items-center profileMenuItem-gap">
                     <svg class="fill-iconLightColor stroke-iconLightColor" width="20px" height="20px"
                          enable-background="new 0 0 24 24" id="Layer_1" version="1.1" viewBox="0 0 24 24"
                          xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -464,7 +503,7 @@
                     <span>@T("account.clubsoroush")</span>
                 </a>
                 <div class="lg:border-t-[1px] lg:border-solid border-zinc-200 my-seperate"></div>
-                <a href="" class="flex items-center profileMenuItem-gap">
+                <a href="@Url.RouteUrl("Logout")" class="flex items-center profileMenuItem-gap">
                     <svg class="fill-iconLightColor stroke-iconLightColor stroke-2" width="20px"
                          height="20px" id="Layer_1" style="enable-background:new 0 0 48 48;"
                          version="1.1" viewBox="0 0 48 48" xml:space="preserve"
@@ -490,25 +529,30 @@ else
 
     <li>
 
-        <a href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")"
-           class="flex items-center justify-center flex-col text-[13px] w-[55px] gap-2">
-            <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 32 32" id="Layer_4"
-                 version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                 xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g>
-                    <line fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
-                          stroke-width="2" x1="0" x2="27" y1="16" y2="16"/>
-                    <polyline fill="none" points="21,10 27,16    21,22  " stroke="#000000"
-                              stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                    <path
-                        d="M9,8V3   c0-1.105,0.895-2,2-2h18c1.105,0,2,0.895,2,2v26c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2v-5"
-                        fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
-                        stroke-width="2"/>
-                </g>
-            </svg>
-            <span class="text-[13px]">@T("Account.MyAccount")</span>
-        </a>
+        @if (Model.RegistrationType != UserRegistrationType.Disabled)
+        {
+            <a href="@Url.RouteUrl("Register", new { returnUrl })" data-loginUrl="@Url.Action("Login", "Customer")"
+               class="flex items-center justify-center flex-col text-[13px] w-[55px] gap-2">
+                <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 32 32" id="Layer_4"
+                     version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                        <line fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                              stroke-width="2" x1="0" x2="27" y1="16" y2="16"/>
+                        <polyline fill="none" points="21,10 27,16    21,22  " stroke="#000000"
+                                  stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                        <path
+                            d="M9,8V3   c0-1.105,0.895-2,2-2h18c1.105,0,2,0.895,2,2v26c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2v-5"
+                            fill="none" stroke="#000000" stroke-linejoin="round" stroke-miterlimit="10"
+                            stroke-width="2"/>
+                    </g>
+                </svg>
+                <span class="text-[13px]">@T("Account.Register")</span>
+            </a>
+     @*  <a href="@Url.RouteUrl("Login", new { returnUrl })" class="ico-login">@T("Account.Login")</a> *@
 
+        }
+        
 
         @* <div class="profile-menu-box @if (shouldShowLoginFormInHeader && !isLoginPage){<text>login-form-in-header</text>}"> *@
         @*     <div class="close-side-menu"> *@
@@ -578,7 +622,7 @@ else
     @*         <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span> *@
     @*     </a> *@
     @* </li> *@
-    
+
         @*  <div class="mobile-flyout-wrapper"> *@
         @*     <div class="close-side-menu"> *@
         @*         <span class="close-side-menu-text">@T("SevenSpikes.Themes.Emporium.Common.ShoppingCart")</span> *@
@@ -591,23 +635,23 @@ else
 
     <a class="relative flex flex-col items-center cursor-pointer
                                             gap-2" href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
-          <span>
-                     <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
-                          xmlns="http://www.w3.org/2000/svg">
-                         <path
-                             d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
-                     </svg>
-                     <div class="absolute bg-[red] left-[3px] top-[-6px] text-[13px] font-semibold
+        <span>
+            <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
+            </svg>
+            <div class="absolute bg-[red] top-[-6px] left-[3px] text-[13px] font-semibold
                                   text-white rounded-[5px]">
-                         <div class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
-                                        <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+                <div class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
+                    <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
 
-                         </div>
-                     </div>
-                 </span>
-        
-            <span class="cart-label text-[13px]">@T("ShoppingCart")</span>
-        </a>
+                </div>
+            </div>
+        </span>
+
+        <span class="cart-label text-[13px]">@T("ShoppingCart")</span>
+    </a>
 
 
 @*      <div class="relative flex flex-col items-center cursor-pointer *@

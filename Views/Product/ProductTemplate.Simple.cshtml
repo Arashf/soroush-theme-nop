@@ -1,4 +1,5 @@
 ﻿@model ProductDetailsModel
+
 @using Nop.Core
 @using Nop.Core.Domain.Seo;
 @using Nop.Core.Domain.Catalog
@@ -66,7 +67,7 @@
     @await Html.PartialAsync("_Microdata", Model)
 }
 <div data-productid="@Model.Id">
-                @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
+@await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
 <div class="container-base product-essential grid grid-cols-1 lg:grid-cols-8 lg:gap-3 mt-4">
 @* <div class="mobile-name-holder"></div> *@
 @* <div class="mobile-prev-next-holder"></div> *@
@@ -99,7 +100,6 @@
                 <h1>
                     @Model.Name
                 </h1>
-
                 <!--manufacturers-->
                 @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
             </div>
@@ -209,6 +209,7 @@
                             </p>
                         </div>
                     </div>
+                   
                     <div class="flex relative h-[20px] pr-[11px] my-1">
                         <div class="border-l-[2px] border-dashed border-[#ced4da] h-[20px] ">
                         </div>
@@ -234,7 +235,7 @@
             </div>
             <!--availability-->
             
-                    @* @await Html.PartialAsync("_Availability", Model) *@
+            @* @await Html.PartialAsync("_Availability", Model) *@
             
             @* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model }) *@
 
@@ -320,7 +321,7 @@
 @* { *@
 @*     @productTabs *@
 @* } *@
-<div style="width: 100%;height: 100px"></div>
+
 @if (shouldShowDescription)
 {
     <div class="full-description">
@@ -360,8 +361,11 @@
         @alsoPurchased
     }
 </div>
+
 </div>
+
 @*</form>*@
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
 </div>
 </div>
+<div style="width: 100%;height: 200px"></div>

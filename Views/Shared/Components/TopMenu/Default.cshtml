@@ -3,6 +3,73 @@
 @using Category = Nop.Core.Domain.Catalog.Category
 @using DocumentFormat.OpenXml.Wordprocessing
 
+
+<!-- ////////////////////////////////////////////////////  Mobile Header -->
+<header id="mobileHeader" class="mobile lg:hidden bg-white shadow-md">
+<div class="flex gap-1 w-full items-center justify-between p-[6px] h-[57px]">
+<div id="toggleMobileSideNav" onclick="openMobileSideNav()">
+    <svg class="fill-iconSecondary stroke-iconSecondary" height="29" width="29" fill="none"
+         viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M3 7C3 6.44771 3.44772 6 4 6H24C24.5523 6 25 6.44771 25 7C25 7.55229 24.5523 8 24 8H4C3.44772 8 3 7.55229 3 7Z"
+            fill="black"/>
+        <path
+            d="M3 14C3 13.4477 3.44772 13 4 13H24C24.5523 13 25 13.4477 25 14C25 14.5523 24.5523 15 24 15H4C3.44772 15 3 14.5523 3 14Z"
+            fill="black"/>
+        <path
+            d="M4 20C3.44772 20 3 20.4477 3 21C3 21.5523 3.44772 22 4 22H24C24.5523 22 25 21.5523 25 21C25 20.4477 24.5523 20 24 20H4Z"
+            fill="black"/>
+    </svg>
+</div>
+@* ///////////////////////////////////////////////////// mobile-header-search *@
+<div class="mobile-header-search px-1 w-full">
+    <form class="relative">
+        <input type="text" placeholder="جستجو">
+        <svg id="Layer_1" class="w-[20px] h-[20px] !fill-[#bbbbbb] !stroke-[#bbbbbb]"
+             style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve"
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g>
+                <g>
+                    <path
+                        d="M26.402,48.286C14.325,48.286,4.5,38.461,4.5,26.384S14.325,4.482,26.402,4.482    c12.077,0,21.902,9.825,21.902,21.902S38.479,48.286,26.402,48.286z M26.402,10.012c-9.028,0-16.372,7.345-16.372,16.372    s7.345,16.372,16.372,16.372s16.372-7.345,16.372-16.372S35.43,10.012,26.402,10.012z"
+                        style="fill:#515151;"/>
+                </g>
+                <g>
+                    <path
+                        d="M36.36,29.149c-1.527,0-2.765-1.238-2.765-2.765c0-2.431-1.215-4.681-3.25-6.018    c-1.171-0.769-2.534-1.176-3.943-1.176c-1.527,0-2.765-1.238-2.765-2.765s1.238-2.765,2.765-2.765    c2.491,0,4.904,0.721,6.979,2.084c3.597,2.363,5.744,6.34,5.744,10.639C39.125,27.911,37.887,29.149,36.36,29.149z"
+                        style="fill:#515151;"/>
+                </g>
+                <g>
+                    <path
+                        d="M51.018,59.518c-2.266,0-4.396-0.882-5.998-2.484L33.296,45.31    c-0.622-0.622-0.911-1.504-0.778-2.374c0.133-0.87,0.673-1.625,1.453-2.032c2.975-1.553,5.371-3.943,6.929-6.91    c0.409-0.778,1.163-1.316,2.032-1.448c0.869-0.132,1.749,0.157,2.371,0.778l11.713,11.712c1.602,1.602,2.484,3.732,2.484,5.998    s-0.882,4.396-2.484,5.998C55.414,58.636,53.283,59.518,51.018,59.518z M39.642,43.836l9.288,9.287    c0.558,0.558,1.299,0.865,2.088,0.865c0.789,0,1.53-0.307,2.088-0.865c1.151-1.151,1.151-3.025,0-4.176l-9.282-9.282    C42.625,41.24,41.221,42.641,39.642,43.836z"
+                        style="fill:#515151;"/>
+                </g>
+            </g>
+        </svg>
+    </form>
+</div>
+<!-- ///////////////////////////////////////////// mobile Menu Content -->
+<div id="mobileSideNav" class="sidenav-mobile overflow-y-auto">
+<div class="sideNavHeader-mobile lg:hidden">
+    <div id="closeBtnMobileSideNav" class="closebtn">
+        <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" height="16px" width="16px"
+             id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"
+             xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path
+                d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/>
+        </svg>
+    </div>
+    <div class="mobileMenu-logo">
+        @await Component.InvokeAsync(typeof(LogoViewComponent))
+    </div>
+</div>
+<!-- /////////////////////////////////////////  Navigation content -->
+<div class="mainContainer-sideNav">
+<div class="menuContainer-sideNav">
+<div>
+@* @await Component.InvokeAsync("TopMenu") *@
+
 @functions {
 
     async Task CategoryLine(TopMenuModel.CategoryLineModel lineModel)
@@ -98,6 +165,7 @@
 }
 
 @* /////////////////////////////////////////////// CategoryLineModel Mobile *@
+
 @functions {
 
     async Task CategoryLineMobile(TopMenuModel.CategoryLineModel lineModel)
@@ -186,7 +254,8 @@
                                             </a>
                                         </span>
                                     </div>
-                                    @if(categoryLineModel.Category.HaveSubCategories){
+                                    @if (categoryLineModel.Category.HaveSubCategories)
+                                    {
                                         <div class="dropDown-icon">
                                             <svg class="stroke-iconSecondary feather feather-chevron-down stroke-5"
                                                  fill="none" height="24" stroke="currentColor" stroke-linecap="round"
@@ -239,111 +308,113 @@
 }
 
 @* /////////////////////////////////////////////////////////////////////// end of function *@
-<div class="desktopHeaderMenu justify-between flex items-center">
-    <div class="flex items-center">
-        <div class="desktopMenu">
-            <ul id="desktopHeaderMenuSubItem" class="flex justify-between items-center gap-4">
-                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuBefore, additionalData = Model })
-                @if (Model.DisplayHomepageMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a>
-                    </li>
-                }
-                @if (!Model.UseAjaxMenu)
-                {
-                    var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
-                    @foreach (var category in rootCategories)
-                    {
-                        var categoryLineModel = new TopMenuModel.CategoryLineModel
-                        {
-                            Category = category
-                        };
-                        await CategoryLine(categoryLineModel);
-                    }
-                }
-                @foreach (var topic in Model.Topics)
-                {
-                    <li>
-                        <a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
-                    </li>
-                }
-                @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
-                    </li>
-                }
-                @if (Model.DisplayProductSearchMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a>
-                    </li>
-                }
-                @if (Model.DisplayCustomerInfoMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a>
-                    </li>
-                }
-                @if (Model.BlogEnabled && Model.DisplayBlogMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("Blog")">@T("Blog")</a>
-                    </li>
-                }
-                @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a>
-                    </li>
-                }
-                @* @if (Model.DisplayContactUsMenuItem) *@
-                @* { *@
-                @*     <li> *@
-                @*         <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> *@
-                @*     </li> *@
-                @* } *@
-                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuAfter, additionalData = Model })
-            </ul>
-        </div>
-    </div>
-    <div class="headerCtaMenu flex items-center">
-        <ul>
-            <li class="flex items-center">
-                <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 48 48"
-                     height="48px" version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
-                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g id="Expanded">
-                        <g>
-                            <g>
-                                <path
-                                    d="M35,48H13c-2.757,0-5-2.243-5-5V5c0-2.757,2.243-5,5-5h22c2.757,0,5,2.243,5,5v38C40,45.757,37.757,48,35,48z M13,2     c-1.654,0-3,1.346-3,3v38c0,1.654,1.346,3,3,3h22c1.654,0,3-1.346,3-3V5c0-1.654-1.346-3-3-3H13z"/>
-                            </g>
-                            <g>
-                                <path
-                                    d="M39,10H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,10,39,10z"/>
-                            </g>
-                            <g>
-                                <path
-                                    d="M39,40H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,40,39,40z"/>
-                            </g>
-                            <g>
-                                <path
-                                    d="M24,41c-1.104,0-2,0.896-2,2s0.896,2,2,2s2-0.896,2-2S25.104,41,24,41L24,41z"/>
-                            </g>
-                            <g>
-                                <path
-                                    d="M29,6H19c-0.553,0-1-0.448-1-1s0.447-1,1-1h10c0.553,0,1,0.448,1,1S29.553,6,29,6z"/>
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-                <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a>
-            </li>
-        </ul>
-    </div>
-</div>
+@* <div class="desktopHeaderMenu justify-between flex items-center"> *@
+@*     <div class="flex items-center"> *@
+@*         <div class="desktopMenu"> *@
+@*             <ul id="desktopHeaderMenuSubItem" class="flex justify-between items-center gap-4"> *@
+@*                 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuBefore, additionalData = Model }) *@
+@*                 @if (Model.DisplayHomepageMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (!Model.UseAjaxMenu) *@
+@*                 { *@
+@*                     var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList(); *@
+@*                     @foreach (var category in rootCategories) *@
+@*                     { *@
+@*                         var categoryLineModel = new TopMenuModel.CategoryLineModel *@
+@*                         { *@
+@*                             Category = category *@
+@*                         }; *@
+@*                         await CategoryLine(categoryLineModel); *@
+@*                     } *@
+@*                 } *@
+@*                 @foreach (var topic in Model.Topics) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (Model.DisplayProductSearchMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (Model.DisplayCustomerInfoMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (Model.BlogEnabled && Model.DisplayBlogMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("Blog")">@T("Blog")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 @if (Model.ForumEnabled && Model.DisplayForumsMenuItem) *@
+@*                 { *@
+@*                     <li> *@
+@*                         <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a> *@
+@*                     </li> *@
+@*                 } *@
+@*                 $1$ @if (Model.DisplayContactUsMenuItem) #1# *@
+@*                 $1$ { #1# *@
+@*                 $1$     <li> #1# *@
+@*                 $1$         <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> #1# *@
+@*                 $1$     </li> #1# *@
+@*                 $1$ } #1# *@
+@*                 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuAfter, additionalData = Model }) *@
+@*             </ul> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="headerCtaMenu flex items-center"> *@
+@*         <ul> *@
+@*             <li class="flex items-center"> *@
+@*                 <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 48 48" *@
+@*                      height="48px" version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve" *@
+@*                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> *@
+@*                     <g id="Expanded"> *@
+@*                         <g> *@
+@*                             <g> *@
+@*                                 <path *@
+@*                                     d="M35,48H13c-2.757,0-5-2.243-5-5V5c0-2.757,2.243-5,5-5h22c2.757,0,5,2.243,5,5v38C40,45.757,37.757,48,35,48z M13,2     c-1.654,0-3,1.346-3,3v38c0,1.654,1.346,3,3,3h22c1.654,0,3-1.346,3-3V5c0-1.654-1.346-3-3-3H13z"/> *@
+@*                             </g> *@
+@*                             <g> *@
+@*                                 <path *@
+@*                                     d="M39,10H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,10,39,10z"/> *@
+@*                             </g> *@
+@*                             <g> *@
+@*                                 <path *@
+@*                                     d="M39,40H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,40,39,40z"/> *@
+@*                             </g> *@
+@*                             <g> *@
+@*                                 <path *@
+@*                                     d="M24,41c-1.104,0-2,0.896-2,2s0.896,2,2,2s2-0.896,2-2S25.104,41,24,41L24,41z"/> *@
+@*                             </g> *@
+@*                             <g> *@
+@*                                 <path *@
+@*                                     d="M29,6H19c-0.553,0-1-0.448-1-1s0.447-1,1-1h10c0.553,0,1,0.448,1,1S29.553,6,29,6z"/> *@
+@*                             </g> *@
+@*                         </g> *@
+@*                     </g> *@
+@*                 </svg> *@
+@*                 <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> *@
+@*             </li> *@
+@*         </ul> *@
+@*     </div> *@
+@* </div> *@
+
+@* ///////////////////////////////////////////////////////////////////// *@
 @{
     var rootCategoriesResponsive = Model.Categories.ToList();
     //name it "Categories" if we have only categories. Otherwise, "Menu"
@@ -449,3 +520,198 @@
     }
 
 }
+<div class="mobile-menu-items"></div>
+<div class="w-full h-[80px]"></div>
+</div>
+
+@* ///////////////////////////////////////////////////////////// *@
+</div>
+</div>
+</div>
+<!-- ///////////////////////////////////////////// profileMenu Content -->
+<div>
+    @await Component.InvokeAsync("HeaderLinks")
+</div>
+@* /////////////////////////////////////////////// *@
+@* /////////////////////////////////////////////////// Card Box Content *@
+
+
+<div id="backDropOverlay" class="backDrop-overlay"></div>
+</div>
+</header>
+<!-- ////////////////////////////////////////////////////  Desktop Header -->
+<header id="desktopHeader" class="desktop desktopHeaderMenuBox">
+    <div class="container-base">
+        <div class="flex items-center justify-between z-[9999]">
+            <div class="flex items-center justify-between gap-3">
+                <div class="desktopMenu-logo">
+                    @await Component.InvokeAsync(typeof(LogoViewComponent))
+                </div>
+                <div class="relative">
+                    <div class="desktop-header-search">
+                        <form class="relative">
+                            <input type="text" placeholder="جستجو">
+                            <svg id="Layer_1" class="w-[20px] h-[20px] !fill-[#bbbbbb] !stroke-[#bbbbbb]"
+                                 style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64"
+                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M26.402,48.286C14.325,48.286,4.5,38.461,4.5,26.384S14.325,4.482,26.402,4.482    c12.077,0,21.902,9.825,21.902,21.902S38.479,48.286,26.402,48.286z M26.402,10.012c-9.028,0-16.372,7.345-16.372,16.372    s7.345,16.372,16.372,16.372s16.372-7.345,16.372-16.372S35.43,10.012,26.402,10.012z"
+                                            style="fill:#515151;"/>
+                                    </g>
+                                    <g>
+                                        <path
+                                            d="M36.36,29.149c-1.527,0-2.765-1.238-2.765-2.765c0-2.431-1.215-4.681-3.25-6.018    c-1.171-0.769-2.534-1.176-3.943-1.176c-1.527,0-2.765-1.238-2.765-2.765s1.238-2.765,2.765-2.765    c2.491,0,4.904,0.721,6.979,2.084c3.597,2.363,5.744,6.34,5.744,10.639C39.125,27.911,37.887,29.149,36.36,29.149z"
+                                            style="fill:#515151;"/>
+                                    </g>
+                                    <g>
+                                        <path
+                                            d="M51.018,59.518c-2.266,0-4.396-0.882-5.998-2.484L33.296,45.31    c-0.622-0.622-0.911-1.504-0.778-2.374c0.133-0.87,0.673-1.625,1.453-2.032c2.975-1.553,5.371-3.943,6.929-6.91    c0.409-0.778,1.163-1.316,2.032-1.448c0.869-0.132,1.749,0.157,2.371,0.778l11.713,11.712c1.602,1.602,2.484,3.732,2.484,5.998    s-0.882,4.396-2.484,5.998C55.414,58.636,53.283,59.518,51.018,59.518z M39.642,43.836l9.288,9.287    c0.558,0.558,1.299,0.865,2.088,0.865c0.789,0,1.53-0.307,2.088-0.865c1.151-1.151,1.151-3.025,0-4.176l-9.282-9.282    C42.625,41.24,41.221,42.641,39.642,43.836z"
+                                            style="fill:#515151;"/>
+                                    </g>
+                                </g>
+                            </svg>
+                        </form>
+                    </div>
+                </div>
+                @* <div class="search-box store-search-box">
+            <div class="close-side-menu">
+                <span class="close-side-menu-text">@T("Search.SearchBox.Tooltip")</span>
+                <span class="close-side-menu-btn">@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+            </div>
+            @await Component.InvokeAsync("SearchBox")
+        </div> *@
+            </div>
+            @* class="header-links-wrapper" *@
+
+            <div>
+                @* <div onclick="userMenu()">openProfileMenu</div>  *@
+                @await Component.InvokeAsync("HeaderLinks")
+            </div>
+        </div>
+
+        @* </div> *@
+
+        <div class="desktopMenu-Item">
+            @{
+                var menuHtml = await Component.InvokeAsync("Widget", new { widgetZone = "theme_header_menu" });
+            }
+            @if (!String.IsNullOrEmpty(await menuHtml.RenderHtmlContentAsync()))
+            {
+                @menuHtml
+            }
+            else
+            {
+                    @* @await Component.InvokeAsync("TopMenu") *@
+                <div class="desktopHeaderMenu justify-between flex items-center">
+                    <div class="flex items-center">
+                        <div class="desktopMenu">
+                            <ul id="desktopHeaderMenuSubItem" class="flex justify-between items-center gap-4">
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuBefore, additionalData = Model })
+                                @if (Model.DisplayHomepageMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a>
+                                    </li>
+                                }
+                                @if (!Model.UseAjaxMenu)
+                                {
+                                    var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+                                    @foreach (var category in rootCategories)
+                                    {
+                                        var categoryLineModel = new TopMenuModel.CategoryLineModel
+                                        {
+                                            Category = category
+                                        };
+                                        await CategoryLine(categoryLineModel);
+                                    }
+                                }
+                                @foreach (var topic in Model.Topics)
+                                {
+                                    <li>
+                                        <a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
+                                    </li>
+                                }
+                                @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
+                                    </li>
+                                }
+                                @if (Model.DisplayProductSearchMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a>
+                                    </li>
+                                }
+                                @if (Model.DisplayCustomerInfoMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a>
+                                    </li>
+                                }
+                                @if (Model.BlogEnabled && Model.DisplayBlogMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("Blog")">@T("Blog")</a>
+                                    </li>
+                                }
+                                @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a>
+                                    </li>
+                                }
+                                @* @if (Model.DisplayContactUsMenuItem) *@
+                                @* { *@
+                                @*     <li> *@
+                                @*         <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> *@
+                                @*     </li> *@
+                                @* } *@
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMenuAfter, additionalData = Model })
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="headerCtaMenu flex items-center">
+                        <ul>
+                            <li class="flex items-center">
+                                <svg class="w-[23px] h-[23px] fill-textSecondary" enable-background="new 0 0 48 48"
+                                     height="48px" version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve"
+                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <g id="Expanded">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M35,48H13c-2.757,0-5-2.243-5-5V5c0-2.757,2.243-5,5-5h22c2.757,0,5,2.243,5,5v38C40,45.757,37.757,48,35,48z M13,2     c-1.654,0-3,1.346-3,3v38c0,1.654,1.346,3,3,3h22c1.654,0,3-1.346,3-3V5c0-1.654-1.346-3-3-3H13z"/>
+                                            </g>
+                                            <g>
+                                                <path
+                                                    d="M39,10H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,10,39,10z"/>
+                                            </g>
+                                            <g>
+                                                <path
+                                                    d="M39,40H9c-0.553,0-1-0.448-1-1s0.447-1,1-1h30c0.553,0,1,0.448,1,1S39.553,40,39,40z"/>
+                                            </g>
+                                            <g>
+                                                <path
+                                                    d="M24,41c-1.104,0-2,0.896-2,2s0.896,2,2,2s2-0.896,2-2S25.104,41,24,41L24,41z"/>
+                                            </g>
+                                            <g>
+                                                <path
+                                                    d="M29,6H19c-0.553,0-1-0.448-1-1s0.447-1,1-1h10c0.553,0,1,0.448,1,1S29.553,6,29,6z"/>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            <div class="mobile-menu-items"></div>
+        </div>
+    </div>
+</header>

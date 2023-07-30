@@ -1,4 +1,5 @@
-﻿@model ProductDetailsModel.AddToCartModel
+﻿
+@model ProductDetailsModel.AddToCartModel
 @using Nop.Core.Domain.Orders
 @if (Model.UpdatedShoppingCartItemId > 0)
 {
@@ -7,9 +8,9 @@
                   
  @if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
 {
-    
     @if (Model.CustomerEntersPrice)
     {
+
         <div class="customer-entered-price">
             <div class="price-input">
                 <label asp-for="CustomerEnteredPrice" asp-postfix=":" class="enter-price-label"></label>
@@ -29,6 +30,7 @@
         
         @if (!Model.DisableBuyButton)
         {
+
             <div class="add-to-cart-panel">
 
                 @* <label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label> *@
@@ -139,7 +141,8 @@
 }
 else
 {
-    <div>
+    <div class="outOfStock">
         کالا موجود نیست
     </div>
+    @* @Model.CustomerEntersPrice *@
 }
