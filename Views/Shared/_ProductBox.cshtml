@@ -212,10 +212,24 @@
                         addToCartText = T("ShoppingCart.PreOrder").Text;
                     }
                 @* <button type="button" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">@(addToCartText)</button> *@
-                    <button class="button-2 add-to-cart-button" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
+                    @* <button class="button-2 add-to-cart-button" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
+                    @*         onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;"> *@
+                    @*     $1$ @addToCartText #1# *@
+                    @*     <div class="product-add-to-cart"> *@
+                    @*         <span class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;"> *@
+                    @*             <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+                    @*                 <g> *@
+                    @*                     <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25"/> *@
+                    @*                     <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16"/> *@
+                    @*                 </g> *@
+                    @*             </svg> *@
+                    @*         </span> *@
+                    @*     </div> *@
+                    @* </button> *@
+                    <div class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
                             onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;">
                         @* @addToCartText *@
-                        <div class="product-add-to-cart">
+                        @* <div class="product-add-to-cart"> *@
                             <span class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;">
                                 <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                     <g>
@@ -224,8 +238,8 @@
                                     </g>
                                 </svg>
                             </span>
-                        </div>
-                    </button>
+                        @* </div> *@
+                    </div>
                 }
             </div>
             @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })

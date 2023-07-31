@@ -42,37 +42,37 @@
                 @foreach (var attributeValue in attribute.Values)
                 {
                 var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                           attributeValue.Name : 
-                            T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment, 
-                                attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text; 
-                         <option data-attr-value="@attributeValue.Id" selected="@attributeValue.IsPreSelected" value="@attributeValue.Id">@attributeName</option> 
-               
-                   } 
-                 </select> 
+                           attributeValue.Name :
+                            T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment,
+                                attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text;
+                         <option data-attr-value="@attributeValue.Id" selected="@attributeValue.IsPreSelected" value="@attributeValue.Id">@attributeName</option>
                 
-@*                 <div class="selected-product-property flex flex-wrap items-center justify-start gap-4 lg:gap-3 mt-3 p-2" data-attr="@(attribute.Id)" name="@(controlId)" id="@(controlId)" @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onchange=\"showHideDropdownQuantity('{controlId}')\"") : null)> *@
-@*                     $1$ <div value="0">@T("Products.ProductAttributes.DropdownList.DefaultItem")</div> #1# *@
-@*                     @foreach (var attributeValue in attribute.Values) *@
-@*                     { *@
-@*                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ? *@
-@*                             attributeValue.Name : *@
-@*                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment, *@
-@*                                 attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text; *@
-@*                         <div class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px]  *@
-@*                       px-[10px] cursor-pointer transition-all duration-200 border-[2px] border-solid border-borderPrimary" *@
-@*                              data-attr-value="@attributeValue.Id" selected="@attributeValue.IsPreSelected" value="@attributeValue.Id"> *@
-@*                             <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]"> *@
-@*                                 <span class="pr-[2px]"> *@
-@*                              *@
-@*                                 </span> *@
-@*                             </span> *@
-@*                             <span class="propertyContent text-[13px] pr-1"> *@
-@*                             @attributeName *@
-@*                             </span> *@
-@*                         </div> *@
-@*                              *@
-@*                     } *@
-@*                 </div> *@
+                   }
+                 </select>
+                
+@*                 <div class="selected-product-property flex flex-wrap items-center justify-start gap-4 lg:gap-3 mt-3 p-2"  *@
+@*                      data-attr="@(attribute.Id)" name="@(controlId)" id="@(controlId)" @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onchange=\"showHideDropdownQuantity('{controlId}')\"") : null)> *@
+@*                      @foreach (var attributeValue in attribute.Values) *@
+@*                      { *@
+@*                          var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ? *@
+@*                              attributeValue.Name : *@
+@*                              T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment, *@
+@*                                  attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text; *@
+@*                          <div class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px] *@
+@*                        px-[10px] cursor-pointer transition-all duration-200 border-[2px] border-solid border-borderPrimary" *@
+@*                               data-attr-value="@attributeValue.Id" selected="@attributeValue.IsPreSelected" value="@attributeValue.Id"> *@
+@*                              <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]"> *@
+@*                                  <span class="pr-[2px]"> *@
+@* *@
+@*                                  </span> *@
+@*                              </span> *@
+@*                              <span class="propertyContent text-[13px] pr-1"> *@
+@*                              @attributeName *@
+@*                              </span> *@
+@*                          </div> *@
+@* *@
+@*                      } *@
+@*                  </div> *@
                 
                 foreach (var attributeValue in attribute.Values.Where(value => value.CustomerEntersQty))
                 {
