@@ -17,43 +17,46 @@ window.addEventListener("load", function () {
     }
   }
   //////////////////////////////////////////////////////// BackDrop-overlay
-  const backDropOverlay = document.getElementById("backDropOverlay")
-  if (backDropOverlay) {
-    backDropOverlay.addEventListener("click", (e) => {
-      console.log("backDropOverlay")
-      // document.onclick = function (e) {
-      const elementSideNav = document.getElementById("mobileSideNav")
-      const elementToggleSideNav = document.getElementById(
-        "toggleMobileSideNav"
-      )
-      if (
-        !elementSideNav.contains(e.target) &&
-        !elementToggleSideNav.contains(e.target)
-      ) {
-        document
-          .getElementById("mobileSideNav")
-          .classList.remove("navBarActive")
-        document.querySelector("header div.backDrop-overlay").style.display =
-          "none"
-        document.querySelector("html").classList.remove("remove-scrolling")
-      }
-      ///////////////////////////////////////////////////////// Profile Menu
-      const elementprofileMenuBox = document.getElementById("profileMenuBox")
-      const elementToggleProfileMenu =
-        document.getElementById("toggleProfileMenu")
-      if (
-        !elementprofileMenuBox.contains(e.target) &&
-        !elementToggleProfileMenu.contains(e.target)
-      ) {
-        document
-          .getElementById("profileMenuBox")
-          .classList.remove("profileMenuActive")
-        document.querySelector("header div.backDrop-overlay").style.display =
-          "none"
-        document.querySelector("html").classList.remove("remove-scrolling")
-      }
-    })
-  }
+  // function backDropOverlay() {
+  //   const backDropOverlay = document.getElementById("backDropOverlay")
+  //   if (backDropOverlay !== undefined && backDropOverlay !== null) {
+  //     backDropOverlay.addEventListener("click", (e) => {
+  //       // document.onclick = function (e) {
+  //       const elementSideNav = document.getElementById("mobileSideNav")
+  //       const elementToggleSideNav = document.getElementById(
+  //         "toggleMobileSideNav"
+  //       )
+  //       if (
+  //         !elementSideNav.contains(e.target) &&
+  //         !elementToggleSideNav.contains(e.target)
+  //       ) {
+  //         document
+  //           .getElementById("mobileSideNav")
+  //           .classList.remove("navBarActive")
+  //         document.querySelector("header div.backDrop-overlay").style.display =
+  //           "none"
+  //         document.querySelector("html").classList.remove("remove-scrolling")
+  //       }
+  //       ///////////////////////////////////////////////////////// Profile Menu
+  //       const elementprofileMenuBox = document.getElementById("profileMenuBox")
+  //       const elementToggleProfileMenu =
+  //         document.getElementById("toggleProfileMenu")
+  //       if (elementToggleProfileMenu !== null && elementToggleProfileMenu !== undefined) {
+  //         if (
+  //           !elementprofileMenuBox.contains(e.target) &&
+  //           !elementToggleProfileMenu.contains(e.target)
+  //         ) {
+  //           document
+  //             .getElementById("profileMenuBox")
+  //             .classList.remove("profileMenuActive")
+  //           document.querySelector("header div.backDrop-overlay").style.display =
+  //             "none"
+  //           document.querySelector("html").classList.remove("remove-scrolling")
+  //         }
+  //       }
+  //     })
+  //   }
+  // }
   //////////////////////////////////////////////////////// handleMobile Menu And SubMenu
   function handleMobileMenu() {
     let sideNavSub = document.querySelectorAll("div.optionHead-sideNav")
@@ -148,7 +151,7 @@ window.addEventListener("load", function () {
   function openProfileMenu() {
     const element = document.querySelector("#toggleProfileMenu")
     contentElement = document.querySelector("#profileMenuBox")
-    element.addEventListener("click", () => {
+    element?.addEventListener("click", () => {
       contentElement.classList.add("profileMenuActive")
       document.querySelector("header div.backDrop-overlay").style.display =
         "block"
@@ -158,7 +161,7 @@ window.addEventListener("load", function () {
 
   function closeProfileMenu() {
     const element = document.getElementById("closebtnProfileMenuMobile")
-    element.addEventListener("click", () => {
+    element?.addEventListener("click", () => {
       document
         .getElementById("profileMenuBox")
         .classList.remove("profileMenuActive")
@@ -219,6 +222,7 @@ window.addEventListener("load", function () {
   ///////////////////////////////////////////////////////////// End of Onload JavaScript Functions
   // window.changeInnerTag = changeInnerTag()
   userMenu()
+  // backDropOverlay()
   openProfileMenu()
   changeInnerTag()
   handleMobileMenu()
@@ -228,7 +232,7 @@ window.addEventListener("load", function () {
   closeProfileMenu()
 })
 
-jQuery(function ($) {
+jQuery(document).ready(function ($) {
   var add_to_cart = $("button.add-to-cart-plus")
   var plus = $("button.add-to-cart-plus")
   var minus = $("button.add-to-cart-minus")
@@ -314,7 +318,7 @@ jQuery(function ($) {
 window.addEventListener("load", function () {
   ///////////////////////////////////////////////////// Home Page Sliders
   function homePageSlider() {
-    // if (typeof Swiper !== "undefined" && typeof Swiper !== null) {
+     if (typeof Swiper !== "undefined" && typeof Swiper !== null) {
     const swiper = new Swiper("#bannerSwiper", {
       direction: "horizontal",
       slidesPerView: 1,
@@ -329,7 +333,7 @@ window.addEventListener("load", function () {
         prevEl: ".swiper-button-prev",
       },
     })
-    // }
+     }
   }
   function specialOffersCarousel() {
     if (typeof Swiper !== "undefined" && typeof Swiper !== null) {
@@ -430,8 +434,7 @@ window.addEventListener("load", function () {
   productsCarousel()
 })
 
-// $(document).ready(function () {
-jQuery(function ($) {
+jQuery(document).ready(function ($) {
   const sorts = $("div.sortItem-selected-mobile div")
   $("#seletedSortItemName").text(sorts.first().text().replace(/\s/g, ""))
   var selectedSortItem = ""
@@ -842,7 +845,7 @@ window.addEventListener("load", function () {
   closeSidenavSort()
 })
 
-jQuery(function ($) {
+jQuery(document).ready(function ($) {
   // $(document).ready(function () {
   // const selectedPropertyElement = $("div.selected-product-property")
   const selectedProperty = $("div.selected-product-property div")

@@ -805,10 +805,6 @@ video {
   height: 100px !important;
 }
 
-.\!h-\[40px\] {
-  height: 40px !important;
-}
-
 .\!h-full {
   height: 100% !important;
 }
@@ -2013,11 +2009,11 @@ img {
   background-repeat: no-repeat;
 }
 
-.blur-load.loaded > img {
+.blur-load.loaded>img {
   opacity: 1;
 }
 
-.blur-load > img {
+.blur-load>img {
   opacity: 0;
   transition: opacity 200ms ease-in-out;
 }
@@ -2258,7 +2254,7 @@ div.closebtn .mainOptionHead {
 
 /* ////////////////////////////////////////////////////////////////////  swiper Pagination  */
 
-.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-horizontal>.swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal,
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
@@ -2399,7 +2395,7 @@ header.desktop .desktopHeaderMenu {
   margin-left: 30px;
 } */
 
-header.desktop .desktopMenu ul li:hover > .subMenuBox {
+header.desktop .desktopMenu ul li:hover>.subMenuBox {
   visibility: visible;
   opacity: 1;
 }
@@ -2968,7 +2964,7 @@ footer.desktopFooter .footerBox li a:hover {
     font-weight: bold;
   }
 
-  .optionContainer-sideNav.open > .optionBody-sideNav {
+  .optionContainer-sideNav.open>.optionBody-sideNav {
     height: auto;
     max-height: 1000px;
     /* max-height: 100%; */
@@ -2977,7 +2973,7 @@ footer.desktopFooter .footerBox li a:hover {
     color: #9ca3af;
   }
 
-  .optionContainer-sideNav.open > .optionHead-sideNav .dropDown-icon svg {
+  .optionContainer-sideNav.open>.optionHead-sideNav .dropDown-icon svg {
     transform: rotate(180deg);
     transition: transform 0.15s ease-in;
     /* fill: #ed6866 !important; */
@@ -2985,12 +2981,12 @@ footer.desktopFooter .footerBox li a:hover {
     stroke-width: 2.2;
   }
 
-  .optionContainer-sideNav.open > .optionHead-sideNav span {
+  .optionContainer-sideNav.open>.optionHead-sideNav span {
     transition: transform 0.1s ease-in;
     color: #ed6866;
   }
 
-  .optionContainer-sideNav.open > .optionBody-sideNav {
+  .optionContainer-sideNav.open>.optionBody-sideNav {
     padding: 10px 0 6px 0;
   }
 }
@@ -3022,6 +3018,10 @@ footer.desktopFooter .footerBox li a:hover {
 }
 
 /* ///////////////////////////////////////////////////////  NopCommerce */
+
+.quick-view-button {
+  display: none !important;
+}
 
 .ui-widget-content {
   display: none !important;
@@ -3597,6 +3597,10 @@ footer.desktopFooter .footerBox li a:hover {
   margin: 15px !important;
 }
 
+.product-item {
+  position: relative;
+}
+
 /* .product-item .details .add-info-Price .buttons {
   display: none !important;
 } */
@@ -3616,6 +3620,7 @@ footer.desktopFooter .footerBox li a:hover {
 
 .item-box {
   width: 250px;
+  position: relative !important;
 }
 
 .privacy .enamad {
@@ -3659,6 +3664,63 @@ footer.desktopFooter .footerBox li a:hover {
 
 .required {
   color: var(--main-color) !important;
+}
+
+.table-wrapper {
+  border: 1px solid #d3d3d3;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.tier-prices .title {
+  padding-bottom: 25px;
+}
+
+.prices-row {
+  display: flex;
+  height: 36px;
+  align-items: center;
+}
+
+.item-quantity {
+  min-width: 120px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid lightgray;
+}
+
+.item-price {
+  min-width: 120px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+}
+
+.prices-row .field-header {
+  width: 120px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .prices-table .thead {
+  border-bottom: 1px solid #d3d3d3;
+} */
+
+.prices-table .tbody .field-header {
+  height: 36px;
+  border-top: 1px solid lightblue;
+}
+
+.thead .field-header .field-header {
+  height: 36px;
+  border-bottom: 1px solid #d3d3d3;
 }
 
 /* .spc-products .slick-next {
@@ -5110,163 +5172,8 @@ li {
   left: 1px;
 }
 
-/* This line can be removed it was just for display on CodePen: */
-
-.container {
-  margin-top: 125px;
-}
-
-.slider-labels {
-  margin-top: 10px;
-  direction: ltr !important;
-}
-
-/* Functional styling;
- * These styles are required for noUiSlider to function.
- * You don't need to change these rules to apply your design.
- */
-
-.noUi-target,
-.noUi-target * {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  -moz-user-select: none;
-  user-select: none;
-  box-sizing: border-box;
-}
-
-.noUi-target {
-  position: relative;
-  direction: ltr;
-}
-
-.noUi-base {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-  /* Fix 401 */
-}
-
-.noUi-origin {
-  position: absolute;
-  right: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.noUi-handle {
-  position: relative;
-  z-index: 1;
-}
-
-.noUi-stacking .noUi-handle {
-  /* This class is applied to the lower origin when
-   its values is > 50%. */
-  z-index: 10;
-}
-
-.noUi-state-tap .noUi-origin {
-  transition: left 0.3s, top 0.3s;
-}
-
-.noUi-state-drag * {
-  cursor: inherit !important;
-}
-
-/* Painting and performance;
- * Browsers can paint handles in their own layer.
- */
-
-.noUi-base,
-.noUi-handle {
-  transform: translate3d(0, 0, 0);
-}
-
-/* Slider size and handle placement;
- */
-
-.noUi-horizontal {
-  height: 4px;
-}
-
-.noUi-horizontal .noUi-handle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  left: -7px;
-  top: -7px;
-  background-color: #228be6;
-}
-
-/* Styling;
- */
-
-.noUi-background {
-  background: #d6d7d9;
-}
-
-/* #345dbb */
-
-.noUi-connect {
-  background: #228be6;
-  transition: background 450ms;
-}
-
-.noUi-origin {
-  border-radius: 2px;
-}
-
-.noUi-target {
-  border-radius: 2px;
-}
-
-.noUi-target.noUi-connect {
-}
-
-/* Handles and cursors;
- */
-
-.noUi-draggable {
-  cursor: w-resize;
-}
-
-.noUi-vertical .noUi-draggable {
-  cursor: n-resize;
-}
-
-.noUi-handle {
-  cursor: default;
-  box-sizing: content-box !important;
-}
-
-.noUi-handle:active {
-  border: 8px solid #345dbb;
-  border: 5px solid rgba(53, 93, 187, 0.38);
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  left: -14px;
-  top: -13px;
-  cursor: pointer;
-}
-
-/* Disabled state;
- */
-
-[disabled].noUi-connect,
-[disabled] .noUi-connect {
-  background: #b8b8b8;
-}
-
-[disabled].noUi-origin,
-[disabled] .noUi-handle {
-  cursor: not-allowed;
-}
-
-.first\:\!border-0:first-child {
-  border-width: 0 !important;
+.first\:border-0:first-child {
+  border-width: 0;
 }
 
 .last\:border-none:last-child {
