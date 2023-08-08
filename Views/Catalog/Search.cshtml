@@ -52,7 +52,7 @@
                             {
                                 <div class="inputs">
                                     <label asp-for="cid">@T("Search.Category"):</label>
-                                    <select asp-for="cid" asp-items="Model.AvailableCategories"></select>
+                                    <select class="js-example-basic-single" asp-for="cid" asp-items="Model.AvailableCategories"></select>
                                 </div>
                                 <div class="inputs reversed">
                                     <input asp-for="isc" />
@@ -63,14 +63,14 @@
                             {
                                 <div class="inputs">
                                     <label asp-for="mid">@T("Search.Manufacturer"):</label>
-                                    <select asp-for="mid" asp-items="Model.AvailableManufacturers"></select>
+                                    <select class="js-example-basic-single" asp-for="mid" asp-items="Model.AvailableManufacturers"></select>
                                 </div>
                             }
                             @if (Model.asv && Model.AvailableVendors.Count > 0)
                             {
                                 <div class="inputs">
                                     <label asp-for="vid">@T("Search.Vendor"):</label>
-                                    <select asp-for="vid" asp-items="Model.AvailableVendors"></select>
+                                    <select class="js-example-basic-single" asp-for="vid" asp-items="Model.AvailableVendors"></select>
                                 </div>
                             }
                             <div class="inputs reversed">

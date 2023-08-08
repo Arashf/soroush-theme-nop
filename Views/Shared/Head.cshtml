@@ -3,23 +3,26 @@
 @inject IWorkContext workContext
 
 @{
-    
-        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.rtl.css");
-         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.rtl.css");
-         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.rtl.css");
-        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/768.rtl.css");
-         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/480.rtl.css");
-         // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/mobile.rtl.css");
-        // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/tables.rtl.css");
-       // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/styles.rtl.css");
 
-        
-        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/main.css");
-         NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/output.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1600.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1280.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/1024.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/768.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/480.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/mobile.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/tables.rtl.css");
+    // NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/styles.rtl.css");
 
-        NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/font.css");
+
+    NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/main.css");
+    NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/output.css");
+
+
+     NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/select2.min.css");
+    NopHtml.AppendCssFileParts("~/Themes/Emporium/Content/css/font.css");
     <script src="~/Themes/Emporium/Content/scripts/temp.js" asp-location="Footer"></script>
-   
+    <script src="~/Themes/Emporium/Content/scripts/select2.min.js" asp-location="Footer"></script>
+
 
     @* var supportRtl = (await workContext.GetWorkingLanguageAsync()).Rtl;
     if (supportRtl)
@@ -62,7 +65,7 @@
     @* *@
     @* <script src="~/Themes/Emporium/Content/scripts/emporium.js" asp-location="Footer"></script> *@
 
-   /////////////////////////////////////////////////////////////////////// new Js
+    /////////////////////////////////////////////////////////////////////// new Js
     @* <script src="~/Themes/Emporium/Content/scripts/global.js" asp-location="Footer"></script> *@
 
  @*    <script> *@
@@ -104,7 +107,7 @@
  @*          $('.to', $selectedPriceRangeEl).html(to); *@
  @*      } *@
  @* </script> *@
-    
+
     <script type="module" crossorigin src="/assets/index.7cff7bb4.js"></script>
     <link rel="modulepreload" href="/assets/vendor.a63941c7.js"/>
     <link rel="stylesheet" href="/assets/index.55a3ba0a.css"/>

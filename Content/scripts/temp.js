@@ -1,3 +1,6 @@
+$(document).ready(function () {
+  $('.js-example-basic-single').select2();
+});
 ///////////////////////////////////////////////////******** */=======>  Onload JavaScript Functions
 window.addEventListener("load", function () {
   function scrollToTop() {
