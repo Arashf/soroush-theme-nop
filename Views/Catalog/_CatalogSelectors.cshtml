@@ -50,45 +50,45 @@
 
     @if (Model.AllowProductSorting)
     {
-        <div class="product-sorting">
-            <span>@T("Catalog.OrderBy")</span>
-            @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") })
-        </div>
-        <script asp-location="Footer">
-            $(document).ready(function () {
-                var $orderByEl = $('#products-orderby');
-                $orderByEl.on('change', function () {
-                    CatalogProducts.getProducts();
-                });
-
-                $(CatalogProducts).on('before', function (e) {
-                    e.payload.urlBuilder
-                        .addParameter('orderby', $orderByEl.val());
-                });
-            });
-        </script>
+        @* <div class="product-sorting"> *@
+        @*     <span>@T("Catalog.OrderBy")</span> *@
+        @*     @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") }) *@
+        @* </div> *@
+        @* <script asp-location="Footer"> *@
+        @*     $(document).ready(function () { *@
+        @*         var $orderByEl = $('#products-orderby'); *@
+        @*         $orderByEl.on('change', function () { *@
+        @*             CatalogProducts.getProducts(); *@
+        @*         }); *@
+        @* *@
+        @*         $(CatalogProducts).on('before', function (e) { *@
+        @*             e.payload.urlBuilder *@
+        @*                 .addParameter('orderby', $orderByEl.val()); *@
+        @*         }); *@
+        @*     }); *@
+        @* </script> *@
     }
 
     @if (Model.AllowCustomersToSelectPageSize)
     {
-        <div class="product-page-size">
-            <span>@T("Catalog.PageSize")</span>
-            @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { aria_label = T("Catalog.PageSize.Label") })
-            <span>@T("Catalog.PageSize.PerPage")</span>
-        </div>
-        <script asp-location="Footer">
-            $(document).ready(function () {
-                var $pageSizeEl = $('#products-pagesize');
-                $pageSizeEl.on('change', function () {
-                    CatalogProducts.getProducts();
-                });
-
-                $(CatalogProducts).on('before', function (e) {
-                    e.payload.urlBuilder
-                        .addParameter('pagesize', $pageSizeEl.val());
-                });
-            });
-        </script>
+        @* <div class="product-page-size"> *@
+        @*     <span>@T("Catalog.PageSize")</span> *@
+        @*     @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { aria_label = T("Catalog.PageSize.Label") }) *@
+        @*     <span>@T("Catalog.PageSize.PerPage")</span> *@
+        @* </div> *@
+        @* <script asp-location="Footer"> *@
+        @*     $(document).ready(function () { *@
+        @*         var $pageSizeEl = $('#products-pagesize'); *@
+        @*         $pageSizeEl.on('change', function () { *@
+        @*             CatalogProducts.getProducts(); *@
+        @*         }); *@
+        @* *@
+        @*         $(CatalogProducts).on('before', function (e) { *@
+        @*             e.payload.urlBuilder *@
+        @*                 .addParameter('pagesize', $pageSizeEl.val()); *@
+        @*         }); *@
+        @*     }); *@
+        @* </script> *@
     }
      <div id="opentogglefilter" class="filterToggle lg:hidden  w-[120px] justify-end" onclick="openFilternav()">
                     <svg class="fill-iconSecondary stroke-iconSecondary stroke-3" height="26px" width="26px"

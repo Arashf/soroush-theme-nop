@@ -662,9 +662,19 @@ video {
   margin-bottom: 0.25rem;
 }
 
+.my-\[10px\] {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .my-seperate {
   margin-top: 13px;
   margin-bottom: 13px;
+}
+
+.my-\[15px\] {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .-mt-\[60px\] {
@@ -719,6 +729,10 @@ video {
   margin-top: 80px;
 }
 
+.mt-\[15px\] {
+  margin-top: 15px;
+}
+
 .block {
   display: block;
 }
@@ -757,6 +771,10 @@ video {
 
 .h-\[15px\] {
   height: 15px;
+}
+
+.h-\[170px\] {
+  height: 170px;
 }
 
 .h-\[180px\] {
@@ -935,6 +953,10 @@ video {
   flex-wrap: wrap;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .items-end {
   align-items: flex-end;
 }
@@ -981,6 +1003,10 @@ video {
 
 .gap-5 {
   gap: 1.25rem;
+}
+
+.gap-\[17px\] {
+  gap: 17px;
 }
 
 .gap-\[2px\] {
@@ -1226,8 +1252,16 @@ video {
   padding: 0.75rem;
 }
 
+.p-\[15px\] {
+  padding: 15px;
+}
+
 .p-\[6px\] {
   padding: 6px;
+}
+
+.p-\[10px\] {
+  padding: 10px;
 }
 
 .px-1 {
@@ -1493,6 +1527,11 @@ video {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .filter {

@@ -2190,10 +2190,10 @@ input {
   direction: ltr !important;
 }
 
-html,
+/* html,
 body {
   scroll-behavior: smooth !important;
-}
+} */
 
 * {
   outline: unset;
@@ -3059,7 +3059,7 @@ footer.desktopFooter .footerBox li a:hover {
   width: 100%;
   background-color: var(--primary-color);
   color: white;
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
   display: flex;
   /* align-items: center; */
@@ -3069,22 +3069,32 @@ footer.desktopFooter .footerBox li a:hover {
 
 .bar-notification {
   /* left: calc(70% - 300px); */
-  /* position: absolute;
-  float: left;
-  left: 50%;
-  top: 50%; */
   /* transform: translate(-50%, -50%); */
-  position: fixed !important;
-  /* bottom: 80px !important; */
-  bottom: 130px !important;
-  left: 10px !important;
+  position: absolute !important;
+  margin-left: auto;
+  margin-right: auto;
+  top: 5rem;
+  left: 0;
+  right: 0;
   z-index: 999 !important;
   padding: 10px;
-  width: 300px;
-  background-color: #00d70070;
+  width: 600px;
   height: 45px;
-  border-radius: 11px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   text-align: center;
+}
+
+.bar-notification-container .success {
+  background-color: #4cb050;
+  color: white;
+  font-weight: 600;
+}
+
+.bar-notification-container .error {
+  background-color: #ec2b2b;
+  color: white;
+  font-weight: 600;
 }
 
 .content {
@@ -3447,6 +3457,10 @@ footer.desktopFooter .footerBox li a:hover {
   width: 96%;
 }
 
+.contact-us-form div.buttons {
+  width: 96% !important;
+}
+
 /* ///////////////////////////////////////÷ */
 
 .categoryItems h2 {
@@ -3461,6 +3475,7 @@ footer.desktopFooter .footerBox li a:hover {
 
 .pager ul {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 14px;
   font-size: 15px;
@@ -3519,6 +3534,11 @@ footer.desktopFooter .footerBox li a:hover {
   /* padding: 25px 10px; */
 }
 
+.product-content .product-content-details .short-description {
+  font-size: 15px !important;
+  line-height: 20px !important;
+}
+
 .product-name {
   display: flex;
   flex-direction: column;
@@ -3536,8 +3556,8 @@ footer.desktopFooter .footerBox li a:hover {
 .product-content-details {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 25px 10px;
+  gap: 10px;
+  padding: 0 10px;
 }
 
 .product-price-AddTocard {
@@ -3726,45 +3746,86 @@ footer.desktopFooter .footerBox li a:hover {
   border-bottom: 1px solid #d3d3d3;
 }
 
-.previous-page {
+/* //////////////////////////////////////////////// Pagination  */
+
+.pager ul li.first-page {
   border: 1px solid lightgray;
-  padding: 8px;
+  padding: 9px 0;
   border-radius: 6px;
 }
 
-.next-page {
+.pager ul li.first-page a {
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pager ul li.previous-page {
   border: 1px solid lightgray;
-  padding: 8px;
+  padding: 9px 0;
   border-radius: 6px;
 }
 
-.individual-page {
+.pager ul li.previous-page a {
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pager ul li.individual-page {
   border: 1px solid lightgray;
-  padding: 8px;
+  padding: 9px 2px;
   border-radius: 6px;
 }
 
-.current-page {
+.pager ul li.individual-page a {
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pager ul li.current-page {
   border: 1px solid lightgray;
-  padding: 8px;
+  padding: 9px 2px;
   border-radius: 6px;
   color: white;
-  background-color: #228be6;
+  background-color: var(--primary-color);
 }
 
-.last-page {
+.pager ul li.current-page span {
+  background-color: var(--primary-color) !important;
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pager ul li.next-page {
   border: 1px solid lightgray;
-  padding: 8px;
+  padding: 9px 0;
   border-radius: 6px;
 }
 
-.current-page span {
-  background-color: #228be6 !important;
+.pager ul li.next-page a {
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pager ul li.last-page {
+  border: 1px solid lightgray;
+  padding: 9px 0;
+  border-radius: 6px;
+}
+
+.pager ul li.last-page a {
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
 .products-container .products-wrapper .pager ul li:hover,
 .products-container .products-wrapper .pager ul li:hover {
-  background-color: #228be6 !important;
+  background-color: var(--primary-color) !important;
   color: white !important;
   cursor: pointer;
 }
@@ -3814,7 +3875,7 @@ input[type="checkbox"]:checked+label:before,
 .anywhere-slider .slick-arrow:hover,
 .theme-roller .open-button,
 .product-filters .ui-slider-range {
-  background-color: #228be6 !important;
+  background-color: var(--primary-color) !important;
 }
 
 /*/////////////////////////////////////////////////////////////////////////// Select2*/
@@ -3856,6 +3917,60 @@ input[type="checkbox"]:checked+label:before,
 
 .select2-container {
   width: 100%;
+}
+
+.select2-container--open .select2-dropdown--below {
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border: 1px solid #aaa;
+  border-radius: 10px !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  line-height: 22px !important;
+  font-size: 14px !important;
+  padding: 8px !important;
+  border-radius: 11px !important;
+  margin: 5px !important;
+  background-color: #2877ff !important;
+}
+
+.select2-results__option--selectable {
+  line-height: 22px !important;
+  font-size: 14px !important;
+  padding: 5px !important;
+  border-radius: 11px !important;
+  margin: 4px !important;
+}
+
+/* ///////////////////////////////////////////////////// Disable Overlay Loading */
+
+/* .spc-categories .loading-overlay,
+.spc-body .loading-overlay {
+  display: none !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, .8);
+} */
+
+/* ///////////////////////////////////////////////////// Disable FilterBox  */
+
+.stickyFilterBox {
+  display: none !important
+}
+
+.product-selectors {
+  display: none !important
 }
 
 /* .admin-header-links {
@@ -4207,6 +4322,7 @@ input[type="checkbox"]:checked+label:before,
   width: 24px !important;
   height: 24px !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .product-add-to-cart.active>button.addToCard-plus-category {
