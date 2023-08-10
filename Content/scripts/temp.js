@@ -1,6 +1,18 @@
 $(document).ready(function () {
   $('.js-example-basic-single').select2();
+  // if ($('.success').val() != undefined && $('.success').val() != null) {
+  //   $(".success")
+  //     .fadeIn()
+  //     .css({ right: 0, })
+  //     .animate({ left: 0 }, 1000, function () {
+  //       // $('#selector').delay(5000).fadeOut('slow');
+  //     });
+  //   //////////////////////////////////////
+  //   $(".success").fadeOut("slow");
+  // }
 });
+
+
 ///////////////////////////////////////////////////******** */=======>  Onload JavaScript Functions
 window.addEventListener("load", function () {
   function scrollToTop() {

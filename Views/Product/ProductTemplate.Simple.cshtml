@@ -103,12 +103,12 @@
                 <!--manufacturers-->
                 @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
             </div>
-            <div class="reviews-and-compare">
-                <!--product reviews-->
-                @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
-                <!--compare button-->
-                @await Html.PartialAsync("_CompareProductsButton", Model)
-            </div>
+            @* <div class="reviews-and-compare"> *@
+            @*     <!--product reviews--> *@
+            @*     @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview) *@
+            @*     <!--compare button--> *@
+            @*     @await Html.PartialAsync("_CompareProductsButton", Model) *@
+            @* </div> *@
             <!--short description-->
             @if (!string.IsNullOrEmpty(Model.ShortDescription))
             {

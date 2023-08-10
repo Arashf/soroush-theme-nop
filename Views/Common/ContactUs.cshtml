@@ -12,7 +12,7 @@
         <div class="page-title">
             <h1>@T("PageTitle.ContactUs")</h1>
         </div>
-        <div class="product-prices-box border-t-[1px] border-solid border-borderPrimary my-seperate"></div>
+        <div class="border-t-[1px] border-solid border-borderPrimary my-seperate"></div>
         <div class="page-body">
             @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "ContactUs" })
             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ContactUsTop, additionalData = Model })
