@@ -51,8 +51,11 @@
         AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart', localized_data);
     </script>
     <div class="overlayOffCanvas"></div>
+    
     @if (isHomePage)
     {
+        @* <div class="w-full h-[192px] topBlockHidden-mobile"></div> *@
+
         @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_main_slider" })
     }
     <div class="master-wrapper-content">

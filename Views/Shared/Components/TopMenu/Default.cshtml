@@ -2,8 +2,19 @@
 @using Nop.Core.Domain.Topics
 @using Category = Nop.Core.Domain.Catalog.Category
 @using DocumentFormat.OpenXml.Wordprocessing
+ <div class="desktopTopBanner">
+ <div id="topHeaderBanner">
+        <a href="https://soroush.app/club">
+            <picture>
+                <source media="(min-width: 768px)" srcSet="../Themes/Emporium/Content/img/banner/topBannerDesktop.JPG">
+                </source>
+                <source media="(max-width: 767px)" srcSet="../Themes/Emporium/Content/img/banner/topHeaderMobile.JPG">
+                </source>
+                <img src="../Themes/Emporium/Content/img/banner/topBannerDesktop.JPG" alt="soroush" loading="lazy"/>
+            </picture>
+        </a>
 
-
+    </div>
 <!-- ////////////////////////////////////////////////////  Mobile Header -->
 <header id="mobileHeader" class="mobile lg:hidden bg-white shadow-md">
 <div class="flex gap-1 w-full items-center justify-between p-[6px] h-[57px]">
@@ -553,7 +564,7 @@
                  @*        </div> *@
                 <div class="relative">
                     <div class="desktop-header-search">
-                            @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
+                        @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
                         @* <form class="relative" > *@
                         @*     <input type="text" placeholder="جستجو"  name="q"> *@
                         @*     <svg id="Layer_1" class="w-[20px] h-[20px] !fill-[#bbbbbb] !stroke-[#bbbbbb]" *@
@@ -720,3 +731,4 @@
         </div>
     </div>
 </header>
+ </div>

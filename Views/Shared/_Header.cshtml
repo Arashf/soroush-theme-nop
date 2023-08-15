@@ -11,19 +11,9 @@
 }
 
 <div class="header">
-    <div>
-        <a href="https://soroush.app/club">
-            <picture>
-                <source media="(min-width: 768px)" srcSet="../Themes/Emporium/Content/img/banner/topBannerDesktop.JPG">
-                </source>
-                <source media="(max-width: 767px)" srcSet="../Themes/Emporium/Content/img/banner/topHeaderMobile.JPG">
-                </source>
-                <img src="../Themes/Emporium/Content/img/banner/topBannerDesktop.JPG" alt="soroush" loading="lazy"/>
-            </picture>
-        </a>
-
-    </div>
+   
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderBefore })
+        <div class="w-full h-[192px] topBlockHidden-mobile"></div>
     <div class="header-upper">
         <div class="header-selectors-wrapper">
             @await Component.InvokeAsync("TaxTypeSelector")
@@ -32,9 +22,7 @@
             @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderSelectors })
         </div>
     </div>
-
-
-  @await Component.InvokeAsync("TopMenu")
     
-  @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderAfter })
+    @await Component.InvokeAsync("TopMenu")
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderAfter })
 </div>

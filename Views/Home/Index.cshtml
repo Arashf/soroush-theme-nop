@@ -21,7 +21,7 @@
     {
         NopHtml.AddMetaDescriptionParts(homepageDescription);
     }
-
+            
     //page class
     NopHtml.AppendPageCssClassParts("html-home-page");
 
@@ -116,7 +116,7 @@
                             rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
                     <!-- <div class="blur-load"
                               style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
-                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014179_450.png" alt="تصویر برای دسته  صبحانه" title="نمایش محصولات در دسته &nbsp;صبحانه" style="opacity: 1;"
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014179_-_450.png" alt="تصویر برای دسته  صبحانه" title="نمایش محصولات در دسته &nbsp;صبحانه" style="opacity: 1;"
                          loading="lazy"/>
                     <!-- </div> -->
                     <h2 class="text-center pb-3">
@@ -189,7 +189,7 @@
                                                                                                                                                                                                      rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
                     <!-- <div class="blur-load"
                               style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
-                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014332_-_450.png"
+                    <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014527_450.png"
                          alt="تصویر برای دسته &nbsp;مواد پروتئینی" title="نمایش محصولات در دسته &nbsp;مواد پروتئینی" style="opacity: 1;"
                          loading="lazy"/>
                     <!-- </div> -->
@@ -225,7 +225,7 @@
                         میوه و سبزیجات
                     </h2>
                 </a>
-                 @* /////////////////////////////////////////////////////////////// *@
+                @* /////////////////////////////////////////////////////////////// *@
                 <a href="/%D9%84%D9%88%D8%A7%D8%B2%D9%85-%D8%A2%D8%B1%D8%A7%DB%8C%D8%B4%DB%8C"
                    title="نمایش محصولات در دسته &nbsp;لوازم آرایشی " tabindex="0"
                    class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
@@ -239,7 +239,7 @@
                         لوازم آرایشی
                     </h2>
                 </a>
-                 @* /////////////////////////////////////////////////////////////// *@
+                @* /////////////////////////////////////////////////////////////// *@
                 <a href="/%D9%84%D9%88%D8%A7%D8%B2%D9%85-%D8%A8%D9%87%D8%AF%D8%A7%D8%B4%D8%AA%DB%8C"
                    title="نمایش محصولات در دسته &nbsp;لوازم بهداشتی" tabindex="0"
                    class="flex flex-col items-center bg-white h-[120px] w-[150px] lg:h-[140px] lg:w-[170px]                                                                                                                                                                                           rounded-2xl mb-[55px] transition-all duration-200 shadow-custom categoryItems">
@@ -262,26 +262,28 @@
                     <!-- <div class="blur-load"
                               style="background-image: url(../Content/img/categories/1-smaller.png);"> -->
                     <img class="-mt-[60px]" src="https://soroush.app/images/thumbs/001/0014386_-_450.png"
-                        alt="تصویر برای دسته &nbsp;مواد شوینده" title="نمایش محصولات در دسته &nbsp;مواد شوینده" style="opacity: 1;"
+                         alt="تصویر برای دسته &nbsp;مواد شوینده" title="نمایش محصولات در دسته &nbsp;مواد شوینده" style="opacity: 1;"
                          loading="lazy"/>
                     <!-- </div> -->
                     <h2 class="text-center pb-3">
-                       مواد شوینده
+                        مواد شوینده
                     </h2>
                 </a>
             </div>
         </div>
     </div>
 </section>
+
+
 @* ////////////////////////////////////////////////////////////////////////////////////////// *@
 @await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_info_boxes" })
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageTop })
 @await Component.InvokeAsync("TopicBlock", new { systemName = "HomepageText" })
-@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeCategories })
+@* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeCategories }) *@
 @await Component.InvokeAsync("HomepageCategories")
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeNews })
 @await Component.InvokeAsync("HomepageNews")
-@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforePoll })
+@* @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforePoll }) *@
 @await Component.InvokeAsync("HomepagePolls")
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBottom })
 @await Component.InvokeAsync("Widget", new { widgetZone = "emporium_home_page_sale_of_the_day" })

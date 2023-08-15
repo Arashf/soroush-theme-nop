@@ -44,143 +44,131 @@
  
 <div class="product-item" data-productid="@Model.Id">
   
-    <!-- ////////////////////////////////// AddToCard -->
-    @* <div class="product-add-to-cart"> *@
-    @*     <button class="addToCard-minus-category"> *@
-    @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
-    @*             <g> *@
-    @*                 <line stroke-width="3px" class="cls-1" x1="7" x2="25" y1="16" y2="16" /> *@
-    @*             </g> *@
-    @*         </svg> *@
-    @*     </button> *@
-    @*     <div id="addToCartCounter" class="add-to-cart-counter"></div> *@
-    @*     <button class="addToCard-plus-category"> *@
-    @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
-    @*             <g> *@
-    @*                 <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25" /> *@
-    @*                 <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16" /> *@
-    @*             </g> *@
-    @*         </svg> *@
-    @*     </button> *@
+<!-- ////////////////////////////////// AddToCard -->
+@* <div class="product-add-to-cart"> *@
+@*     <button class="addToCard-minus-category"> *@
+@*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+@*             <g> *@
+@*                 <line stroke-width="3px" class="cls-1" x1="7" x2="25" y1="16" y2="16" /> *@
+@*             </g> *@
+@*         </svg> *@
+@*     </button> *@
+@*     <div id="addToCartCounter" class="add-to-cart-counter"></div> *@
+@*     <button class="addToCard-plus-category"> *@
+@*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+@*             <g> *@
+@*                 <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25" /> *@
+@*                 <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16" /> *@
+@*             </g> *@
+@*         </svg> *@
+@*     </button> *@
+@* </div> *@
+<!-- //////////////////////////////////-->
+@* class="picture" *@
+
+
+@* style="background-image: url('{{@picture.ImageUrl}}');" *@
+<div class="rounded-tr-2xl rounded-tl-2xl">
+    <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))" title="@picture.Title">
+        <img class="rounded-tr-2xl rounded-tl-2xl h-[180px]" src="@picture.ImageUrl"
+             alt="@picture.AlternateText" title="@picture.Title" loading="lazy"/>
+    </a>
+
+    @* <div class="btn-wrapper"> *@
+    @*     @if (!Model.ProductPrice.DisableAddToCompareListButton) *@
+    @*     { *@
+    @*         <button type="button" title="@T("ShoppingCart.AddToCompareList")" class="button-2 add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;">@T("ShoppingCart.AddToCompareList")</button> *@
+    @*     } *@
+    @*     @if (!Model.ProductPrice.DisableWishlistButton) *@
+    @*     { *@
+    @*         <button type="button" title="@T("ShoppingCart.AddToWishlist")" class="button-2 add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">@T("ShoppingCart.AddToWishlist")</button> *@
+    @*     } *@
     @* </div> *@
-    <!-- //////////////////////////////////-->
-    @* class="picture" *@
-
-    <div class="rounded-tr-2xl rounded-tl-2xl"
-         style="background-image: url('{{@picture.ImageUrl}}');">
-        <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))" title="@picture.Title">
-            @if (viewComponentSelector.SelectComponent("LazyLoadImage") != null)
-            {
-                @await Component.InvokeAsync("LazyLoadImage", new (string Key, string Value)[]
-                       {
-                           ("src", picture.ImageUrl),
-                           ("alt", picture.AlternateText),
-                           ("title", picture.Title),
-                           ("class", "picture-img rounded-tr-2xl rounded-tl-2xl h-[140px] lg:h-[150px]")
-                       })
-            }
-            else
-            {
-                // class="picture-img"
-                <img class="rounded-tr-2xl rounded-tl-2xl h-[180px]" src="@picture.ImageUrl"
-                     alt="@picture.AlternateText" title="@picture.Title" loading="lazy"/>
-            }
-        </a>
-        @* <div class="btn-wrapper"> *@
-        @*     @if (!Model.ProductPrice.DisableAddToCompareListButton) *@
-        @*     { *@
-        @*         <button type="button" title="@T("ShoppingCart.AddToCompareList")" class="button-2 add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;">@T("ShoppingCart.AddToCompareList")</button> *@
-        @*     } *@
-        @*     @if (!Model.ProductPrice.DisableWishlistButton) *@
-        @*     { *@
-        @*         <button type="button" title="@T("ShoppingCart.AddToWishlist")" class="button-2 add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">@T("ShoppingCart.AddToWishlist")</button> *@
-        @*     } *@
-        @* </div> *@
+</div>
+<div class="details">
+    <div class="product-title-limited">
+        <h2 class="product-title">
+            <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))">@Model.Name</a>
+        </h2>
     </div>
-    <div class="details">
-        <div class="product-title-limited">
-            <h2 class="product-title">
-                <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))">@Model.Name</a>
-            </h2>
-            </div>
-        @if (catalogSettings.ShowSkuOnCatalogPages && !string.IsNullOrEmpty(Model.Sku))
-        {
-            <div class="sku">
-                @Model.Sku
-            </div>
-        }
-        @* @if (Model.ReviewOverviewModel.AllowCustomerReviews) *@
-        @* { *@
-        @*     var ratingPercent = 0; *@
-        @*     if (Model.ReviewOverviewModel.TotalReviews != 0) *@
-        @*     { *@
-        @*         ratingPercent = ((Model.ReviewOverviewModel.RatingSum*100)/Model.ReviewOverviewModel.TotalReviews)/5; *@
-        @*     } *@
-        @*     <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)"> *@
-        @*         <div class="rating"> *@
-        @*             <div style="width: @(ratingPercent)%"> *@
-        @*             </div> *@
-        @*         </div> *@
-        @*     </div> *@
-        @* } *@
+    @if (catalogSettings.ShowSkuOnCatalogPages && !string.IsNullOrEmpty(Model.Sku))
+    {
+        <div class="sku">
+            @Model.Sku
+        </div>
+    }
+    @* @if (Model.ReviewOverviewModel.AllowCustomerReviews) *@
+    @* { *@
+    @*     var ratingPercent = 0; *@
+    @*     if (Model.ReviewOverviewModel.TotalReviews != 0) *@
+    @*     { *@
+    @*         ratingPercent = ((Model.ReviewOverviewModel.RatingSum*100)/Model.ReviewOverviewModel.TotalReviews)/5; *@
+    @*     } *@
+    @*     <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)"> *@
+    @*         <div class="rating"> *@
+    @*             <div style="width: @(ratingPercent)%"> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
         
-        @* <div class="description"> *@
-        @*     @Html.Raw(Model.ShortDescription) *@
-        @* </div> *@
-        <div class="add-info add-info-Price">
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
-            @* prices *@
-            <div class="flex flex-col gap-1 px-3 pt-3" style="text-align: center">
-                @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+    @* <div class="description"> *@
+    @*     @Html.Raw(Model.ShortDescription) *@
+    @* </div> *@
+    <div class="add-info add-info-Price">
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
+        @* prices *@
+        <div class="flex flex-col gap-1 px-3 pt-3" style="text-align: center">
+            @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
                 
-                {
+            {
                     @* <span class="price old-price">@Model.ProductPrice.OldPrice</span> *@
-                }
+            }
                 
                 
-                @* <div> *@
-                @*     <span class="price old-price"> *@
-                @*         154,888 *@
-                @*     </span> *@
-                @*     <span class="text-textPrimary text-[9px] font-semibold"> *@
-                @*         تومان *@
-                @*     </span> *@
-                @* </div> *@
+            @* <div> *@
+            @*     <span class="price old-price"> *@
+            @*         154,888 *@
+            @*     </span> *@
+            @*     <span class="text-textPrimary text-[9px] font-semibold"> *@
+            @*         تومان *@
+            @*     </span> *@
+            @* </div> *@
                 
-                <span class="price actual-price">@String.Format("{0:N0}", Model.ProductPrice.PriceValue) 
-                    <span class="priceToman">@T("ProductBox.PriceToman")</span>
-                    </span>
-                @if (Model.ProductPrice.DisplayTaxShippingInfo)
-                {
-                    var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
-                    //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
-                    //of course, you can modify appropriate locales to include VAT info there
-                    <span class="tax-shipping-info">
-                        @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))
-                    </span>
-                }
-                @* <div> *@
-                @*     <span class="price old-price"> *@
-                @*         12,888 *@
-                @*     </span> *@
-                @*     <span class="text-textPrimary text-[9px] font-semibold"> *@
-                @*         تومان *@
-                @*     </span> *@
-                @* </div> *@
-                @if (!string.IsNullOrEmpty(Model.ProductPrice.BasePricePAngV))
-                {
-                    <div class="base-price-pangv">
-                        @Model.ProductPrice.BasePricePAngV
-                    </div>
-                }
-            </div>
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
-            <div class="buttons">
+            <span class="price actual-price">@String.Format("{0:N0}", Model.ProductPrice.PriceValue) 
+                <span class="priceToman">@T("ProductBox.PriceToman")</span>
+            </span>
+            @if (Model.ProductPrice.DisplayTaxShippingInfo)
+            {
+                var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
+                //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                //of course, you can modify appropriate locales to include VAT info there
+                <span class="tax-shipping-info">
+                    @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))
+                </span>
+            }
+            @* <div> *@
+            @*     <span class="price old-price"> *@
+            @*         12,888 *@
+            @*     </span> *@
+            @*     <span class="text-textPrimary text-[9px] font-semibold"> *@
+            @*         تومان *@
+            @*     </span> *@
+            @* </div> *@
+            @if (!string.IsNullOrEmpty(Model.ProductPrice.BasePricePAngV))
+            {
+                <div class="base-price-pangv">
+                    @Model.ProductPrice.BasePricePAngV
+                </div>
+            }
+        </div>
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
+        <div class="buttons">
 
-                <nop-antiforgery-token/>
-                @*<button type="button" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')">@T("Products.Details")</button>*@
-                @if (!Model.ProductPrice.DisableBuyButton)
-                {
+            <nop-antiforgery-token/>
+            @*<button type="button" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')">@T("Products.Details")</button>*@
+            @if (!Model.ProductPrice.DisableBuyButton)
+            {
                     @* <div class="product-add-to-cart"> *@
                     @*     <button class="addToCard-minus-category"> *@
                     @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
@@ -200,17 +188,17 @@
                     @*     </button> *@
                     @* </div> *@
 
-                    var addToCartText = T("ShoppingCart.AddToCart").Text;
-                    var data = "{\"addtocart_" + Model.Id + ".EnteredQuantity\": 1,\"AddProductReview.Title\": \"\",\"AddProductReview.ReviewText\":\"\",\"AddProductReview.Rating\": 5,\"FullName\": \"\",\"Email\": \"\",\"Email\": \"\",\"Enquiry\":\"\" }";
+                var addToCartText = T("ShoppingCart.AddToCart").Text;
+                var data = "{\"addtocart_" + Model.Id + ".EnteredQuantity\": 1,\"AddProductReview.Title\": \"\",\"AddProductReview.ReviewText\":\"\",\"AddProductReview.Rating\": 5,\"FullName\": \"\",\"Email\": \"\",\"Email\": \"\",\"Enquiry\":\"\" }";
 
-                    if (Model.ProductPrice.IsRental)
-                    {
-                        addToCartText = T("ShoppingCart.Rent").Text;
-                    }
-                    if (Model.ProductPrice.AvailableForPreOrder)
-                    {
-                        addToCartText = T("ShoppingCart.PreOrder").Text;
-                    }
+                if (Model.ProductPrice.IsRental)
+                {
+                    addToCartText = T("ShoppingCart.Rent").Text;
+                }
+                if (Model.ProductPrice.AvailableForPreOrder)
+                {
+                    addToCartText = T("ShoppingCart.PreOrder").Text;
+                }
                 @* <button type="button" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">@(addToCartText)</button> *@
                     @* <button class="button-2 add-to-cart-button" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
                     @*         onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;"> *@
@@ -226,23 +214,24 @@
                     @*         </span> *@
                     @*     </div> *@
                     @* </button> *@
-                    <div class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
-                            onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;">
-                        @* @addToCartText *@
-                        @* <div class="product-add-to-cart"> *@
-                            <span class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;">
-                                <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <g>
-                                        <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25"/>
-                                        <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16"/>
-                                    </g>
-                                </svg>
-                            </span>
-                        @* </div> *@
-                    </div>
-                }
-            </div>
-            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
+                <div  class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
+                     onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;">
+                    @* @addToCartText *@
+                    @* <div class="product-add-to-cart"> *@
+                    <span  class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;">
+                        <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25"/>
+                                <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16"/>
+                            </g>
+                        </svg>
+                    </span>
+                    @* </div> *@
+                </div>
+            }
         </div>
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
     </div>
 </div>
+</div>
+

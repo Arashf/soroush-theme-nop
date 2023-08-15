@@ -1,148 +1,435 @@
-﻿
-@model ProductDetailsModel.AddToCartModel
+﻿@model ProductDetailsModel.AddToCartModel
 @using Nop.Core.Domain.Orders
-@if (Model.UpdatedShoppingCartItemId > 0)
-{
-    <input asp-for="UpdatedShoppingCartItemId" type="hidden" />
+@{
+    var addtocartlink = Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart });
 }
-                  
- @if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
-{
-    @if (Model.CustomerEntersPrice)
-    {
 
-        <div class="customer-entered-price">
-            <div class="price-input">
-                <label asp-for="CustomerEnteredPrice" asp-postfix=":" class="enter-price-label"></label>
-                @*round price*@
-                <input asp-for="CustomerEnteredPrice" value="@Convert.ToInt32(Math.Ceiling(Model.CustomerEnteredPrice))" class="enter-price-input"/>
-            </div>
-            <div class="price-range">
-                @Model.CustomerEnteredPriceRange
-            </div>
-        </div>
-    }
-    @if (!string.IsNullOrEmpty(Model.MinimumQuantityNotification))
-    { 
-       <div class="min-qty-notification">@Model.MinimumQuantityNotification</div>
-    }
-    <div class="add-to-cart">
-        
+<div data-productid="@Model.ProductId">
+    <div>
+        <nop-antiforgery-token/>
         @if (!Model.DisableBuyButton)
         {
+            @* <input type="number" id="count"> *@
+            @* <div data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
+            @*      onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);"> *@
+            @*     <span> *@
+            @*         Test kharid *@
+            @*     </span> *@
+            @* </div> *@
 
-            <div class="add-to-cart-panel">
-
-                @* <label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label> *@
-                @if (Model.AllowedQuantities.Count > 0)
+            {
+                var addToCartText = "";
+                if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemType.HasValue && Model.UpdateShoppingCartItemType.Value == ShoppingCartType.ShoppingCart)
                 {
-                   
-                    <select asp-for="EnteredQuantity" asp-items="Model.AllowedQuantities" id="product_enteredQuantity_@Model.ProductId" class="qty-dropdown" aria-label=@T("Products.Qty.AriaLabel")></select>
-                    <script asp-location="Footer">
-                        $(document).ready(function () {
-                            $("#product_enteredQuantity_@Model.ProductId").on("change", function () {
-                                var data = {
-                                    productId: @Model.ProductId,
-                                    quantity: $('#product_enteredQuantity_@Model.ProductId').find(":selected").text()
-                                };
-                                $(document).trigger({ type: "product_quantity_changed", changedData: data });
-                            });
-                        });
-                    </script>
+                    addToCartText = T("ShoppingCart.AddToCart.Update").Text;
                 }
                 else
                 {
-                    @* <div class="add-to-cart-qty-wrapper"> *@
-                    @*     <input asp-for="EnteredQuantity" id="product_enteredQuantity_@Model.ProductId" class="qty-input" type="text" aria-label=@T("Products.Qty.AriaLabel")/> *@
-                    @*     <span class="plus">&#x69;</span> *@
-                    @*     <span class="minus">&#x68;</span> *@
-                    @* </div> *@
-                    @* <script asp-location="Footer"> *@
-                    @*     //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible) *@
-                    @*     $(document).ready(function() { *@
-                    @*         $("#@Html.IdFor(model => model.EnteredQuantity)").on("keydown", function(event) { *@
-                    @*             if (event.keyCode == 13) { *@
-                    @*                 $("#add-to-cart-button-@Model.ProductId").trigger("click"); *@
-                    @*                 return false; *@
-                    @*             } *@
-                    @*         }); *@
-                    @* *@
-                    @*         $("#product_enteredQuantity_@Model.ProductId").on("input propertychange paste", function () { *@
-                    @*             var data = { *@
-                    @*                 productId: @Model.ProductId, *@
-                    @*                 quantity: $('#product_enteredQuantity_@Model.ProductId').val() *@
-                    @*             }; *@
-                    @*             $(document).trigger({ type: "product_quantity_changed", changedData: data }); *@
-                    @*         }); *@
-                    @*     }); *@
-                    @* </script> *@
-                   
-                }
-                @{
-                    var addToCartText = "";
-                    if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemType.HasValue && Model.UpdateShoppingCartItemType.Value == ShoppingCartType.ShoppingCart)
+                    addToCartText = T("ShoppingCart.AddToCart").Text;
+                    if (Model.IsRental)
                     {
-                        addToCartText = T("ShoppingCart.AddToCart.Update").Text;
+                        addToCartText = T("ShoppingCart.Rent").Text;
                     }
-                    else
+                    if (Model.AvailableForPreOrder)
                     {
-                        addToCartText = T("ShoppingCart.AddToCart").Text;
-                        if (Model.IsRental)
-                        {
-                            addToCartText = T("ShoppingCart.Rent").Text;
-                        }
-                        if (Model.AvailableForPreOrder)
-                        {
-                            addToCartText = T("ShoppingCart.PreOrder").Text;
-                        }
+                        addToCartText = T("ShoppingCart.PreOrder").Text;
                     }
-                    <button type="button" id="add-to-cart-button-@Model.ProductId" class="button-1 add-to-cart-button" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.ProductId, shoppingCartTypeId = (int) ShoppingCartType.ShoppingCart})', '#product-details-form');return false;">@addToCartText</button>
-                    @* <form method="post" enctype="multipart/form-data" asp-controller="ShoppingCart"  asp-action="cart"> *@
-                    @*     <input name="itemquantity@(Model.ProductId)" id="itemquantity@(Model.ProductId)" type="text" value="1" class="qty-input" aria-label="@T("ShoppingCart.Quantity")" /> *@
-                    @*     <button type="submit" name="updatecart" id="updatecart" class="button-2 update-cart-button">minus</button> *@
-                    @* </form> *@
-                
-                @*     <script type="text/javascript"> *@
-                @*     var frm = $('#contactForm1'); *@
-                @* *@
-                @*     frm.submit(function (e) { *@
-                @*         e.preventDefault(); *@
-                @*         $.ajax({ *@
-                @*             type: frm.attr('post'), *@
-                @*             url: frm.attr('/cart'), *@
-                @*             data: frm.serialize(), *@
-                @*             success: function (data) { *@
-                @*                 console.log('Submission was successful.'); *@
-                @*                 console.log(data); *@
-                @*             }, *@
-                @*             error: function (data) { *@
-                @*                 console.log('An error occurred.'); *@
-                @*                 console.log(data); *@
-                @*             }, *@
-                @*         }); *@
-                @*     }); *@
-                @* </script>                                                                                                                                                                                                                                                                                                                                                                              *@
-
                 }
-               
-                
-              
-            </div>
-            if (!string.IsNullOrEmpty(Model.PreOrderAvailabilityStartDateTimeUserTime))
-            {
-                <div class="pre-order-availability-date">
-                    <label>@T("ShoppingCart.PreOrderAvailability"):</label>
-                    @Html.Raw(Model.PreOrderAvailabilityStartDateTimeUserTime)
+                <div class="purchaseBtn mt-3 w-full">
+                    <button class="h-[43px] addToCard-button" 
+                            data-productid="@Model.ProductId" 
+                            id="add-to-cart-button-@Model.ProductId"
+                                         onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);">
+                        @addToCartText
+                    </button>
+                    <div class="addToCard inVisibleElement">
+                        <button class="AddToCardProduct-status">
+                        </button>
+                        <div class="addToCard-counter" id="count"></div>
+                        <button class="addToCard-plus p-1" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId"
+                                onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);">
+                            <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
+                                 width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                <title/>
+                                <g id="plus">
+                                    <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
+                                    <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <input type="hidden" id="productId"/>
+                    <input type="hidden" id="productCount"/>
                 </div>
+
+                @* <input type="number" id="count"> *@
+                @* <div class="flex flex-col gap-[12px]"> *@
+                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
+                @*      onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId); "> *@
+                @*     <span> *@
+                @*         Add kharid *@
+                @*     </span> *@
+                @* </div> *@
+                @* *@
+                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
+                @*      onclick="updateCartAjax( @Model.ProductId);"> *@
+                @*     <span> *@
+                @*         Update kharid *@
+                @*     </span> *@
+                @* </div> *@
+                @* *@
+                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
+                @*      onclick="deleteItemCartAjax(@Model.ProductId);"> *@
+                @*     <span> *@
+                @*         Delete kharid *@
+                @*     </span> *@
+                @* </div> *@
+                @* </div> *@
             }
         }
-        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsAddInfo, additionalData = Model })
+        else
+        {
+            <div class="outOfStock">
+                کالا موجود نیست
+            </div>
+              @* @Model.CustomerEntersPrice *@
+        }
     </div>
+</div>
+
+<script asp-location="Footer">
+async function getCartData () {
+  try {
+    let response = await $.ajax({
+      url: window.location.origin + '/api/ShoppingCart',
+      type: 'GET',
+    })
+            var cartItems = response.Items
+            // var productAvailable = false
+            var cartCount = response.Count
+            if (cartItems.length !== 0){
+                      cartItems.map((childs) => {
+                                  if (childs.ProductId === @Model.ProductId) {
+                                      // productAvailable = true
+                                       console.log('UpdateCount')
+                                      
+                                        document.getElementById("productId").value= @Model.ProductId; 
+                                        document.getElementById("productCount").value= childs.Quantity; 
+                                        document.getElementById("count").innerHTML= childs.Quantity; 
+                                        
+                                         document.getElementById("cartQuentity").textContent = cartCount     
+                                                                         
+                                        addTocart() 
+                                      
+                                  } 
+                                });
+            } 
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+    // Code to run after the AJAX request is complete, regardless of success or failure
+    // this.setLoadWaiting(false);
+  }
+}              
+getCartData()
+/////////////////////////////////////////////////////////////////// /productAddToCartAjax
+async function  productAddToCartAjax  (url, productId){  
+        // if (this.loadWaiting) {
+        //     return;
+        // }
+        // this.setLoadWaiting(true);
+    
+        // let count = document.getElementById("count").value;
+        
+        let data = {
+            ProductId: productId,
+            EnteredQuantity: 1,
+            Title: "",
+            ReviewText: "",
+            Rating: 5,
+            FullName: "",
+            Email: "",
+            Enquiry: ""
+        };
+        
+        addAntiForgeryToken(data);
+        try {
+            let response = await $.ajax({
+                url: url,
+                type: "POST",
+                data: data
+            })
+            console.log('AddedProductToCart')
+            getCartData()
+              
+        } catch (error) {
+            console.log('error',error)
+        } finally {
+        }
+    }
+  
+    
+const updateCartAjax = async (productId) => {
+
+  let count = parseInt(document.getElementById('count').value)
+
+  let data = {
+    cartItemId: productId,
+    cartItemQuantity: count,
+  };
+  
+  data = JSON.stringify(data);
+
+  addAntiForgeryToken(data)
+
+  try {
+    let response = await $.ajax({
+      url:
+        window.location.origin + '/RealOnePageCheckout/UpdateShoppingCartItem',
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      type: 'POST',
+      data: data,
+      success: function(result) {
+              // Handle success here
+          },
+          error: function(xhr, status, error) {
+              // Handle errors here
+          }
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
 }
-else
-{
-    <div class="outOfStock">
-        کالا موجود نیست
-    </div>
-    @* @Model.CustomerEntersPrice *@
+const deleteItemCartAjax = async (productId) => {
+   
+  // if (this.loadWaiting) {
+  //   return
+  // }
+  // this.setLoadWaiting(true);
+
+
+  let data = {
+    cartItemId: productId
+  }
+
+  addAntiForgeryToken(data)
+
+  data = JSON.stringify(data);
+
+  try {
+    let response = await $.ajax({
+      url: window.location.origin + '/RealOnePageCheckout/UpdateShoppingCartItem',
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      type: 'POST',
+      data: data,
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
 }
+
+
+const getShoppingCartItems = async () => {
+  try {
+    let response = await $.ajax({
+      url: window.location.origin + '/RealOnePageCheckout/GetShoppingCartItems',
+      type: 'GET',
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
+}
+const getOrderTotals = async () => {
+  try {
+    let response = await $.ajax({
+      url: window.location.origin + '/RealOnePageCheckout/GetOrderTotals',
+      type: 'GET',
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
+}
+const deleteShoppingCartItem = async () => {
+  let data = {
+    cartItemId: productId,
+  }
+  
+  addAntiForgeryToken(data)
+  
+  try {
+    let response = await $.ajax({
+      url:
+        window.location.origin + '/RealOnePageCheckout/DeleteShoppingCartItem',
+      type: 'POST',
+      data: data,
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
+}
+const getCheckoutData = async () => {
+  try {
+    let response = await $.ajax({
+      url: window.location.origin + '/RealOnePageCheckout/GetCheckoutData',
+      type: 'GET',
+    })
+
+    console.log('Success:', response)
+    // Success code here
+  } catch (error) {
+    console.log('Error:', error)
+    // Error handling code here
+  } finally {
+    console.log('AJAX request complete')
+
+    // Code to run after the AJAX request is complete, regardless of success or failure
+
+    // this.setLoadWaiting(false);
+  }
+}  
+
+
+// ##{***************************************************} ///////////////////////
+// ##{************} //////////////////////////////////// AddToCart Main Btn
+
+  var add_to_cart = $("div.purchaseBtn")
+  var add_to_cartBtn = $("button.addToCard-button")
+  var AddToCardProduct_status = $("button.AddToCardProduct-status")
+  var addToCard_plus = $("button.addToCard-plus")
+  /////////////////////////////////////////////////// AddToCard-button
+
+  function addTocart() {
+    // e.preventDefault()
+    var productCount = document.getElementById("productCount").value
+    if (parseInt(productCount) === 1){
+    $(add_to_cartBtn).addClass("inVisibleElement")
+    $("div.addToCard").removeClass("inVisibleElement")
+    $(add_to_cart).find("button.AddToCardProduct-status").css("padding", "12px")
+      var counterBox = $(add_to_cart).children().find(".addToCard-counter")
+         var counterBox_value = parseInt(productCount)
+          ? parseInt(productCount)
+          : 0  
+           $(counterBox).html(counterBox_value)
+    $(AddToCardProduct_status).append(`<span class="trash-icon"></span>`)
+    } else if (parseInt(productCount) > 1) {
+            $(add_to_cartBtn).addClass("inVisibleElement")
+            $("div.addToCard").removeClass("inVisibleElement")
+            $(add_to_cart).find("button.AddToCardProduct-status").css("padding", "12px")
+            addToCardPlus()
+            //   var counterBox = $(add_to_cart).children().find(".addToCard-counter")
+            //     var counterBox_value = parseInt($(counterBox).html())
+            //       ? parseInt($(counterBox).html())
+            //       : 0  
+            //       $(counterBox).html(counterBox_value + 1)
+            //    $(AddToCardProduct_status).append(`<span class="trash-icon"></span>`)
+    }
+  }
+
+  ////////////////////////////////////////////////////////// AddToCardProduct_status
+  function AddToCardProductStatus(){
+    var counterBox = $(add_to_cart).children().find(".addToCard-counter")
+        var counterBox_value = parseInt($(counterBox).html())
+        $(counterBox).html(counterBox_value - 1)
+        counterBox_value = parseInt($(counterBox).html())
+        console.log("counterBox_value", counterBox_value)
+        if (counterBox_value < 1) {
+          $(add_to_cartBtn).removeClass("inVisibleElement")
+          $("div.addToCard").addClass("inVisibleElement")
+          counterBox_value = 0
+          $(counterBox).html(counterBox_value)
+          $("button.AddToCardProduct-status").html(``)
+        } else if (counterBox_value === 1) {
+          $("button.AddToCardProduct-status").html(
+            `<span class="trash-icon"></span>`
+          )
+          $(add_to_cart)
+            .find("button.AddToCardProduct-status")
+            .css("padding", "12px")
+        }
+    }
+  ////////////////////////////////////////////////////// AddToCard-plus
+   function addToCardPlus(){
+     var productCount = document.getElementById("productCount").value
+    var counterBox = $(add_to_cart).children().find(".addToCard-counter")
+        // var counterBox_value = parseInt($(productCount).html())
+        //   ? parseInt(productCount)
+        //   : 0
+          // $(counterBox).html(counterBox_value + 1)
+        var counterBox_value = parseInt($(counterBox).html())  
+        console.log("addToCardPlus_CounterBox", counterBox_value)
+        if (counterBox_value === 1) {
+          $("button.AddToCardProduct-status").html(
+            `   <span class="trash-icon"></span>`
+          )
+        } else if (counterBox_value > 1) {
+          $("button.AddToCardProduct-status").html(`
+          <svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px"
+                                            viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z"
+                                                fill="currentColor" />
+                                        </svg>
+          `)
+          $(add_to_cart)
+            .find("button.AddToCardProduct-status")
+            .css("padding", "7px")
+        }
+  }
+</script>
+
+@* //////////////////////////////////////////////////////////////// *@

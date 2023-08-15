@@ -841,6 +841,10 @@ video {
   height: 180px;
 }
 
+.h-\[200px\] {
+  height: 200px;
+}
+
 .h-\[20px\] {
   height: 20px;
 }
@@ -879,6 +883,10 @@ video {
 
 .h-\[43px\] {
   height: 43px;
+}
+
+.h-\[46px\] {
+  height: 46px;
 }
 
 .h-\[50px\] {
@@ -1938,7 +1946,7 @@ video {
 body,
 html {
   max-width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   /* background-color: #f7fafe; */
   background-color: #fff;
   font-family: IRANSansX !important;
@@ -2312,6 +2320,8 @@ div.closebtn .mainOptionHead {
 
 /*Dekstop Header*/
 
+/* ////////////////////////////////////////////////////////////// Query Desktop */
+
 @media (max-width: 899px) {
   ul.breadcrumb li a {
     text-decoration: none;
@@ -2325,7 +2335,13 @@ div.closebtn .mainOptionHead {
   .header-links-desktop {
     display: none !important;
   }
+
+  .topBlockHidden-mobile {
+    display: none;
+  }
 }
+
+/* ////////////////////////////////////////////////////////////// Query Mobile */
 
 @media (min-width: 900px) {
   ul.breadcrumb li a {
@@ -2340,6 +2356,27 @@ div.closebtn .mainOptionHead {
   .header-links-mobile {
     display: none !important;
   }
+
+  .desktopTopBanner {
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    top: 0;
+  }
+
+  #topHeaderBanner {
+    transition-duration: .3s;
+    height: auto;
+    max-height: unset;
+    opacity: 1;
+  }
+
+  #topHeaderBanner.headerBanner {
+    height: 0;
+    max-height: 0;
+    transition-duration: .1s;
+    opacity: 0;
+  }
 }
 
 .desktopMenu-logo {
@@ -2351,16 +2388,6 @@ div.closebtn .mainOptionHead {
 }
 
 /* ///////////////////////////////////////////////////////  Header And Footer */
-
-.stickyHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  transition: top 0.3s;
-  /* transition: 0.32s; */
-}
 
 /* .desktopHeaderMenuBox {
   transition: all 0.5s ease !important;
@@ -2382,6 +2409,26 @@ div.closebtn .mainOptionHead {
 } */
 
 /* //////////////////////////////////////// Header Desktop SubMenu Items */
+
+.stickyHeader {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  top: 0;
+  transition: top 0.6s ease-out;
+  /* animation: stickyHeader 0.6s ease-in-out; */
+}
+
+/* @keyframes stickyHeader {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+} */
 
 header.desktop .cta a {
   margin-right: 20px;
@@ -2428,7 +2475,7 @@ header.desktop .desktopMenu li .subMenuBox {
   padding: 20px;
   border-radius: 0 0 20px 20px;
   box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.1);
-  z-index: 999;
+  z-index: 9999;
 }
 
 .container {
@@ -2527,7 +2574,7 @@ header.desktop .headerCtaMenu li svg {
 
 .desktop-header-search input {
   border: none;
-  padding: 10px 34px;
+  padding: 10px 20px;
   font-size: 13px;
   max-width: 100%;
   min-width: 400px;
@@ -2536,20 +2583,25 @@ header.desktop .headerCtaMenu li svg {
   transition-duration: 0.3s;
 }
 
-.desktop-header-search svg {
+.desktop-header-search button {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 10px;
-  right: 10px;
-  direction: rtl;
+  width: 50px;
+  height: 34px;
+  top: 3px;
+  left: 3px;
+  background-color: white;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
 }
 
 /* //////////////////////////////////////// SearchBox mobile */
 
 .mobile-header-search input {
   border: none;
-  padding: 10px 34px;
+  padding: 10px 14px;
   font-size: 13px;
   width: 100%;
   max-width: 100%;
@@ -2559,13 +2611,18 @@ header.desktop .headerCtaMenu li svg {
   transition-duration: 0.3s;
 }
 
-.mobile-header-search svg {
+.mobile-header-search button {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 10px;
-  right: 10px;
-  direction: rtl;
+  width: 35px;
+  height: 34px;
+  top: 3px;
+  left: 3px;
+  background-color: white;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
 }
 
 /* .desktop-header-search input:focus{
@@ -2778,13 +2835,18 @@ footer.desktopFooter .footerBox li a:hover {
   }
 
   header.desktop {
-    display: block !important;
+    display: block;
     width: 100%;
     background-color: #fff;
     margin-bottom: 2px;
     padding: 25px 0 10px 0;
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.1);
   }
+
+  /* .fixedHeader {
+    position: relative;
+    transition: relative 0.5s ease-in-out;
+  } */
 }
 
 /* //////////////////////////////////////////////// Media Query Mobile */
@@ -3158,7 +3220,7 @@ footer.desktopFooter .footerBox li a:hover {
     position: fixed;
     z-index: 400;
     max-width: 27.5rem;
-    top: 10rem;
+    top: 13rem;
     right: 1rem;
   }
 }
@@ -3622,6 +3684,10 @@ footer.desktopFooter .footerBox li a:hover {
   margin: 40px 15px 20px;
 }
 
+.search-results .products-container .products-wrapper .pager {
+  width: 100%;
+}
+
 .pager ul {
   display: flex;
   flex-wrap: wrap;
@@ -3692,6 +3758,7 @@ footer.desktopFooter .footerBox li a:hover {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  line-height: 35px;
 }
 
 .manufacturers {
@@ -3730,11 +3797,12 @@ footer.desktopFooter .footerBox li a:hover {
 }
 
 .add-to-cart-panel button {
-  width: 120px;
+  /* width: 120px; */
+  /* width: 39px; */
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 5px;
-  color: white;
+  /* color: white; */
   font-size: 13px;
   font-weight: 600;
   height: 41px;
@@ -4190,6 +4258,10 @@ input[type="checkbox"]:checked+label:before,
   color: #5d616f;
   text-align: right;
   line-height: 25px;
+}
+
+.ropc .section .title {
+  background-color: #e7e7e7 !important;
 }
 
 /* .admin-header-links {
