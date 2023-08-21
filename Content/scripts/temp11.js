@@ -266,18 +266,18 @@ window.addEventListener("scroll", function () {
     }
   }
 
-  // function topHeaderBoxMobile() {
-  //   const mobileHeader = document.getElementById("mobileHeader")
-  //   if (mobileHeader) {
-  //     var currentScrollPos = window.pageYOffset
-  //     var firstScrollPos = 150
-  //     if (currentScrollPos < firstScrollPos) {
-  //       mobileHeader.classList.remove("stickyHeader")
-  //     } else {
-  //       mobileHeader.classList.add("stickyHeader")
-  //     }
-  //   }
-  // }
+  function topHeaderBoxMobile() {
+    const mobileHeader = document.getElementById("mobileHeader")
+    if (mobileHeader) {
+      var currentScrollPos = window.pageYOffset
+      var firstScrollPos = 150
+      if (currentScrollPos < firstScrollPos) {
+        mobileHeader.classList.remove("stickyHeader")
+      } else {
+        mobileHeader.classList.add("stickyHeader")
+      }
+    }
+  }
 
   function stopScrolling() {
     var subMenuLi = document.querySelectorAll(".desktopMenu ul .subMenu")
@@ -295,7 +295,7 @@ window.addEventListener("scroll", function () {
   }
 
   topHeaderBoxDesktop()
-  // topHeaderBoxMobile()
+  topHeaderBoxMobile()
   stopScrolling()
 
 })

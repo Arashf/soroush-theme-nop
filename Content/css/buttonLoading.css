@@ -1,0 +1,57 @@
+.action-btn {
+    /*background-color: #FF7F00;*/
+    /*border: none;*/
+    /*font-size: 20px;*/
+    /*font-weight: 600;*/
+    text-transform: uppercase;
+    /*padding: 0.5em 1.25em;*/
+    /*color: white;*/
+    /*border-radius: 0.15em;*/
+    transition: 0.3s;
+    /*cursor: pointer;*/
+    position: relative;
+    /*display: block;*/
+}
+
+/*.action-btn:hover {*/
+/*    background-color: #ff6600;*/
+/*}*/
+
+.action-btn:focus {
+    outline: 0.05em dashed #ff6600;
+    outline-offset: 0.05em;
+}
+
+.action-btn::after {
+    content: '';
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    left: calc(50% - 0.75em);
+    top: calc(50% - 0.75em);
+    border: 0.15em solid transparent;
+    border-right-color: #6141ff;
+    border-radius: 50%;
+    animation: button-anim 0.7s linear infinite;
+    opacity: 0;
+}
+
+@keyframes button-anim {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.action-btn.loading {
+    color: transparent;
+}
+
+.action-btn.loading::after {
+    opacity: 1;
+}
+
+/* em values are used to adjust button values such as padding, radius etc. based on font-size */

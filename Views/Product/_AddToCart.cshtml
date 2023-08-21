@@ -9,13 +9,6 @@
         <nop-antiforgery-token/>
         @if (!Model.DisableBuyButton)
         {
-            @* <input type="number" id="count"> *@
-            @* <div data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
-            @*      onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);"> *@
-            @*     <span> *@
-            @*         Test kharid *@
-            @*     </span> *@
-            @* </div> *@
 
             {
                 var addToCartText = "";
@@ -36,18 +29,15 @@
                     }
                 }
                 <div class="purchaseBtn mt-3 w-full">
-                    <button class="h-[43px] addToCard-button" 
-                            data-productid="@Model.ProductId" 
+                    <button class="h-[43px] addToCard-button"
+                            data-productid="@Model.ProductId"
                             id="add-to-cart-button-@Model.ProductId"
-                                         onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);">
+                            onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId)">
                         @addToCartText
                     </button>
                     <div class="addToCard inVisibleElement">
-                        <button class="AddToCardProduct-status">
-                        </button>
-                        <div class="addToCard-counter" id="count"></div>
                         <button class="addToCard-plus p-1" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId"
-                                onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId);">
+                                onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId);">
                             <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
                                  width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                 <title/>
@@ -57,34 +47,18 @@
                                 </g>
                             </svg>
                         </button>
+
+
+                        <div class="addToCard-counter" id="count"></div>
+                        <button class="AddToCardProduct-status" data-productid="@Model.ProductId"
+                                id="add-to-cart-button-@Model.ProductId" onclick="CartManager.updateCartItem(@Model.ProductId);">
+                        </button>
                     </div>
+                    <input type="hidden" id="cartId"/>
                     <input type="hidden" id="productId"/>
                     <input type="hidden" id="productCount"/>
-                </div>
 
-                @* <input type="number" id="count"> *@
-                @* <div class="flex flex-col gap-[12px]"> *@
-                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
-                @*      onclick="productAddToCartAjax('@addtocartlink', @Model.ProductId); "> *@
-                @*     <span> *@
-                @*         Add kharid *@
-                @*     </span> *@
-                @* </div> *@
-                @* *@
-                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
-                @*      onclick="updateCartAjax( @Model.ProductId);"> *@
-                @*     <span> *@
-                @*         Update kharid *@
-                @*     </span> *@
-                @* </div> *@
-                @* *@
-                @* <div class="p-3" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId" *@
-                @*      onclick="deleteItemCartAjax(@Model.ProductId);"> *@
-                @*     <span> *@
-                @*         Delete kharid *@
-                @*     </span> *@
-                @* </div> *@
-                @* </div> *@
+                </div>
             }
         }
         else
@@ -98,338 +72,425 @@
 </div>
 
 <script asp-location="Footer">
-async function getCartData () {
-  try {
-    let response = await $.ajax({
-      url: window.location.origin + '/api/ShoppingCart',
-      type: 'GET',
-    })
-            var cartItems = response.Items
-            // var productAvailable = false
-            var cartCount = response.Count
-            if (cartItems.length !== 0){
-                      cartItems.map((childs) => {
-                                  if (childs.ProductId === @Model.ProductId) {
-                                      // productAvailable = true
-                                       console.log('UpdateCount')
-                                      
-                                        document.getElementById("productId").value= @Model.ProductId; 
-                                        document.getElementById("productCount").value= childs.Quantity; 
-                                        document.getElementById("count").innerHTML= childs.Quantity; 
-                                        
-                                         document.getElementById("cartQuentity").textContent = cartCount     
-                                                                         
-                                        addTocart() 
-                                      
-                                  } 
-                                });
-            } 
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-    // Code to run after the AJAX request is complete, regardless of success or failure
-    // this.setLoadWaiting(false);
-  }
-}              
-getCartData()
-/////////////////////////////////////////////////////////////////// /productAddToCartAjax
-async function  productAddToCartAjax  (url, productId){  
-        // if (this.loadWaiting) {
-        //     return;
-        // }
-        // this.setLoadWaiting(true);
-    
-        // let count = document.getElementById("count").value;
-        
-        let data = {
-            ProductId: productId,
-            EnteredQuantity: 1,
-            Title: "",
-            ReviewText: "",
-            Rating: 5,
-            FullName: "",
-            Email: "",
-            Enquiry: ""
-        };
-        
-        addAntiForgeryToken(data);
-        try {
-            let response = await $.ajax({
-                url: url,
-                type: "POST",
-                data: data
-            })
-            console.log('AddedProductToCart')
-            getCartData()
-              
-        } catch (error) {
-            console.log('error',error)
-        } finally {
-        }
-    }
-  
-    
-const updateCartAjax = async (productId) => {
+'use strict'
 
-  let count = parseInt(document.getElementById('count').value)
+const HTTP_METHODS = { POST: 'POST', GET: 'GET' }
+const PRODUCT_ATTRIBUTES = { 
+    EnteredQuantity: 1,
+    Title: '',
+    ReviewText: '', 
+    Rating: 5,
+    FullName: '',
+    Email: '',
+    Enquiry: ''
+}
 
-  let data = {
-    cartItemId: productId,
-    cartItemQuantity: count,
-  };
-  
-  data = JSON.stringify(data);
-
-  addAntiForgeryToken(data)
-
-  try {
-    let response = await $.ajax({
-      url:
-        window.location.origin + '/RealOnePageCheckout/UpdateShoppingCartItem',
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      type: 'POST',
-      data: data,
-      success: function(result) {
-              // Handle success here
-          },
-          error: function(xhr, status, error) {
-              // Handle errors here
-          }
-    })
-
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
+class ErrorHandler {
+  static logAndThrow(error, message = 'Error') {
+    console.error(`${message}:`, error)
+    throw error
   }
 }
-const deleteItemCartAjax = async (productId) => {
+
+class RequestHandler {
+  static buildHeaders(method) {
+    const contentTypes = {
+      [HTTP_METHODS.POST]: 'application/json',
+    }
+    return { 'Content-Type': contentTypes[method] }
+  }
+
+  static generateRequestOptions(method, data) {
+    const headers = this.buildHeaders(method);
+    const body = data ? JSON.stringify(data) : null;
+    return { method, headers, body };
+  }
+
+  static async requestContentFrom(url, method, data = null) {
+    const options = this.generateRequestOptions(method, data);
+    try {
+      const response = await fetch(url, options);
+      if (method === 'GET'){
+             return response.json();
+       } else{
+             return response
+       }
+    } catch (error) {
+      ErrorHandler.logAndThrow(error, 'Fetch Error');
+    }
+  }
+}
+
+class Util {
+  static getIdValue(id) {
+      if (document.getElementById(id).value){      
+                return parseInt(document.getElementById(id).value)
+      }
+  }
+
+  static checkSubProductFlag() {
+    return !!document.getElementById("product_attribute_3")?.value
+  }
+}
+
+class DOMManager {
+  static getElementById(id) {
+    return document.getElementById(id);
+  }
+
+  static getElementsBySelector(selector) {
+    return document.querySelectorAll(selector);
+  }
+
+  static addClass(element, className) {
+    element.classList.add(className);
+  }
+
+  static removeClass(element, className) {
+    element.classList.remove(className);
+  }
+
+  static setElementPadding(element, padding) {
+    element.style.padding = padding;
+  }
+
+  static setElementInnerText(element, text) {
+    element.innerText = text;
+  }
+
+  static setElementInnerHTML(element, html) {
+    element.innerHTML = html;
+  }
+}
+
+class CartManager {
+  static getAttributeProperty = () => {
+        if (childs.AttributeInfo !== ''){
+                        const getElementId = document.getElementById('attributeId').value
+                      const element = document.getElementById(`attributename-${getElementId}`).innerText
+                           console.log(childs.AttributeInfo)
+                           let vazn = "وزن: " + element.replace(' ','')
+                           console.log(vazn)
+                       if (childs.AttributeInfo === vazn){
+                               
+                       }   
+                    }
+      }
+      
+  static productAddToCartAsync = async (url, productId) => {
+      const addToCartBox = document.getElementById("addToCartBox");
+      
+     let boxAttributeId = document.getElementById('boxAttributeId')
+     let boxWayofChopAttrId = document.getElementById('boxChoppingAttributeId')
+     
+      let attributeId = document.getElementById("attributeId")
+      let attrValue = document.getElementById("attrValue")
+       
+       let wayofChopAttrId = document.getElementById("attributeIdWayCh")
+       
+       
+          let productData = ''
+          let boxAttributeIdString = null
+          let boxWayofChopAttrIdString = null
+          let attributeIdInt = 0   
+          let wayofChopAttrIdInt = 0 
+          let attrValueInt = null
+             
+         if (boxAttributeId !== null || boxWayofChopAttrId !== null){  
+           if (attributeId !== null && attrValue !== null){
+                 attrValueInt =  attrValue.value
+                 attributeIdInt = parseInt(attributeId.value)
+              }
+            if (wayofChopAttrId !== null){
+                 wayofChopAttrIdInt = parseInt(wayofChopAttrId.value)
+                 boxWayofChopAttrIdString = boxWayofChopAttrId.value
+             }
+                 boxAttributeIdString = boxAttributeId.value
+                 
+           } 
+           
+           if (attributeIdInt === 0 && attrValueInt === null){
+               productData = {
+                     ProductId: productId,
+                     ...PRODUCT_ATTRIBUTES,
+                     }                     
+                   }
+                   else{
+                         productData = {
+                           [`product_attribute_${boxAttributeIdString}`] : attributeIdInt,
+                            [`addtocart_${productId}.EnteredQuantity`] : 1,
+                            'EnteredQuantity' : 1,
+                             ...PRODUCT_ATTRIBUTES,
+                                 }
+                             }
+                           if (wayofChopAttrIdInt !== 0) {
+                                productData = {...productData,
+                             [`product_attribute_${boxWayofChopAttrIdString}`] : wayofChopAttrIdInt,
+                                   }
+                       }
+     
+     addAntiForgeryToken(productData)
+     await $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: productData
+                });
+     
+     // let response =  await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, productData)
    
-  // if (this.loadWaiting) {
-  //   return
-  // }
-  // this.setLoadWaiting(true);
-
-
-  let data = {
-    cartItemId: productId
+     await this.getUpdatedCartData()
+    
   }
 
-  addAntiForgeryToken(data)
-
-  data = JSON.stringify(data);
-
-  try {
-    let response = await $.ajax({
-      url: window.location.origin + '/RealOnePageCheckout/UpdateShoppingCartItem',
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      type: 'POST',
-      data: data,
-    })
-
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
+  static updateCartItem = async (productId) => {
+    const counts = parseInt(document.getElementById("productCount").value)
+    const idCart =parseInt(document.getElementById("cartId").value)
+    let attrValue = document.getElementById("attrValueId")
+    let attributeId = document.getElementById("attributeId")
+    let cartContents = ''
+    let attributeIdInt = 0    
+    let attrValueInt = 0
+    
+    
+    if (attributeId !== null && attrValue !== null){
+       console.log("attributeId !== null && attrValue !== null")    
+       attrValueInt =  parseInt(attrValue.value)
+       attributeIdInt = parseInt(attributeId.value)
+       console.log("End If")
+    }
+    
+    
+    if (counts > 1){
+        if (attributeIdInt === 0 && attrValueInt === 0){
+            cartContents =  [
+                            {key:`addtocart_${productId}.EnteredQuantity`, value:counts -1},
+                            {key:`itemquantity${idCart}`, value:counts -1},
+                            {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
+                          ]
+                          console.log("attributeIdInt !== 0 && attrValueInt !== 0")
+        }
+        else{
+            cartContents =  [
+                {key:`product_attribute_${productId}_3_${attributeId}`, value:attributeId},
+                {key:`itemquantity${idCart}`, value:counts -1},
+                {key:`addtocart_${productId}.EnteredQuantity`, value:counts},
+                {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
+              ]
+              console.log("else for Attribute Data")
+          }
+    }
+    else {
+        cartContents =  [
+            { value: 0, key: "itemquantity1" },
+            { value: `${idCart}`, key: "removefromcart" }
+          ]
+           document.getElementById("productCount").value= 0; 
+    }
+    
+    await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
+    await this.getUpdatedCartData()
+    // let response = await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
+    // console.log('update_Button: ',response)
+    await ButtonsManager.UpdateCard()
   }
-}
 
-
-const getShoppingCartItems = async () => {
-  try {
-    let response = await $.ajax({
-      url: window.location.origin + '/RealOnePageCheckout/GetShoppingCartItems',
-      type: 'GET',
-    })
-
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
-  }
-}
-const getOrderTotals = async () => {
-  try {
-    let response = await $.ajax({
-      url: window.location.origin + '/RealOnePageCheckout/GetOrderTotals',
-      type: 'GET',
-    })
-
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
-  }
-}
-const deleteShoppingCartItem = async () => {
-  let data = {
-    cartItemId: productId,
+  static changePriceByAttribute = async (productId, attributeId,attributeValue) => {
+    let data ={
+        [`product_attribute_${attributeId}`]: attributeValue,
+        [`addtocart_${productId}.EnteredQuantity`]: 1,
+        "AddProductReview.Title": '',
+        "AddProductReview.ReviewText": '' ,
+        "AddProductReview.Rating": 5
+    }
+    addAntiForgeryToken(data);
+    try {
+      const fullUrl = `${window.location.origin}/shoppingcart/productdetails_attributechange?productId=${productId}&validateAttributeConditions=False&loadPicture=True`;
+      let response = await $.ajax({
+                          url: fullUrl,
+                          type: "POST",
+                          data: data
+                      });
+       const productPriceId = document.getElementById(`price-value-${productId}`)
+       productPriceId.innerHTML = response.price
+       
+    } catch (error) {
+      ErrorHandler.logAndThrow(error, 'Fetch Error');
+    } finally {
+      console.log("AJAX request complete");
+      this.getUpdatedCartData()
+    }
   }
   
-  addAntiForgeryToken(data)
-  
-  try {
-    let response = await $.ajax({
-      url:
-        window.location.origin + '/RealOnePageCheckout/DeleteShoppingCartItem',
-      type: 'POST',
-      data: data,
-    })
+  static getUpdatedCartData = async () => {
+    // return await RequestHandler.requestContentFrom('/api/ShoppingCart', HTTP_METHODS.GET)
+    
+    let addtoCartCounter = document.getElementById('productCount')
+    let productMaxQuantity = 0
+   let response =  await RequestHandler.requestContentFrom('/api/ShoppingCart', HTTP_METHODS.GET)
+     let cartItems = response.Items
+                // var productAvailable = false
+                let cartCount = response.Count
+                if (cartItems.length !== 0){
+                    let find = false
+                          cartItems.map((childs) => {
+                                      if (childs.ProductId === @Model.ProductId) {
+                                          productMaxQuantity = childs.AllowedQuantities.length
+                                           if (childs.AttributeInfo !== ''){
+                                               /////////////////////////////////////// WayOfChop
+                                                let result = childs.AttributeInfo.includes("<br />");
+                                                   if (result){
+                                                               let fields = childs.AttributeInfo.split('<br />');
+                                                               let weightAmount = fields[0];
+                                                               let chopMethod = fields[1];
+                                                // console.log('weightAmount',weightAmount)
+                                                // console.log('chopMethod',chopMethod)
+                                                               
+                                               /////////////////////////////////////////////////// weightAmount 
+                                                    const getElementId = document.getElementById('attributeId').value
+                                                            const element = document.getElementById(`attributename-${getElementId}`).innerText
+                                                             // console.log('element',element)
+                                                             //   console.log('weightAmount',weightAmount)
+                                                                        let vazn = "وزن:" + element.replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','')
+                                                                        let vazn1 = weightAmount.replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','')
+                                                                         // console.log('vazn',vazn)
+                                                                   // console.log('vazn1',vazn1)
+                                                                    if (vazn1 === vazn){
+                                                                         console.log('Same Weight')
+                                                                          let wayofChop = chopMethod.split(':');
+                                                                          let chopAttrId = document.getElementById('attributeIdWayCh').value
+                                                                         let chopAttrIdElement = document.getElementById(`chopAttrId-${chopAttrId}`).innerText
+                                                                             let chopMethodAttr = wayofChop[1].replace(' ','')        
+                                                                             let chopMethodAttr1 = chopAttrIdElement
+                                                                              
+                                                                         console.log('chopMethodAttr',chopMethodAttr)
+                                                                         console.log('chopMethodAttr1',chopMethodAttr1)
+                                                                             
+                                                                                  if (chopMethodAttr === chopMethodAttr1){
+                                                                                           document.getElementById('cartId').value = childs.Id
+                                                                                        document.getElementById("productId").value= @Model.ProductId; 
+                                                                                        document.getElementById("productCount").value= childs.Quantity; 
+                                                                                        document.getElementById("count").innerHTML= childs.Quantity; 
+                                                                                        find = true
+                                                                                  }
+                                                                       
+                                                                     } 
+                                                    
+                                                     }
+                                                   ///////////////////////////////////////////////////////////////
+                                                 ///////////////////////////////////////////////
+                                                 else {
+                                                           const getElementId = document.getElementById('attributeId').value
+                                                         const element = document.getElementById(`attributename-${getElementId}`).innerText
+                                                              let vazn = "وزن:" + element.replace(' ','').replace(' ','')
+                                                              let vazn1 = childs.AttributeInfo.replace(' ','').replace(' ','')
+                                                          if (vazn1 === vazn){
+                                                               console.log('Same Weight')
+                                                               document.getElementById('cartId').value = childs.Id
+                                                               document.getElementById("productId").value= @Model.ProductId; 
+                                                               document.getElementById("productCount").value= childs.Quantity; 
+                                                               document.getElementById("count").innerHTML= childs.Quantity; 
+                                                               find = true
+                                                          }    
+                                                          }
+                                                         }
+                                           else {
+                                          console.log('Without Any Attribute')
+                                          find = true
+                                                 document.getElementById('cartId').value = childs.Id
+                                                 document.getElementById("productId").value= @Model.ProductId; 
+                                                 document.getElementById("productCount").value= childs.Quantity; 
+                                                 document.getElementById("count").innerHTML= childs.Quantity;        
+                                             }  
+                                      } 
+                                    });
+                                              if (!find) {
+                                                   document.getElementById("productCount").value= 0; 
+                                                   document.getElementById("count").innerHTML= 0;     
+                                                            }
+                               }
+                            // ButtonsManager.productAddToCartStyle();
+                            ButtonsManager.productAddToCartStyle();
+                 ////////////////////////////////////////////////////////////// Disable AddToACartPlusBtn / Over MaxQuantity 
+                if (productMaxQuantity === parseInt(addtoCartCounter.value)){
+                    document.querySelector(".addToCard-plus").disabled = true;
+                    const svgTag = document.querySelectorAll(".cls-1")
+                    svgTag.forEach((element)=>{
+                        element.classList.add('disableAddToCartPlus')
+                    }) 
+                }else if (productMaxQuantity !== parseInt(addtoCartCounter.value)){
+                     document.querySelector(".addToCard-plus").disabled = false;
+                         const svgTag = document.querySelectorAll(".cls-1")
+                         svgTag.forEach((element)=>{
+                         element.classList.remove('disableAddToCartPlus')
+                       }) 
+                  }
+  }
 
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
+  static updateCartItems = async (url, cartContents) => {
+    return await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, cartContents)
   }
 }
-const getCheckoutData = async () => {
-  try {
-    let response = await $.ajax({
-      url: window.location.origin + '/RealOnePageCheckout/GetCheckoutData',
-      type: 'GET',
-    })
-
-    console.log('Success:', response)
-    // Success code here
-  } catch (error) {
-    console.log('Error:', error)
-    // Error handling code here
-  } finally {
-    console.log('AJAX request complete')
-
-    // Code to run after the AJAX request is complete, regardless of success or failure
-
-    // this.setLoadWaiting(false);
-  }
-}  
 
 
-// ##{***************************************************} ///////////////////////
-// ##{************} //////////////////////////////////// AddToCart Main Btn
-
-  var add_to_cart = $("div.purchaseBtn")
-  var add_to_cartBtn = $("button.addToCard-button")
-  var AddToCardProduct_status = $("button.AddToCardProduct-status")
-  var addToCard_plus = $("button.addToCard-plus")
-  /////////////////////////////////////////////////// AddToCard-button
-
-  function addTocart() {
-    // e.preventDefault()
-    var productCount = document.getElementById("productCount").value
-    if (parseInt(productCount) === 1){
-    $(add_to_cartBtn).addClass("inVisibleElement")
-    $("div.addToCard").removeClass("inVisibleElement")
-    $(add_to_cart).find("button.AddToCardProduct-status").css("padding", "12px")
-      var counterBox = $(add_to_cart).children().find(".addToCard-counter")
-         var counterBox_value = parseInt(productCount)
-          ? parseInt(productCount)
-          : 0  
-           $(counterBox).html(counterBox_value)
-    $(AddToCardProduct_status).append(`<span class="trash-icon"></span>`)
-    } else if (parseInt(productCount) > 1) {
-            $(add_to_cartBtn).addClass("inVisibleElement")
-            $("div.addToCard").removeClass("inVisibleElement")
-            $(add_to_cart).find("button.AddToCardProduct-status").css("padding", "12px")
-            addToCardPlus()
-            //   var counterBox = $(add_to_cart).children().find(".addToCard-counter")
-            //     var counterBox_value = parseInt($(counterBox).html())
-            //       ? parseInt($(counterBox).html())
-            //       : 0  
-            //       $(counterBox).html(counterBox_value + 1)
-            //    $(AddToCardProduct_status).append(`<span class="trash-icon"></span>`)
+class ButtonsManager {
+  static productAddToCartStyle = function () {
+      let productCount = 0
+      if (Util.getIdValue("productCount") === null ||  Util.getIdValue("productCount") === undefined ){
+            productCount = 0
+      } else {
+                productCount = Util.getIdValue("productCount")
+          }
+    if (productCount < 1) {
+      document.querySelector('.addToCard-button').classList.remove('inVisibleElement')
+      Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+        node.classList.add('inVisibleElement')
+      })
+      DOMManager.setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
+      let counterBox = document.querySelector(".addToCard-counter");
+      DOMManager.setElementInnerText(counterBox,productCount ? productCount : 0)
+       // document.querySelector(".AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>'
+    } else if (productCount >= 1) {
+      document.querySelector('.addToCard-button').classList.add('inVisibleElement')
+      Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+        node.classList.remove('inVisibleElement')
+      })
+      DOMManager.setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
+           ButtonsManager.addToCardPlus()
     }
   }
 
-  ////////////////////////////////////////////////////////// AddToCardProduct_status
-  function AddToCardProductStatus(){
-    var counterBox = $(add_to_cart).children().find(".addToCard-counter")
-        var counterBox_value = parseInt($(counterBox).html())
-        $(counterBox).html(counterBox_value - 1)
-        counterBox_value = parseInt($(counterBox).html())
-        console.log("counterBox_value", counterBox_value)
-        if (counterBox_value < 1) {
-          $(add_to_cartBtn).removeClass("inVisibleElement")
-          $("div.addToCard").addClass("inVisibleElement")
-          counterBox_value = 0
-          $(counterBox).html(counterBox_value)
-          $("button.AddToCardProduct-status").html(``)
-        } else if (counterBox_value === 1) {
-          $("button.AddToCardProduct-status").html(
-            `<span class="trash-icon"></span>`
-          )
-          $(add_to_cart)
-            .find("button.AddToCardProduct-status")
-            .css("padding", "12px")
-        }
+  static UpdateCard = function () {
+    let productCount = Util.getIdValue("productCount")
+     let counterBox = document.querySelector(".addToCard-counter");
+         counterBox.innerHTML = productCount
+     let counterBox_value = productCount;
+    if (counterBox_value < 1) {
+      document.querySelector('.addToCard-button').classList.remove('inVisibleElement');
+      Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+        node.classList.add('inVisibleElement');
+      });
+      counterBox_value = 0;
+      counterBox.innerText = counterBox_value;
+      document.querySelector("button.AddToCardProduct-status").innerHTML = '';
+    } else if (counterBox_value === 1) {
+      document.querySelector("button.AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>';
+      document.querySelector("button.AddToCardProduct-status").style.padding = "12px";
     }
-  ////////////////////////////////////////////////////// AddToCard-plus
-   function addToCardPlus(){
-     var productCount = document.getElementById("productCount").value
-    var counterBox = $(add_to_cart).children().find(".addToCard-counter")
-        // var counterBox_value = parseInt($(productCount).html())
-        //   ? parseInt(productCount)
-        //   : 0
-          // $(counterBox).html(counterBox_value + 1)
-        var counterBox_value = parseInt($(counterBox).html())  
-        console.log("addToCardPlus_CounterBox", counterBox_value)
-        if (counterBox_value === 1) {
-          $("button.AddToCardProduct-status").html(
-            `   <span class="trash-icon"></span>`
-          )
-        } else if (counterBox_value > 1) {
-          $("button.AddToCardProduct-status").html(`
-          <svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px"
-                                            viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z"
-                                                fill="currentColor" />
-                                        </svg>
-          `)
-          $(add_to_cart)
-            .find("button.AddToCardProduct-status")
-            .css("padding", "7px")
-        }
   }
+
+  static addToCardPlus = function () {
+    let counterBox = document.querySelector(".addToCard-counter");
+    let counterBox_value = parseInt(counterBox.innerText);
+
+    if (counterBox_value === 1) {
+      document.querySelector("button.AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>';
+    } else if (counterBox_value > 1) {
+      document.querySelector("button.AddToCardProduct-status").innerHTML = '<svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z" fill="currentColor" /></svg>'
+      document.querySelector("button.AddToCardProduct-status").style.padding = "7px";
+    }
+  }
+}
+
+CartManager.getUpdatedCartData()
+
 </script>
-
-@* //////////////////////////////////////////////////////////////// *@

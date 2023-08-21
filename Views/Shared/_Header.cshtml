@@ -13,7 +13,9 @@
 <div class="header">
    
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderBefore })
-        <div class="w-full h-[192px] topBlockHidden-mobile"></div>
+    <div class="w-full h-[192px] topBlockHidden-desktop"></div>
+        <div class="w-full h-[116px] topBlockHidden-mobile"></div>
+    
     <div class="header-upper">
         <div class="header-selectors-wrapper">
             @await Component.InvokeAsync("TaxTypeSelector")
