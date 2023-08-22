@@ -2179,7 +2179,8 @@ table {
 :root {
   --main-color: #f30235;
   --primary-color: #2877ff;
-  --second-color: #3a3f4fdc;
+  --secondary-color: #19bfd3;
+  --basic-color: #3a3f4fdc;
   --border-color: #e2e2e2;
 }
 
@@ -2504,7 +2505,7 @@ header.desktop .desktopMenu li .subMenuBox {
 } */
 
 header.desktop .desktopMenu ul li a {
-  color: var(--second-color);
+  color: var(--basic-color);
   font-size: 13px;
   line-height: 40px;
 }
@@ -2516,12 +2517,12 @@ header.desktop .desktopMenu ul li ul li a {
 }
 
 header.desktop .desktopMenu ul li a:hover {
-  color: var(--second-color);
+  color: var(--basic-color);
 }
 
 header.desktop .desktopMenu ul li a.subMenuTitle {
   font-weight: 600;
-  color: var(--second-color);
+  color: var(--basic-color);
   font-size: 15px;
   /* border-right: 2px solid var(--main-color); */
   padding-right: 5px;
@@ -2563,7 +2564,7 @@ header.desktop .desktopMenu ul li a.subMenuTitle::after {
 
 header.desktop .headerCtaMenu a {
   font-size: 13px;
-  color: var(--second-color);
+  color: var(--basic-color);
 }
 
 header.desktop .headerCtaMenu li {
@@ -2684,7 +2685,7 @@ footer.desktopFooter .footerBox li:last-child {
 footer.desktopFooter .footerBox li a {
   font-size: 15px;
   line-height: 30px;
-  color: var(--second-color);
+  color: var(--basic-color);
   transition-duration: 0.3s;
 }
 
@@ -2710,7 +2711,7 @@ footer.desktopFooter .footerBox li a:hover {
   border-radius: 100px 0 0 100px;
   width: 80px;
   height: 40px;
-  background-color: var(--second-color);
+  background-color: var(--basic-color);
   color: #fff;
 }
 
@@ -3766,11 +3767,11 @@ footer.desktopFooter .footerBox li a:hover {
 }
 
 .manufacturers {
-  color: #19bfd3;
+  color: var(--secondary-color);
 }
 
 .manufacturers label {
-  color: #19bfd3 !important;
+  color: var(--secondary-color) !important;
 }
 
 .product-content-details {
@@ -3923,7 +3924,7 @@ footer.desktopFooter .footerBox li a:hover {
 
 .prices-row {
   display: flex;
-  height: 33px;
+  height: 36px;
   align-items: center;
 }
 
@@ -3961,9 +3962,6 @@ footer.desktopFooter .footerBox li a:hover {
 .prices-table .tbody .field-header {
   height: 36px;
   border-top: 1px solid var(--border-color);
-}
-.prices-table{
-  font-size: 14px !important;
 }
 
 .thead .field-header .field-header {
@@ -4288,6 +4286,25 @@ svg .cls-1 {
   stroke-width: 2px !important;
 }
 
+.cartNavbarActive {
+  left: 0 !important;
+}
+
+/* /////////////////////////////////////////////// Cart SideNav */
+
+.cart-sideNav {
+  width: 350px;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: -400px;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: .5s;
+}
+
 /* .admin-header-links {
   display: flex;
   align-items: center;
@@ -4438,9 +4455,7 @@ svg .cls-1 {
   box-shadow: 0 0 11px -1px rgb(33 33 33 / 30%);
   background-color: rgb(255, 255, 255);
   --tw-translate-y: -0.25rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-  rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-  scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 /* ///////////////////////////////////////////////////  sepecial Offers */
@@ -4491,7 +4506,7 @@ svg .cls-1 {
 
 .product-add-to-cart.active {
   justify-content: space-between;
-  background-color: var(--second-color);
+  background-color: var(--basic-color);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -4502,7 +4517,7 @@ svg .cls-1 {
 .product-add-to-cart button {
   border: none;
   border-radius: 100px;
-  color: var(--second-color);
+  color: var(--basic-color);
   padding: 0;
   background-color: transparent;
   display: flex;
@@ -4526,7 +4541,7 @@ svg .cls-1 {
   display: none;
 }
 
-.product-add-to-cart.active > button.add-to-cart-minus {
+.product-add-to-cart.active>button.add-to-cart-minus {
   display: flex;
   background-color: transparent;
 }
@@ -4538,7 +4553,7 @@ svg .cls-1 {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-.product-add-to-cart.active > button.add-to-cart-plus {
+.product-add-to-cart.active>button.add-to-cart-plus {
   background-color: transparent;
   box-shadow: none;
 }
@@ -4592,7 +4607,7 @@ svg .cls-1 {
 
 .product-add-to-cart.active {
   justify-content: space-between;
-  background-color: var(--second-color);
+  background-color: var(--basic-color);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -4603,7 +4618,7 @@ svg .cls-1 {
 .product-add-to-cart button {
   border: none;
   border-radius: 100px;
-  color: var(--second-color);
+  color: var(--basic-color);
   padding: 0;
   background-color: transparent;
   display: flex;
@@ -5264,6 +5279,15 @@ li {
   border: 3px solid #228be6;
 } */
 
+:root {
+  --main-color: #f30235;
+  --primary-color: #2877ff;
+  --secondary-color: #19bfd3;
+  --secondaryAct-color: #197ed3;
+  --basic-color: #3a3f4fdc;
+  --border-color: #e2e2e2;
+}
+
 .productOffers {
   /* display: block; */
   transition: all 0.2s;
@@ -5274,11 +5298,19 @@ li {
 }
 
 .activeProduct-property {
-  border: 2px solid #19bfd3;
+  border: 2px solid var(--secondary-color);
 }
 
 .activeProduct-property-child {
-  border: 1px solid #19bfd3;
+  border: 1px solid var(--secondary-color);
+}
+
+.activeProduct-property-chopping {
+  border: 2px solid var(--secondaryAct-color);
+}
+
+.activeProduct-property-chopping-child {
+  border: 1px solid var(--secondaryAct-color);
 }
 
 .visibleSeleted-property {
@@ -5567,7 +5599,7 @@ li {
 
 .product-add-to-cart.active {
   justify-content: space-between;
-  background-color: var(--second-color);
+  background-color: var(--basic-color);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -5578,7 +5610,7 @@ li {
 .product-add-to-cart button {
   border: none;
   border-radius: 100px;
-  color: var(--second-color);
+  color: var(--basic-color);
   padding: 0;
   background-color: transparent;
   display: flex;
@@ -5602,7 +5634,7 @@ li {
   display: none;
 }
 
-.product-add-to-cart.active > button.addToCard-minus-recomm {
+.product-add-to-cart.active>button.addToCard-minus-recomm {
   display: flex;
   background-color: transparent;
 }
@@ -5614,7 +5646,7 @@ li {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-.product-add-to-cart.active > button.addToCard-plus-recomm {
+.product-add-to-cart.active>button.addToCard-plus-recomm {
   background-color: transparent;
   box-shadow: none;
 }

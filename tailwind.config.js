@@ -43,8 +43,9 @@ module.exports = {
         height: "height",
       },
       colors: {
-        primary: "#f30235",
+        primary: "#11296d",
         secondary: "#19bfd3",
+        secondaryAct: "#197ed3",
         // bgPrimary: "",
         bgSecondary: "#f7f7f8",
         textPrimary: "#1a2448",

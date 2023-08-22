@@ -168,9 +168,7 @@ class CartManager {
         if (childs.AttributeInfo !== ''){
                         const getElementId = document.getElementById('attributeId').value
                       const element = document.getElementById(`attributename-${getElementId}`).innerText
-                           console.log(childs.AttributeInfo)
                            let vazn = "وزن: " + element.replace(' ','')
-                           console.log(vazn)
                        if (childs.AttributeInfo === vazn){
                                
                        }   
@@ -253,10 +251,8 @@ class CartManager {
     
     
     if (attributeId !== null && attrValue !== null){
-       console.log("attributeId !== null && attrValue !== null")    
        attrValueInt =  parseInt(attrValue.value)
        attributeIdInt = parseInt(attributeId.value)
-       console.log("End If")
     }
     
     
@@ -267,7 +263,6 @@ class CartManager {
                             {key:`itemquantity${idCart}`, value:counts -1},
                             {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
                           ]
-                          console.log("attributeIdInt !== 0 && attrValueInt !== 0")
         }
         else{
             cartContents =  [
@@ -276,7 +271,6 @@ class CartManager {
                 {key:`addtocart_${productId}.EnteredQuantity`, value:counts},
                 {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
               ]
-              console.log("else for Attribute Data")
           }
     }
     else {
@@ -290,7 +284,6 @@ class CartManager {
     await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
     await this.getUpdatedCartData()
     // let response = await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
-    // console.log('update_Button: ',response)
     await ButtonsManager.UpdateCard()
   }
 
@@ -342,28 +335,21 @@ class CartManager {
                                                                let fields = childs.AttributeInfo.split('<br />');
                                                                let weightAmount = fields[0];
                                                                let chopMethod = fields[1];
-                                                // console.log('weightAmount',weightAmount)
-                                                // console.log('chopMethod',chopMethod)
                                                                
                                                /////////////////////////////////////////////////// weightAmount 
                                                     const getElementId = document.getElementById('attributeId').value
                                                             const element = document.getElementById(`attributename-${getElementId}`).innerText
-                                                             // console.log('element',element)
-                                                             //   console.log('weightAmount',weightAmount)
+                                                            
                                                                         let vazn = "وزن:" + element.replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','')
                                                                         let vazn1 = weightAmount.replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','')
-                                                                         // console.log('vazn',vazn)
-                                                                   // console.log('vazn1',vazn1)
+                                                                        
                                                                     if (vazn1 === vazn){
-                                                                         console.log('Same Weight')
                                                                           let wayofChop = chopMethod.split(':');
                                                                           let chopAttrId = document.getElementById('attributeIdWayCh').value
                                                                          let chopAttrIdElement = document.getElementById(`chopAttrId-${chopAttrId}`).innerText
                                                                              let chopMethodAttr = wayofChop[1].replace(' ','')        
                                                                              let chopMethodAttr1 = chopAttrIdElement
                                                                               
-                                                                         console.log('chopMethodAttr',chopMethodAttr)
-                                                                         console.log('chopMethodAttr1',chopMethodAttr1)
                                                                              
                                                                                   if (chopMethodAttr === chopMethodAttr1){
                                                                                            document.getElementById('cartId').value = childs.Id
@@ -384,7 +370,6 @@ class CartManager {
                                                               let vazn = "وزن:" + element.replace(' ','').replace(' ','')
                                                               let vazn1 = childs.AttributeInfo.replace(' ','').replace(' ','')
                                                           if (vazn1 === vazn){
-                                                               console.log('Same Weight')
                                                                document.getElementById('cartId').value = childs.Id
                                                                document.getElementById("productId").value= @Model.ProductId; 
                                                                document.getElementById("productCount").value= childs.Quantity; 
@@ -394,7 +379,6 @@ class CartManager {
                                                           }
                                                          }
                                            else {
-                                          console.log('Without Any Attribute')
                                           find = true
                                                  document.getElementById('cartId').value = childs.Id
                                                  document.getElementById("productId").value= @Model.ProductId; 

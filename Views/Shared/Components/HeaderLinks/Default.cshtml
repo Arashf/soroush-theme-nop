@@ -89,7 +89,8 @@
                 </a>
         }
         @* href="@Url.RouteUrl("ShoppingCart")" *@
-        <a href="/order/checkout" class="relative w-[55px] flex flex-col items-center cursor-pointer  gap-2"
+        @* href="/order/checkout" *@
+        <div class="toggleCartSideNav relative w-[55px] flex flex-col items-center cursor-pointer gap-2"
            >
             <span>
                 <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
@@ -107,7 +108,7 @@
             </span>
 
             @* <span class="cart-label text-[13px]">@T("ShoppingCart")</span> *@
-        </a>
+        </div>
     </div>
 </div>
 @* //////////////////////////////////////////////////////////////////////  ProfileMenuBox *@
@@ -329,6 +330,7 @@
 }
 </div>
 <div class="header-links-desktop">
+
 <div class="flex items-center justify-center gap-4">
 @* class="header-links" *@
 <ul class="flex items-center justify-center gap-4">
@@ -386,7 +388,7 @@
         <div id="userMenu" class="userMenuclose absolute bg-white top-[53px] -right-[65px] w-[230px] h-[170px] text-[13px] font-semibold
                             transition-all z-[99999] shadow-custom rounded-[15px] px-[15px] py-[15px]">
             <div class="flex flex-col justify-start">
-             @* href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")" *@
+                @* href="@Url.RouteUrl("CustomerInfo")" data-loginUrl="@Url.Action("Login", "Customer")" *@
                 <div
                     class="flex items-center gap-1 justify-between transition-all">
                     <span class="flex items-center gap-1">
@@ -406,7 +408,7 @@
                                         stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
                             </g>
                         </svg>
-                         @Model.CustomerName
+                        @Model.CustomerName
                         
                         @* @Model.CustomerName.Substring(0 ,@Model.CustomerName.IndexOf("@")+1) *@
                         @* <span> @Model.CustomerName.Substring(0, @Model.CustomerName.IndexOf("@"))</span> *@
@@ -640,26 +642,29 @@ else
     ///
 
     // href="@Url.RouteUrl("ShoppingCart")"
-    <a class="relative flex flex-col items-center cursor-pointer
-                                            gap-2" href="/order/checkout">
+    // href="/order/checkout"
+    
+    // onclick="openCartSideNav()"
+    <div  class="toggleCartSideNav relative flex flex-col items-center cursor-pointer
+                                            gap-2" >
         <span>
-        <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
-             xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
-        </svg>
+            <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M560 192l-101.6 .002l-93.11-179.1c-6.062-11.72-20.61-16.37-32.36-10.22c-11.78 6.094-16.34 20.59-10.22 32.34l81.61 156.9H171.7l81.61-156.9C259.4 23.32 254.9 8.822 243.1 2.728C231.3-3.397 216.8 1.228 210.7 12.95l-93.11 179.1L16 192c-8.836 0-16 7.164-16 15.1v32c0 8.836 7.164 15.1 16 15.1h23.11l45.75 205.9C91.37 491.2 117.3 512 147.3 512h281.3c29.1 0 55.97-20.83 62.48-50.12l45.75-205.9H560c8.838 0 16-7.164 16-15.1v-32C576 199.2 568.8 192 560 192zM192 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM304 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.165-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432zM416 432c0 8.834-7.166 15.1-16 15.1c-8.832 0-16-7.166-16-15.1V304c0-8.834 7.168-15.1 16-15.1c8.834 0 16 7.166 16 15.1V432z"/>
+            </svg>
         </span>
         
-            <div class="absolute bg-[red] top-[-6px] left-[3px] text-[13px] font-semibold text-white rounded-[5px]">
-                <span id="test" class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
+        <div class="absolute bg-[red] top-[-6px] left-[3px] text-[13px] font-semibold text-white rounded-[5px]">
+            <span id="test" class="flex items-center justify-center w-[25px] h-[21px] pt-[2px]">
                    
-                    <span  class="cart-qty"> @T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
-                </span>
-            </div>
+                <span  class="cart-qty"> @T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+            </span>
+        </div>
 
         
         <span class="cart-label text-[13px]" id="test123">@T("ShoppingCart")</span>
-    </a>
+    </div>
 
 
 
