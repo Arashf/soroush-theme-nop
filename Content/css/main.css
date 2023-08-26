@@ -2178,7 +2178,7 @@ table {
 
 :root {
   --main-color: #f30235;
-  --primary-color: #2877ff;
+  --primary-color: #f30235;
   --secondary-color: #19bfd3;
   --basic-color: #3a3f4fdc;
   --border-color: #e2e2e2;
@@ -2383,6 +2383,7 @@ div.closebtn .mainOptionHead {
   height: auto;
   max-height: unset;
   opacity: 1;
+  visibility: visible;
 }
 
 #topHeaderBanner.headerBanner {
@@ -2390,6 +2391,7 @@ div.closebtn .mainOptionHead {
   max-height: 0;
   transition-duration: .1s;
   opacity: 0;
+  visibility: hidden;
 }
 
 .desktopMenu-logo {
@@ -4286,6 +4288,15 @@ svg .cls-1 {
   stroke-width: 2px !important;
 }
 
+.disableSvgCartBtn {
+  font-size: 16px;
+  fill: #c7c7c7 !important;
+  stroke: #c7c7c7 !important;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px !important;
+}
+
 .cartNavbarActive {
   left: 0 !important;
 }
@@ -4303,6 +4314,10 @@ svg .cls-1 {
   overflow-x: hidden;
   overflow-y: auto;
   transition: .5s;
+}
+
+.cart-counterbox {
+  box-shadow: 0 1px 5px rgb(0 0 0/15%);
 }
 
 /* .admin-header-links {
@@ -5281,7 +5296,7 @@ li {
 
 :root {
   --main-color: #f30235;
-  --primary-color: #2877ff;
+  --primary-color: #f30235;
   --secondary-color: #19bfd3;
   --secondaryAct-color: #197ed3;
   --basic-color: #3a3f4fdc;

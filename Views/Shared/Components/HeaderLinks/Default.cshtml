@@ -90,7 +90,7 @@
         }
         @* href="@Url.RouteUrl("ShoppingCart")" *@
         @* href="/order/checkout" *@
-        <div class="toggleCartSideNav relative w-[55px] flex flex-col items-center cursor-pointer gap-2"
+        <div onclick="openCartSideNav()" class="toggleCartSideNav relative w-[55px] flex flex-col items-center cursor-pointer gap-2"
            >
             <span>
                 <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"
@@ -645,7 +645,7 @@ else
     // href="/order/checkout"
     
     // onclick="openCartSideNav()"
-    <div  class="toggleCartSideNav relative flex flex-col items-center cursor-pointer
+    <div onclick="openCartSideNav()"  class="toggleCartSideNav relative flex flex-col items-center cursor-pointer
                                             gap-2" >
         <span>
             <svg viewBox="0 0 576 512" class="w-[23px] h-[23px] fill-textSecondary"

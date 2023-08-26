@@ -25,13 +25,13 @@
 .action-btn::after {
     content: '';
     display: block;
-    width: 1.2em;
-    height: 1.2em;
+    width: 1.3em;
+    height: 1.3em;
     position: absolute;
     left: calc(50% - 0.75em);
     top: calc(50% - 0.75em);
     border: 0.15em solid transparent;
-    border-right-color: #6141ff;
+    border-right-color: #f30235;
     border-radius: 50%;
     animation: button-anim 0.7s linear infinite;
     opacity: 0;
