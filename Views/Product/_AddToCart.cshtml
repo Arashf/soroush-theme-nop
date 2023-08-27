@@ -29,13 +29,13 @@
                     }
                 }
                 <div class="purchaseBtn mt-3 w-full">
-                    <button class="h-[43px] addToCard-button"
+                    <button class="h-[43px] addToCard-button product-action-btn"
                             data-productid="@Model.ProductId"
                             id="add-to-cart-button-@Model.ProductId"
                             onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId)">
                         @addToCartText
                     </button>
-                    <div class="addToCard inVisibleElement">
+                    <div class="addToCard inVisibleElement product-action-btnBox">
                         <button class="addToCard-plus p-1" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId"
                                 onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId);">
                             <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
@@ -73,7 +73,13 @@
 
 <script asp-location="Footer">
 'use strict'
-
+ // let cartqty = document.querySelectorAll('.cart-qty')
+ //    let nowCartCounState 
+ //    cartqty.forEach((el)=>{
+ //                if (el.innerHTML !== ''){
+ //                 nowCartCounState = el.innerHTML
+ //                }
+ //           })   
 const HTTP_METHODS = { POST: 'POST', GET: 'GET' }
 const PRODUCT_ATTRIBUTES = { 
     EnteredQuantity: 1,
@@ -87,7 +93,7 @@ const PRODUCT_ATTRIBUTES = {
 
 class ErrorHandler {
   static logAndThrow(error, message = 'Error') {
-    console.error(`${message}:`, error)
+    // console.error(`${message}:`, error)
     throw error
   }
 }
@@ -164,20 +170,42 @@ class DOMManager {
 }
 
 class CartManager {
-  static getAttributeProperty = () => {
-        if (childs.AttributeInfo !== ''){
-                        const getElementId = document.getElementById('attributeId').value
-                      const element = document.getElementById(`attributename-${getElementId}`).innerText
-                           let vazn = "وزن: " + element.replace(' ','')
-                       if (childs.AttributeInfo === vazn){
-                               
-                       }   
-                    }
-      }
+  // static getAttributeProperty = () => {
+  //       if (childs.AttributeInfo !== ''){
+  //                       const getElementId = document.getElementById('attributeId').value
+  //                     const element = document.getElementById(`attributename-${getElementId}`).innerText
+  //                          let vazn = "وزن: " + element.replace(' ','')
+  //                      if (childs.AttributeInfo === vazn){
+  //                             
+  //                      }   
+  //                   }
+  //     }
       
   static productAddToCartAsync = async (url, productId) => {
-      const addToCartBox = document.getElementById("addToCartBox");
-      
+      // const addToCartBox = document.getElementById("addToCartBox");
+       let AddtoCartBtn =  document.querySelector('.addToCard')
+       
+         let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")   
+               let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+               let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
+                                if (addToCardPlusDisable !== null){
+                                   addToCardPlusDisable.forEach((el)=>{
+                                        el.classList.add('disableSvgCartBtn')
+                                     })
+                               }
+                                 if (AddToCardTrashDisable !== null){
+                                    AddToCardTrashDisable.classList.add('disableTrashIcon') 
+                                 }  
+                                     
+                               if (AddToCardMinusDisable !== null){
+                                                      AddToCardMinusDisable.classList.add('disableSvgCartBtn')
+                                  }
+                      
+                       document.querySelector("button.addToCard-plus").disabled = true;
+                       document.querySelector("button.AddToCardProduct-status").disabled = true;
+               
+                    AddtoCartBtn.classList.add('loading')
+      ///////////////////////////////////////////////////////////////////////////////
      let boxAttributeId = document.getElementById('boxAttributeId')
      let boxWayofChopAttrId = document.getElementById('boxChoppingAttributeId')
      
@@ -235,12 +263,51 @@ class CartManager {
                 });
      
      // let response =  await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, productData)
-   
+     
+     
+     //                AddtoCartBtn.classList.remove('loading')
+     //                      if (addToCardPlusDisable !== null){
+     //                            addToCardPlusDisable.forEach((el)=>{
+     //                                 el.classList.remove('disableSvgCartBtn')
+     //                              })
+     //                        }
+     //                       if (AddToCardTrashDisable !== null){
+     //                       AddToCardTrashDisable.classList.remove('disableTrashIcon') 
+     //                   }  
+     //                     if (AddToCardMinusDisable !== null){
+     //           AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+     //           }
+     //           document.querySelector("button.addToCard-plus").disabled = false;
+     //           document.querySelector("button.AddToCardProduct-status").disabled = false;
+     
+     
      await this.getUpdatedCartData()
     
   }
 
   static updateCartItem = async (productId) => {
+   let AddtoCartBtn =  document.querySelector('.addToCard')
+        let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
+        let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+        let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
+                              if (addToCardPlusDisable !== null){
+                                     addToCardPlusDisable.forEach((el)=>{
+                                          el.classList.add('disableSvgCartBtn')
+                                       })
+                                 }
+                                   if (AddToCardTrashDisable !== null){
+                                      AddToCardTrashDisable.classList.add('disableTrashIcon') 
+                                   }  
+                                       
+                                 if (AddToCardMinusDisable !== null){
+                                                        AddToCardMinusDisable.classList.add('disableSvgCartBtn')
+                                    }
+               
+                document.querySelector("button.addToCard-plus").disabled = true;
+                document.querySelector("button.AddToCardProduct-status").disabled = true;
+        
+             AddtoCartBtn.classList.add('loading')
+  /////////////////////////////////////////////////////////////////////////
     const counts = parseInt(document.getElementById("productCount").value)
     const idCart =parseInt(document.getElementById("cartId").value)
     let attrValue = document.getElementById("attrValueId")
@@ -284,6 +351,21 @@ class CartManager {
     await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
     await this.getUpdatedCartData()
     // let response = await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
+      AddtoCartBtn.classList.remove('loading')
+                          if (addToCardPlusDisable !== null){
+                            addToCardPlusDisable.forEach((el)=>{
+                                  el.classList.remove('disableSvgCartBtn')
+                               })
+                         }
+                        if (AddToCardTrashDisable !== null){
+                        AddToCardTrashDisable.classList.remove('disableTrashIcon') 
+                    }  
+                      if (AddToCardMinusDisable !== null){
+                     AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+                     }
+                        document.querySelector("button.addToCard-plus").disabled = false;
+                        document.querySelector("button.AddToCardProduct-status").disabled = false;
+    
     await ButtonsManager.UpdateCard()
   }
 
@@ -309,17 +391,21 @@ class CartManager {
     } catch (error) {
       ErrorHandler.logAndThrow(error, 'Fetch Error');
     } finally {
-      console.log("AJAX request complete");
+      // console.log("AJAX request complete");
       this.getUpdatedCartData()
     }
   }
   
   static getUpdatedCartData = async () => {
-    // return await RequestHandler.requestContentFrom('/api/ShoppingCart', HTTP_METHODS.GET)
-    
+     let AddtoCartBtn =  document.querySelector('.addToCard-button')
+      AddtoCartBtn.classList.add('loading')
+    // let cartqty = document.querySelectorAll('.cart-qty')
     let addtoCartCounter = document.getElementById('productCount')
     let productMaxQuantity = 0
    let response =  await RequestHandler.requestContentFrom('/api/ShoppingCart', HTTP_METHODS.GET)
+   // cartqty.forEach((el)=>{
+   //       el.innerHTML = response.Count
+   // })     
      let cartItems = response.Items
                 // var productAvailable = false
                 let cartCount = response.Count
@@ -327,6 +413,7 @@ class CartManager {
                     let find = false
                           cartItems.map((childs) => {
                                       if (childs.ProductId === @Model.ProductId) {
+                                            store.dispatch({type: 'SHOPPING_CART', payload: response})
                                           productMaxQuantity = childs.AllowedQuantities.length
                                            if (childs.AttributeInfo !== ''){
                                                /////////////////////////////////////// WayOfChop
@@ -379,7 +466,7 @@ class CartManager {
                                                           }
                                                          }
                                            else {
-                                          find = true
+                                                 find = true
                                                  document.getElementById('cartId').value = childs.Id
                                                  document.getElementById("productId").value= @Model.ProductId; 
                                                  document.getElementById("productCount").value= childs.Quantity; 
@@ -391,6 +478,7 @@ class CartManager {
                                                    document.getElementById("productCount").value= 0; 
                                                    document.getElementById("count").innerHTML= 0;     
                                                             }
+                                 AddtoCartBtn.classList.remove('loading')
                                }
                             // ButtonsManager.productAddToCartStyle();
                             ButtonsManager.productAddToCartStyle();
@@ -417,7 +505,15 @@ class CartManager {
 
 
 class ButtonsManager {
+    
   static productAddToCartStyle = function () {
+       let AddtoCartBtn =  document.querySelector('.addToCard-button')
+                   
+                     let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")   
+                           let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+                           let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
+                           
+      ////////////////////////////////////////////////////   
       let productCount = 0
       if (Util.getIdValue("productCount") === null ||  Util.getIdValue("productCount") === undefined ){
             productCount = 0
@@ -432,6 +528,7 @@ class ButtonsManager {
       DOMManager.setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
       let counterBox = document.querySelector(".addToCard-counter");
       DOMManager.setElementInnerText(counterBox,productCount ? productCount : 0)
+      
        // document.querySelector(".AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>'
     } else if (productCount >= 1) {
       document.querySelector('.addToCard-button').classList.add('inVisibleElement')
@@ -441,6 +538,22 @@ class ButtonsManager {
       DOMManager.setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
            ButtonsManager.addToCardPlus()
     }
+    //////////////////////////////////////////////////////////// Loading
+     AddtoCartBtn.classList.remove('loading')
+                  if (addToCardPlusDisable !== null){
+                        addToCardPlusDisable.forEach((el)=>{
+                             el.classList.remove('disableSvgCartBtn')
+                          })
+                    }
+                   if (AddToCardTrashDisable !== null){
+                   AddToCardTrashDisable.classList.remove('disableTrashIcon') 
+               }  
+                 if (AddToCardMinusDisable !== null){
+       AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+       }
+       document.querySelector("button.addToCard-plus").disabled = false;
+       document.querySelector("button.AddToCardProduct-status").disabled = false;
+   
   }
 
   static UpdateCard = function () {
@@ -463,6 +576,13 @@ class ButtonsManager {
   }
 
   static addToCardPlus = function () {
+     let AddtoCartBtn =  document.querySelector('.addToCard')
+     let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")   
+     let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+     let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
+             
+    ////////////////////////////////////////////////////////////////////////// 
+                     
     let counterBox = document.querySelector(".addToCard-counter");
     let counterBox_value = parseInt(counterBox.innerText);
 
@@ -472,6 +592,21 @@ class ButtonsManager {
       document.querySelector("button.AddToCardProduct-status").innerHTML = '<svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z" fill="currentColor" /></svg>'
       document.querySelector("button.AddToCardProduct-status").style.padding = "7px";
     }
+    //////////////////////////////////////////////////////////////////////////  Loading
+     AddtoCartBtn.classList.remove('loading')
+                if (addToCardPlusDisable !== null){
+                      addToCardPlusDisable.forEach((el)=>{
+                           el.classList.remove('disableSvgCartBtn')
+                        })
+                  }
+                 if (AddToCardTrashDisable !== null){
+                 AddToCardTrashDisable.classList.remove('disableTrashIcon') 
+             }  
+               if (AddToCardMinusDisable !== null){
+     AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+     }
+     document.querySelector("button.addToCard-plus").disabled = false;
+     document.querySelector("button.AddToCardProduct-status").disabled = false;
   }
 }
 

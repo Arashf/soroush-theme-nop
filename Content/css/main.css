@@ -4289,7 +4289,7 @@ svg .cls-1 {
 }
 
 .disableSvgCartBtn {
-  font-size: 16px;
+  /* font-size: 16px; */
   fill: #c7c7c7 !important;
   stroke: #c7c7c7 !important;
   stroke-linecap: round;
@@ -4306,6 +4306,8 @@ svg .cls-1 {
 .cart-sideNav {
   width: 350px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   z-index: 1000;
   bottom: 0;
@@ -4318,6 +4320,14 @@ svg .cls-1 {
 
 .cart-counterbox {
   box-shadow: 0 1px 5px rgb(0 0 0/15%);
+}
+
+.disableTrashIcon {
+  color: #d3d3d3 !important;
+}
+
+.disableTrashIcon::after {
+  border: 1px solid #d3d3d3 !important;
 }
 
 /* .admin-header-links {
@@ -5757,7 +5767,7 @@ li {
 
 .trash-icon::after {
   background: transparent;
-  border: 1px solid #f30235 !important;
+  border: 1px solid #f30235;
   border-radius: 5px;
   width: 17px;
   height: 3px;

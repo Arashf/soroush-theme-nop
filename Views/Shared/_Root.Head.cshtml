@@ -15,9 +15,11 @@
 
 @{
      // NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.countryselect.js");
-      NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.ajaxcart.js");
-       NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.js");
+      // NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.ajaxcart.js");
     //when jQuery migrate script logging is active you will see the log in the browser console
+    
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.js");
+    
     if (commonSettings.JqueryMigrateScriptLoggingActive)
     {
          // NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-migrate/jquery-migrate.js");
@@ -32,7 +34,15 @@
     // NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-validation/jquery.validate.min.js");
     
     ////////////////////////////////////////////////////////////////////////////////////////// Don't Remove - Slider
-     NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
+    
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
+    
+    <script src="~/Themes/Emporium/Content/scripts/redux.min.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/select2.min.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/redux/cartStore.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/temp.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/notification.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/public.ajaxcart.js" asp-location="Footer"></script>
 
     //custom tag(s);
     if (!string.IsNullOrEmpty(seoSettings.CustomHeadTags))
@@ -80,7 +90,7 @@
     }
     @NopHtml.GenerateScripts(ResourceLocation.Head)
     @NopHtml.GenerateInlineScripts(ResourceLocation.Head)
-    <!--Powered by nopCommerce - https://www.nopCommerce.com-->
+    
 </head>
 <body class="@currentPageClass">
     @RenderBody()
