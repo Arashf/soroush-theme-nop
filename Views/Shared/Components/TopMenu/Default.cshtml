@@ -740,6 +740,16 @@
 </div>
 
 <script asp-location="Footer" defer="defer">
+/////////////////////////////////////////////////////// Check Location Path
+let pathName = window.location.pathname
+if (pathName === '/order/Checkout'){
+    let pathLocation = document.querySelectorAll('.toggleCartSideNav')
+    pathLocation.forEach((el)=>{
+        el.style.display = 'none'
+
+    })
+}
+
 
 // function openCartSideNav() {
 //   const sideNav = document.querySelectorAll(".toggleCartSideNav")

@@ -166,7 +166,7 @@
                             attributeValue.Name :
                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment,
                                 attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text;
-                        <div onclick="CartManager.getUpdatedCartData()" class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px]
+                        <div onclick="CartManager.getShoppingCartData()" class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px]
                        px-[10px] cursor-pointer transition-all duration-200 border-[2px] border-solid border-borderPrimary"
                              data-attr-value="@attributeValue.Id"  attr-id="@attributeValue.Id">
                             @* <li data-attr-value="@attributeValue.Id"> *@

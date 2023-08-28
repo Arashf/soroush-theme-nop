@@ -115,7 +115,7 @@ var AjaxCart = {
                 }
                 else {
                     console.log('DispatchToCart',response)
-                    CartManagerRedux.getUpdatedCartData()
+                    CartManagerRedux.getShoppingCartData()
                     //specify timeout for success messages
                     displayBarNotification(response.message, 'success', 3500);
                 }

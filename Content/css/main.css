@@ -3083,10 +3083,11 @@ footer.desktopFooter .footerBox li a:hover {
 
 .admin-header-links {
   position: fixed !important;
-  bottom: 80px !important;
-  left: 10px !important;
-  z-index: 999 !important;
-  border-radius: 15px !important;
+  bottom: 140px !important;
+  right: 2px;
+  z-index: 9999 !important;
+  border-top-left-radius: 15px !important;
+  border-bottom-left-radius: 15px !important;
   background-color: #c5c5c5 !important;
   padding: 10px !important;
 }
@@ -4309,7 +4310,7 @@ svg .cls-1 {
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
   bottom: 0;
   left: -400px;
   background-color: #fff;
@@ -4328,6 +4329,20 @@ svg .cls-1 {
 
 .disableTrashIcon::after {
   border: 1px solid #d3d3d3 !important;
+}
+
+/* /////////////////////////////////////////////////// RewardPoints Customer */
+
+.reward-points-page .page-body {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, .1);
+  --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  margin-top: 20px;
+  border-radius: 15px !important;
 }
 
 /* .admin-header-links {
@@ -5713,7 +5728,7 @@ li {
   /* width: 140px !important;
   height: 40px !important; */
   /* background-color: #5d616fdc; */
-  background-color: #ef4056 !important;
+  background-color: var(--main-color) !important;
   transition: height 0.6s ease-in-out;
   -webkit-transition: height 0.6s ease-in-out;
   -moz-transition: height 0.6s ease-in-out;
