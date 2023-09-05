@@ -121,7 +121,6 @@
         </div>
         <div class="attributes-wrapper">
             <!--attributes-->
-            
             @{
                 var dataDictAttributes = new ViewDataDictionary(ViewData);
                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
@@ -374,4 +373,11 @@
     setTimeout(function(){
         document.getElementById('mobileFooter').classList.add('gap-bottom-Footer')
         },3000)
+                const voiceCustomer =  document.getElementById('product_attribute_label_671') 
+                const voiceCustomerUploader =  document.getElementById('product_attribute_671uploader') 
+                
+                if (voiceCustomer !== null && voiceCustomerUploader !== null) {
+                   voiceCustomer.style.display = 'none'
+                    voiceCustomerUploader.style.display = 'none'
+                }
 </script>

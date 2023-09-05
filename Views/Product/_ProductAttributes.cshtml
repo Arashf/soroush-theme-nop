@@ -16,7 +16,7 @@
     {
         var controlId = $"{NopCatalogDefaults.ProductAttributePrefix}{attribute.Id}";
         var textPrompt = !string.IsNullOrEmpty(attribute.TextPrompt) ? attribute.TextPrompt : attribute.Name;
-        <dt class="my-[15px] " id="@($"{NopCatalogDefaults.ProductAttributePrefix}label_{attribute.Id}")">
+        <dt class="my-[15px]" id="@($"{NopCatalogDefaults.ProductAttributePrefix}label_{attribute.Id}")">
             <label class="text-prompt">
                 @textPrompt
             </label>
@@ -58,19 +58,19 @@
                             attributeValue.Name :
                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment,
                                 attributeValue.CustomerEntersQty ? T("Products.ProductAttributes.PriceAdjustment.PerItem").Text : string.Empty).Text;
-                         <div class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px]
+                        <div class="flex items-center min-h-[35px] min-w-[90px] rounded-[40px] py-[5px]
                        px-[10px] cursor-pointer transition-all duration-200 border-[2px] border-solid border-borderPrimary"
-                              data-attr-value="@attributeName"  attr-id="@attributeValue.Id"
-                              onclick="CartManager.changePriceByAttribute(@Model.Id,@(attribute.Id),@attributeValue.Id)">
-                             <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]">
-                                 <span class="pr-[2px]">
+                             data-attr-value="@attributeName"  attr-id="@attributeValue.Id"
+                             onclick="CartManager.changePriceByAttribute(@Model.Id,@(attribute.Id),@attributeValue.Id)">
+                            <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]">
+                                <span class="pr-[2px]">
 
-                                 </span>
-                             </span>
-                             <span id="attributename-@attributeValue.Id" class="propertyContent text-[13px] pr-1">
-                                 @attributeName
-                             </span>
-                         </div>
+                                </span>
+                            </span>
+                            <span id="attributename-@attributeValue.Id" class="propertyContent text-[13px] pr-1">
+                                @attributeName
+                            </span>
+                        </div>
                         @* <div  id="radioItem"  *@
                         @*      class="flex items-center justify-center gap-2 border-[1px] border-solid border-zinc-300 rounded-[10px] p-2 text-[14px] cursor-pointer"> *@
                         @*     <input onclick="CartManager.changePriceByAttribute(@Model.Id,@(attribute.Id),@attributeValue.Id)"  type="radio" id="@attributeValue.Id" name="weightSelector" value="@attributeName" class="cursor-pointer">  *@
@@ -159,7 +159,7 @@
                                                                                         
                 <div id="selectorWayChProperty"  data-attr="@(attribute.Id)" class="selected-wayofChop-property flex flex-wrap items-center justify-start gap-4 lg:gap-3 mt-3 p-2"
                      data-attr="@(attribute.Id)" name="@(controlId)" id="@(controlId)" @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onchange=\"showHideDropdownQuantity('{controlId}')\"") : null)>                                                              
-                @* <ul id="selectorWayChProperty" data-attr="@(attribute.Id)" class="option-list flex flex-col justify-center items-start gap-[17px] px-[10px]"> *@
+                    @* <ul id="selectorWayChProperty" data-attr="@(attribute.Id)" class="option-list flex flex-col justify-center items-start gap-[17px] px-[10px]"> *@
                     @foreach (var attributeValue in attribute.Values)
                     {
                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
@@ -170,27 +170,27 @@
                        px-[10px] cursor-pointer transition-all duration-200 border-[2px] border-solid border-borderPrimary"
                              data-attr-value="@attributeValue.Id"  attr-id="@attributeValue.Id">
                             @* <li data-attr-value="@attributeValue.Id"> *@
-                                 <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]">
-                                                                 <span class="pr-[2px]">
+                            <span class="checkSelected-Property flex items-center w-[20px] h-[20px] border-[1px] border-solid border-borderPrimary rounded-[40px]">
+                                <span class="pr-[2px]">
                                 
-                                                                 </span>
-                                             </span>
-                                                             <span id="chopAttrId-@attributeValue.Id" class="propertyContent text-[13px] pr-1">
-                                                                 @attributeName
-                                                             </span>
-                                <input hidden id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected"
-                                       @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null)/>
-                                @* <label hidden for="@(controlId)_@(attributeValue.Id)">@attributeName</label> *@
+                                </span>
+                            </span>
+                            <span id="chopAttrId-@attributeValue.Id" class="propertyContent text-[13px] pr-1">
+                                @attributeName
+                            </span>
+                            <input hidden id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected"
+                                   @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null)/>
+                            @* <label hidden for="@(controlId)_@(attributeValue.Id)">@attributeName</label> *@
 
-                                @if (attributeValue.CustomerEntersQty)
-                                {
-                                    <div class="qty-box" id="@(controlId)_@(attributeValue.Id)_qty_box" style="display:none">
-                                        <label for="@(controlId)_@(attributeValue.Id)_qty">@(T("Products.ProductAttributes.PriceAdjustment.Quantity").Text)</label>
-                                        <input type="text" name="@(controlId)_@(attributeValue.Id)_qty" id="@(controlId)_@(attributeValue.Id)_qty" value="@(attributeValue.Quantity)"/>
-                                    </div>
-                                }
+                            @if (attributeValue.CustomerEntersQty)
+                            {
+                                <div class="qty-box" id="@(controlId)_@(attributeValue.Id)_qty_box" style="display:none">
+                                    <label for="@(controlId)_@(attributeValue.Id)_qty">@(T("Products.ProductAttributes.PriceAdjustment.Quantity").Text)</label>
+                                    <input type="text" name="@(controlId)_@(attributeValue.Id)_qty" id="@(controlId)_@(attributeValue.Id)_qty" value="@(attributeValue.Quantity)"/>
+                                </div>
+                            }
                             @* </li> *@
-                     </div>
+                        </div>
                     }
                 </div>
                 <input type="hidden" id="attributeIdWayCh"/>
@@ -487,8 +487,9 @@
                         <label for="@(controlId)_@(attributeValue.Id)_qty">@(T("Products.ProductAttributes.PriceAdjustment.Quantity").Text)</label>
                         <input type="text" name="@(controlId)_@(attributeValue.Id)_qty" id="@(controlId)_@(attributeValue.Id)_qty" value="@(attributeValue.Quantity)"/>
                     </div>
+          
                 }
-                <script asp-location="Footer">
+                              <script asp-location="Footer">
                                     $(document).ready(function() {
                                         $('.attributes #image-squares-@(attribute.Id)').on('click', 'input', function(event) {
                                             $('.attributes #image-squares-@(attribute.Id)').find('li').removeClass('selected-value');
@@ -501,8 +502,65 @@
                 break;
         }
         </dd>
+        <div class="customer-voiceRecoder">
+            <div id="customerVoiceTitle" class="w-full flex justify-center items-center">
+                <h2 class="title"> فایل صوتی خود را بارگذاری کنید <span class="text-red-500">*</span></h2>
+            </div>
+            <div id="startRecordingBtn" class="start-recording-button flex justify-center items-center gap-[20px]">
+                <svg class="fill-iconLightColor stroke-iconLightColor stroke-3" height="50px" width="50px" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M192 352c53.03 0 96-42.97 96-96v-160c0-53.03-42.97-96-96-96s-96 42.97-96 96v160C96 309 138.1 352 192 352zM344 192C330.7 192 320 202.7 320 215.1V256c0 73.33-61.97 132.4-136.3 127.7c-66.08-4.169-119.7-66.59-119.7-132.8L64 215.1C64 202.7 53.25 192 40 192S16 202.7 16 215.1v32.15c0 89.66 63.97 169.6 152 181.7V464H128c-18.19 0-32.84 15.18-31.96 33.57C96.43 505.8 103.8 512 112 512h160c8.222 0 15.57-6.216 15.96-14.43C288.8 479.2 274.2 464 256 464h-40v-33.77C301.7 418.5 368 344.9 368 256V215.1C368 202.7 357.3 192 344 192z"/>
+                </svg>
+                <span class="text-[16px] font-semibold">بارگذاری</span>
+            </div>
+             @* <canvas class="visualizer" height="60px"></canvas> *@
+            <div class="recording-contorl-buttons-container hide">
+                @* <i class="cancel-recording-button fa fa-times-circle-o" aria-hidden="true"></i><svg id="Icons" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#232323;}</style></defs><path class="cls-1" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm4.707,14.293a1,1,0,1,1-1.414,1.414L12,13.414,8.707,16.707a1,1,0,1,1-1.414-1.414L10.586,12,7.293,8.707A1,1,0,1,1,8.707,7.293L12,10.586l3.293-3.293a1,1,0,1,1,1.414,1.414L13.414,12Z"/></svg> *@
+                <div class="cancel-recording-button">
+                    <svg class="fill-red-400 stroke-red-400 stroke-3" height="25px" width="25px" id="Icons" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#f82d3e;stroke: #f82d3e !important;}</style></defs><path class="cls-1" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm4.707,14.293a1,1,0,1,1-1.414,1.414L12,13.414,8.707,16.707a1,1,0,1,1-1.414-1.414L10.586,12,7.293,8.707A1,1,0,1,1,8.707,7.293L12,10.586l3.293-3.293a1,1,0,1,1,1.414,1.414L13.414,12Z"/></svg>
+                </div>
+                <div class="recording-elapsed-time">
+                    <svg class="red-recording-dot fill-red-400 stroke-red-400 stroke-3" height="20" width="20" id="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style></style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+                    <p class="elapsed-time"></p>
+                </div>
+                <div id="stop" class="stop-recording-button">
+                    <svg class="fill-[#00a93e] stroke-[##00a93e] stroke-3" height="25px" width="25px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M328 160h-144C170.8 160 160 170.8 160 184v144C160 341.2 170.8 352 184 352h144c13.2 0 24-10.8 24-24v-144C352 170.8 341.2 160 328 160zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-114.7 0-208-93.31-208-208S141.3 48 256 48s208 93.31 208 208S370.7 464 256 464z"/>
+                    </svg>
+                </div>
+            </div>
+            @* <div class="text-indication-of-audio-playing-container"> *@
+            @*     <p class="text-indication-of-audio-playing hide">Audio is playing<span>.</span><span>.</span><span>.</span></p> *@
+            @* </div> *@
+            
+            @* <div class="overlay hide"> *@
+            @*     <div class="browser-not-supporting-audio-recording-box"> *@
+            @*         <p>To record audio, use browsers like Chrome and Firefox that support audio recording.</p> *@
+            @*         <button type="button" class="close-browser-not-supported-box">Ok.</button> *@
+            @*     </div> *@
+            @* </div> *@
+            <div id='uploadSection' class="flex flex-col justify-center items-center gap-2 hide">
+
+                <div>
+                    <audio controls class="audio-element">
+                    </audio>
+                </div>
+                <div class="w-[95%] flex justify-between items-center">
+                    <div id="removeRecordingVoice" class="flex items-center gap-1 border-[1px] border-solid border-borderPrimary rounded-[10px] py-[7px] px-[10px] cursor-pointer">
+                        <svg class="fill-red-400 stroke-red-400" height="17" width="17" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path></svg>
+                        <span class="text-[11px] font-semibold">حذف</span>
+                    </div>
+                    <div id="upload" class="flex items-center gap-1 cursor-pointer rounded-[10px] py-[5px] px-[10px]">
+                        <svg class="stroke-iconLightColor feather feather-upload" height="24" width="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                        <span class="text-[11px] text-[#4e4949] font-semibold">بارگزاری</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <script src="~/Themes/Emporium/Content/scripts/startRecord.js" asp-location="Footer"></script>
     }
     </dl>
+    
     <script asp-location="Footer">
             function showHideDropdownQuantity(id) {
                 $('select[name=' + id + '] > option').each(function () {
@@ -524,6 +582,8 @@
                 else
                     $('#' + id + '_qty_box').hide();
             }
+            ///////////////////////////////////////////////////
+            
         </script>
     </div>
 

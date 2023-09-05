@@ -51,26 +51,26 @@
                 @if (Model.SitemapEnabled && Model.DisplaySitemapFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("Sitemap")" target="_blank">@T("Sitemap")</a>
+                        <a href="@Url.RouteUrl("Sitemap")" >@T("Sitemap")</a>
                     </li>
                 }
                 @if (Model.DisplayContactUsFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("ContactUs")" target="_blank">@T("ContactUs")</a>
+                        <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a>
                     </li>
                 }
 
                 @if (Model.SearchEnabled && Model.DisplayProductSearchFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("ProductSearch")" target="_blank">@T("Search")</a>
+                        <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a>
                     </li>
                 }
                 @if (Model.NewsEnabled && Model.DisplayNewsFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("NewsArchive")" target="_blank">@T("News")</a>
+                        <a href="@Url.RouteUrl("NewsArchive")">@T("News")</a>
                     </li>
                 }
                 @if (Model.BlogEnabled && Model.DisplayBlogFooterItem)
@@ -83,13 +83,13 @@
                 @if (Model.ForumEnabled && Model.DisplayForumsFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("Boards")" target="_blank">@T("Forum.Forums")</a>
+                        <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a>
                     </li>
                 }
                 @if (Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("NewProducts")" target="_blank">@T("Products.NewProducts")</a>
+                        <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
                     </li>
                 }
                 @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
@@ -167,13 +167,13 @@
                 @if (Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem)
                 {
                     <li>
-                        <a href="@Url.RouteUrl("ApplyVendorAccount")" target="_blank">@T("Vendors.ApplyAccount")</a>
+                        <a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a>
                     </li>
                 }
                 @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
                 {
                     <li>
-                        <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })" target="_blank">@topic.Name</a>
+                        <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
                     </li>
                 }
             </ul>
@@ -338,26 +338,26 @@
                         @if (Model.SitemapEnabled && Model.DisplaySitemapFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("Sitemap")" target="_blank">@T("Sitemap")</a>
+                                <a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a>
                             </li>
                         }
                         @if (Model.DisplayContactUsFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("ContactUs")" target="_blank">@T("ContactUs")</a>
+                                <a href="@Url.RouteUrl("ContactUs")" >@T("ContactUs")</a>
                             </li>
                         }
 
                         @if (Model.SearchEnabled && Model.DisplayProductSearchFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("ProductSearch")" target="_blank">@T("Search")</a>
+                                <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a>
                             </li>
                         }
                         @if (Model.NewsEnabled && Model.DisplayNewsFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("NewsArchive")" target="_blank">@T("News")</a>
+                                <a href="@Url.RouteUrl("NewsArchive")" >@T("News")</a>
                             </li>
                         }
                         @if (Model.BlogEnabled && Model.DisplayBlogFooterItem)
@@ -370,13 +370,13 @@
                         @if (Model.ForumEnabled && Model.DisplayForumsFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("Boards")" target="_blank">@T("Forum.Forums")</a>
+                                <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a>
                             </li>
                         }
                         @if (Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("NewProducts")" target="_blank">@T("Products.NewProducts")</a>
+                                <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
                             </li>
                         }
                         @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
@@ -393,7 +393,7 @@
                         @if (Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem)
                         {
                             <li>
-                                <a href="@Url.RouteUrl("ApplyVendorAccount")" target="_blank">@T("Vendors.ApplyAccount")</a>
+                                <a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a>
                             </li>
                         }
                         @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
@@ -401,7 +401,7 @@
                             @if(@topic.Name != null && @topic.Name != ""){
                             
                                 <li>
-                                    <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })" target="_blank">@topic.Name</a>
+                                    <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
                                 </li>
                             }
                         }

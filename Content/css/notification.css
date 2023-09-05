@@ -1,31 +1,42 @@
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap");
+/*@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap");*/
 
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
-body {
-    min-height: 100vh;
-    background: hsl(0, 0%, 100%);
-    font-family: "Noto Sans JP", sans-serif;
-}
+/** {*/
+/*    box-sizing: border-box;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+/*body {*/
+/*    min-height: 100vh;*/
+/*    background: hsl(0, 0%, 100%);*/
+/*    font-family: "Noto Sans JP", sans-serif;*/
+/*}*/
 /* display the wrapping container in the top right corner of the viewport */
-.notification {
-    position: fixed;
-    top: 11rem;
-    z-index: 1000;
-    right: 1rem;
-    /* align the content to the rigth */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    color: hsl(0, 0%, 20%);
-    /* hide the overflow to conceal the message when translated to the right of the container */
-    overflow-x: hidden;
-    /* padding to avoid cropping the box-shadow on the message */
-    padding: 0.25rem;
-}
+
+/*.notification {*/
+/*    display: block;*/
+/*    visibility: visible;*/
+/*    !*opacity: 0;*!*/
+/*    position: fixed;*/
+/*    top: 13rem;*/
+/*    z-index: 1000;*/
+/*    right: 1rem;*/
+/*    !* align the content to the rigth *!*/
+/*    !*display: flex;*!*/
+/*    flex-direction: column;*/
+/*    align-items: flex-end;*/
+/*    color: hsl(0, 0%, 20%);*/
+/*    !* hide the overflow to conceal the message when translated to the right of the container *!*/
+/*    overflow-x: hidden;*/
+/*    !* padding to avoid cropping the box-shadow on the message *!*/
+/*    padding: 0.25rem;*/
+/*}*/
+
+/*.visibleNotification {*/
+/*    display: block !important;*/
+/*    visibility: visible !important;*/
+/*    transform: translateX(0%);*/
+/*    opacity: 1;*/
+/*}*/
 
 /* reduce the size of the icon and give a white fill to the elements of the graphic */
 .notification__bell {
@@ -65,21 +76,21 @@ body {
     }
 }
 
-/* style the content of the message to show a grid with the dismiss button in the top right corner
-|h1  |  button |
-|p   |p        |
-*/
-.notification__message {
-    display: grid;
-    grid-gap: 0.2rem;
-    grid-template-columns: 1fr auto;
-    padding: 0.5rem 1rem;
+.notification-message {
+    position:absolute;
+    top: 13rem;
+    z-index: 1000;
+    right: 1rem;
+    width: 350px;
+    height: 70px;
+    /*padding: 0 15px 0 0;*/
     margin: 1rem 0;
     /* style the div as a rounded rectangle with a border on the left segment */
     background: hsl(0, 0%, 100%);
     border-radius: 10px;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1), 0 2px 3px hsla(0, 0%, 0%, 0.1);
-    border-left: 0.5rem solid hsl(0, 0%, 100%);
+    /*border-left: 0.5rem solid hsl(347, 58%, 36%, 0.1);*/
+    border-left: 0.5rem solid #f30235;
     /* by default hide the element from sight and include a transition for the chosen properties */
     transform: translateX(100%);
     opacity: 0;
@@ -88,70 +99,81 @@ body {
     transition-duration: 0.7s;
     transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
-.notification__message h1 {
+.notification-message .notification-info{
+    padding: 0 10px 0 0;
+}
+.notification-message .notification-info div:first-child{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.notification-message .notification-info .notification-error-content{
+   padding: 5px 16px 5px 0
+}
+.notification-message h2 {
     font-size: 1.1rem;
     font-weight: 500;
     text-transform: capitalize;
+    color:#ec2b00;
 }
-.notification__message p {
+.notification-message p {
     max-width: 320px;
     font-size: 0.8rem;
     grid-column: 1/-1;
 }
-.notification__message button {
+.notification-message button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: none;
     border: none;
     color: inherit;
-    width: 20px;
-    height: 20px;
-    grid-column: 2/3;
-    grid-row: 1/2;
+    width: 80px;
+    height: 35px;
+    /*grid-column: 2/3;*/
+    /*grid-row: 1/2;*/
     align-self: center;
-}
-.notification__message button svg {
-    display: block;
-    width: 100%;
-    height: 100%;
 }
 
 /* when the .notification container has a class of .received transition the message into view */
-.notification.received .notification__message {
+.received .notification-message {
     transform: translateX(0%);
+    display: block;
     opacity: 1;
     visibility: visible;
 }
 /* change the border color according to the different modifiers
 ! for each modifier specify also an svg icon in the background, to highlight the message
 */
-.message--info {
-    border-left-color: #90dee9;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle stroke="none" fill="%2390dee9" cx="50" cy="22" r="8"></circle><path fill="none" stroke="%2390dee9" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 45 40 h 5 v 40 h -5 h 10"></path></svg>'),
-    hsl(0, 0%, 100%);
-    background-repeat: no-repeat;
-    background-size: 35px;
-    background-position: 100% 100%;
-}
-.message--success {
-    border-left-color: hsl(120, 67%, 74%);
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%2390e990" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 20 52 l 25 25 l 30 -50"></path></svg>'),
-    hsl(0, 0%, 100%);
-    background-repeat: no-repeat;
-    background-size: 35px;
-    background-position: 100% 100%;
-}
-.message--warning {
-    border-left-color: hsl(54, 67%, 74%);
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%23e9e090" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 50 18 v 40"></path><circle stroke="none" fill="%23e9e090" cx="50" cy="78" r="8"></circle></svg>'),
-    hsl(0, 0%, 100%);
-    background-repeat: no-repeat;
-    background-size: 35px;
-    background-position: 100% 100%;
-}
-.message--danger {
-    border-left-color: hsl(0, 67%, 74%);
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g transform="translate(50 50) rotate(45)"><path fill="none" stroke="%23e99090" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 0 -30 v 60 z M -30 0 h 60"></path></g></svg>'),
-    hsl(0, 0%, 100%);
-    background-repeat: no-repeat;
-    background-size: 35px;
-    background-position: 100% 100%;
-}
+/*.message--info {*/
+/*    border-left-color: #ec2b00;*/
+/*    !*background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle stroke="none" fill="%2390dee9" cx="50" cy="22" r="8"></circle><path fill="none" stroke="%2390dee9" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 45 40 h 5 v 40 h -5 h 10"></path></svg>'),*!*/
+/*    hsl(0, 0%, 100%);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 35px;*/
+/*    background-position: 100% 100%;*/
+/*}*/
+/*.message--success {*/
+/*    border-left-color: hsl(120, 67%, 74%);*/
+/*    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%2390e990" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 20 52 l 25 25 l 30 -50"></path></svg>'),*/
+/*    hsl(0, 0%, 100%);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 35px;*/
+/*    background-position: 100% 100%;*/
+/*}*/
+/*.message--warning {*/
+/*    border-left-color: hsl(54, 67%, 74%);*/
+/*    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%23e9e090" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 50 18 v 40"></path><circle stroke="none" fill="%23e9e090" cx="50" cy="78" r="8"></circle></svg>'),*/
+/*    hsl(0, 0%, 100%);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 35px;*/
+/*    background-position: 100% 100%;*/
+/*}*/
+/*.message--danger {*/
+/*    border-left-color: hsl(0, 67%, 74%);*/
+/*    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g transform="translate(50 50) rotate(45)"><path fill="none" stroke="%23e99090" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" d="M 0 -30 v 60 z M -30 0 h 60"></path></g></svg>'),*/
+/*    hsl(0, 0%, 100%);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 35px;*/
+/*    background-position: 100% 100%;*/
+/*}*/

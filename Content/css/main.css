@@ -1893,8 +1893,8 @@ video {
 }
 
 .shadow-Box {
-  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.1);
-  --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+  --tw-shadow: 0 0 15px -2px rgba(0, 0, 0, 0.1);
+  --tw-shadow-colored: 0 0 15px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -2205,6 +2205,20 @@ a {
     outline: none;
   }
 }
+
+/* Chrome, Safari, Edge, Opera */
+
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+
+/* Firefox */
+
+/* input[type=number] {
+  -moz-appearance: textfield;
+} */
 
 .productRating {
   direction: ltr !important;
@@ -2810,7 +2824,7 @@ footer.desktopFooter .footerBox li a:hover {
 
 /*Responsive*/
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 900px) {
   /*Index*/
 
   footer.desktopFooter {
@@ -3149,6 +3163,7 @@ footer.desktopFooter .footerBox li a:hover {
   width: 100%;
   background-color: var(--primary-color);
   color: white;
+  font-weight: 600;
   padding: 12px;
   border-radius: 10px;
   display: flex;
@@ -3265,13 +3280,13 @@ footer.desktopFooter .footerBox li a:hover {
   text-align: center;
   margin-top: 5px;
   border-top: 1px solid #f2f2f2;
-  background-color: #595d6a;
+  background-color: #ffffff;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .actual-price {
-  color: white !important;
+  color: #4b4b4b !important;
 }
 
 .product-title {
@@ -4310,7 +4325,7 @@ svg .cls-1 {
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index: 10000;
+  z-index: 100000;
   bottom: 0;
   left: -400px;
   background-color: #fff;
@@ -4337,13 +4352,647 @@ svg .cls-1 {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 30px;
+  padding: 15px;
   --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, .1);
   --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   margin-top: 20px;
   border-radius: 15px !important;
 }
+
+.reward-points-page .page-body .reward-points-overview .current-balance {
+  line-height: 25px;
+  text-align: center;
+}
+
+/* //////////////////////////////////////////////////////////  Media Query Style  */
+
+@media (min-width:900px) {
+  .reward-points-page .page-body .reward-points-history {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-x: hidden !important;
+    padding: 5px
+  }
+
+  .reward-points-page .page-body .reward-points-history .rewardPointsItem {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 5px rgb(0 0 0/15%);
+    border-radius: 10px;
+    gap: 15px;
+  }
+
+  /* //////////////////////////////////////////////////////////// LoginPage style */
+
+  .loginBox {
+    --tw-shadow: 0 0 25px -2px rgba(0, 0, 0, .1);
+    --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-radius: 15px !important;
+    padding: 20px;
+    width: 40%;
+    margin: auto;
+  }
+
+  .loginpage-container {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+  }
+
+  .loginpage-svg {
+    width: 35%;
+    text-align: center;
+    margin: auto;
+  }
+
+  .register-state .login-inputBox {
+    font-size: 14px;
+  }
+}
+
+/* ///////////////////////////////////////// Mobile */
+
+@media (max-width:899px) {
+  .reward-points-page .page-body .reward-points-history {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    flex-direction: column;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-x: hidden !important;
+    padding: 5px
+  }
+
+  .reward-points-page .page-body .reward-points-history .rewardPointsItem {
+    width: 100%;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 5px rgb(0 0 0/15%);
+    border-radius: 10px;
+    gap: 15px;
+  }
+
+  /* //////////////////////////////////////////////////////////// LoginPage style */
+
+  .loginpage-container {
+    display: flex;
+    gap: 10px;
+    flex-direction: column-reverse;
+    margin: 25px 0;
+    padding: 0 20px !important;
+  }
+
+  .loginBox {
+    --tw-shadow: 0 0 25px -2px rgba(0, 0, 0, .1);
+    --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-radius: 15px !important;
+    padding: 20px;
+    width: 600px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .loginpage-svg {
+    width: 65%;
+    text-align: center;
+    margin: auto;
+  }
+
+  .login-box-logo {
+    display: none;
+  }
+
+  .loginpage-svg svg {
+    height: 200px;
+  }
+
+  .register-state .login-inputBox {
+    font-size: 14px;
+  }
+
+  .conform-numberbox .editPhoneNumber {
+    padding-top: 15px;
+  }
+}
+
+/* ////////////////////////////////////////////////////////// quary End */
+
+.login-soroush-logo {
+  width: 156px;
+}
+
+.login-errorbox p {
+  height: 34px;
+  max-height: 34px;
+  transition-duration: .1s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.show-login-errorbox {
+  transition-duration: .3s !important;
+  height: auto !important;
+  max-height: unset !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.register-state .conform-numberbox .phoneNo {
+  font-weight: 600;
+}
+
+/* .registerpage-overlay {
+  position: fixed;
+  inset: 0rem;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(0.125rem);
+  border-radius: 0rem;
+  z-index: 1000;
+  display: none;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  user-select: none !important;
+} */
+
+/* spinner */
+
+.login-spin {
+  display: none;
+  width: 30px;
+  height: 30px;
+  /* border: 4px solid rgba(177, 14, 14, .3); */
+  border: 4px solid rgba(177, 14, 14, .3);
+  border-top-color: var(--main-color);
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+.login-spin-resendCode {
+  display: none;
+  width: 30px;
+  height: 30px;
+  /* border: 4px solid rgba(177, 14, 14, .3); */
+  border: 4px solid rgba(177, 14, 14, .3);
+  border-top-color: var(--main-color);
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+.login-spin-sendCode {
+  display: none;
+  width: 30px;
+  height: 30px;
+  /* border: 4px solid rgba(177, 14, 14, .3); */
+  border: 4px solid rgba(177, 14, 14, .3);
+  border-top-color: var(--main-color);
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  display: block !important;
+}
+
+.login-spin-sendCodebox {
+  left: 44%;
+  top: 7px;
+}
+
+/* ////////////////////////////////////////////////////////// */
+
+.reward-points-page .page-body .reward-points-history .rewardPointsItem .message label {
+  font-size: 15px !important;
+}
+
+.reward-points-page .page-body .reward-points-history .rewardPointsItem .message span {
+  font-size: 15px !important;
+}
+
+/* //////////////////////////////////////////////// Verification-Input-Code */
+
+.verification-code-input .form-control {
+  display: block;
+  height: 45px;
+  margin-right: 0.5rem;
+  text-align: center;
+  font-size: 1.25rem;
+  border: 1px solid lightgray;
+  color: #555555;
+  border-radius: 10px;
+  width: 48px;
+  min-width: 0;
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.verification-code-input .code-input-item {
+  direction: ltr !important;
+}
+
+.logInElementState {
+  display: none !important;
+}
+
+/* .register-btn-hide {
+  transition-duration: .1s !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.register-btn-show {
+  transition-duration: .3s;
+  opacity: 1;
+  visibility: visible;
+} */
+
+/* /////////////////////////////////////////////// Resend Verificatiob code */
+
+.resend-code {
+  height: 34px;
+  max-height: 34px;
+  transition-duration: .1s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.resend-code-show {
+  transition-duration: .3s !important;
+  height: auto !important;
+  max-height: unset !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.disableLoginBtn {
+  background-color: #f2f2f2 !important;
+}
+
+/* .form-control:last-child {
+  margin-right: 0;
+} */
+
+/* /////////////////////////////////////////////////  New Otp Design */
+
+.otp-container,
+.email-otp-container {
+  direction: ltr;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.otp-input,
+.email-otp-input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.otp-input:focus,
+.email-otp-input:focus {
+  border-color: #007bff;
+}
+
+#verificationCode,
+#emailverificationCode {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#verificationCode:focus,
+#emailverificationCode:focus {
+  border-color: #007bff;
+}
+
+.email-otp {
+  margin-top: 25px;
+}
+
+/* ////////////////////////////////////////////// */
+
+.customer-voiceRecoder {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 30px;
+  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, .1);
+  --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 15px !important;
+  padding: 35px 15px;
+}
+
+.audio-recording-container {
+  /* view port height*/
+  /*targeting Chrome & Safari*/
+  /* display: -webkit-flex; */
+  /*targeting IE10*/
+  /* display: -ms-flex; */
+  /* display: flex;
+  flex-direction: column; */
+  /* justify-content: center; */
+  /*horizontal centering*/
+  /* align-items: center; */
+}
+
+.start-recording-button {
+  font-size: 70px;
+  color: #435f7a;
+  cursor: pointer;
+  opacity: .5;
+  margin-bottom: 30px;
+}
+
+.start-recording-button:hover {
+  opacity: 1;
+}
+
+.recording-contorl-buttons-container {
+  /*targeting Chrome & Safari*/
+  /*targeting IE10*/
+  display: -ms-flex;
+  display: flex;
+  background-color: #f8f8f8;
+  justify-content: center;
+  /*horizontal centering*/
+  align-items: center;
+  width: 334px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.recording-contorl-buttons-container div:first-child {
+  border-left: 1px solid var(--border-color);
+}
+
+.recording-contorl-buttons-container div:nth-child(2) {
+  border-left: 1px solid var(--border-color);
+}
+
+.cancel-recording-button,
+.stop-recording-button {
+  font-size: 70px;
+  cursor: pointer;
+}
+
+.cancel-recording-button {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  opacity: 0.7;
+}
+
+.cancel-recording-button:hover {
+  color: rgb(206, 4, 4);
+}
+
+.stop-recording-button {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #33cc33;
+  opacity: 0.7;
+}
+
+.stop-recording-button:hover {
+  color: #27a527;
+}
+
+.recording-elapsed-time {
+  width: 100%;
+  height: 42px;
+  /*targeting Chrome & Safari*/
+  /*targeting IE10*/
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  /*horizontal centering*/
+  align-items: center;
+  gap: 10px;
+}
+
+.red-recording-dot {
+  font-size: 25px;
+  color: red;
+  margin-right: 12px;
+  /*transitions with Firefox, IE and Opera Support browser support*/
+  animation-name: flashing-recording-dot;
+  -webkit-animation-name: flashing-recording-dot;
+  -moz-animation-name: flashing-recording-dot;
+  -o-animation-name: flashing-recording-dot;
+  animation-duration: 2s;
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+}
+
+.red-recording-dot .cls-1 {
+  stroke: none !important;
+}
+
+/* The animation code */
+
+@keyframes flashing-recording-dot {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.elapsed-time {
+  color: #515151;
+  font-size: 20px;
+}
+
+.recording-contorl-buttons-container.hide {
+  display: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(82, 76, 76, 0.35);
+  /*targeting Chrome & Safari*/
+  /*targeting IE10*/
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  /*horizontal centering*/
+  align-items: center;
+}
+
+.overlay.hide {
+  display: none;
+}
+
+.browser-not-supporting-audio-recording-box {
+  /*targeting Chrome & Safari*/
+  /*targeting IE10*/
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /*horizontal centering*/
+  align-items: center;
+  width: 317px;
+  height: 119px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.close-browser-not-supported-box {
+  cursor: pointer;
+  background-color: #abc1c05c;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+}
+
+.close-browser-not-supported-box:hover {
+  background-color: #92a5a45c;
+}
+
+.close-browser-not-supported-box:focus {
+  outline: none;
+  border: none;
+}
+
+.audio-element.hide {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.text-indication-of-audio-playing-container {
+  height: 20px;
+}
+
+.text-indication-of-audio-playing {
+  font-size: 20px;
+}
+
+.text-indication-of-audio-playing.hide {
+  display: none;
+}
+
+/* 3 Dots animation*/
+
+.text-indication-of-audio-playing span {
+  /*transitions with Firefox, IE and Opera Support browser support*/
+  animation-name: blinking-dot;
+  -webkit-animation-name: blinking-dot;
+  -moz-animation-name: blinking-dot;
+  -o-animation-name: blinking-dot;
+  animation-duration: 2s;
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+}
+
+.text-indication-of-audio-playing span:nth-child(2) {
+  animation-delay: .4s;
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  -o-animation-delay: .4s;
+}
+
+.text-indication-of-audio-playing span:nth-child(3) {
+  animation-delay: .8s;
+  -webkit-animation-delay: .8s;
+  -moz-animation-delay: .8s;
+  -o-animation-delay: .8s;
+}
+
+/* The animation code */
+
+@keyframes blinking-dot {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The animation code */
+
+/* The animation code */
+
+/* The animation code */
 
 /* .admin-header-links {
   display: flex;
@@ -6029,8 +6678,8 @@ li {
   }
 
   .lg\:shadow-Box {
-    --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.1);
-    --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+    --tw-shadow: 0 0 15px -2px rgba(0, 0, 0, 0.1);
+    --tw-shadow-colored: 0 0 15px -2px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 

@@ -1,13 +1,14 @@
 
-window.addEventListener("load", function () {
+
     function hiddenNotification() {
-        const buttonDismiss = document.getElementById('notification')
+        const buttonDismiss = document.getElementById('button-dismiss')
         buttonDismiss.addEventListener('click', () => {
             const element = document.getElementById('notification')
             element.classList.remove('received')
+            element.classList.remove('visibleNotification')
         })
     }
-
+  
     function checkBarNotification() {
         const addToCartButton = document.querySelectorAll('.addToCard-plus-category')
         const notification = document.getElementById('notification')
@@ -18,15 +19,17 @@ window.addEventListener("load", function () {
                 const element = document.querySelector("#bar-notification .success")[0]
                 console.log('element',element)
                 if(element !== null && element !== undefined){
-                    console.log('@#@#@##@#notify', element.classList.contains('success'))
+                    // console.log('@#@#@##@#notify', element.classList.contains('success'))
                     
             if (element.classList.contains('success')) {
                   notification.classList.add('received')
+                notification.classList.add('visibleNotification')
                 element.style.display = "none"
             } else {
                 // console.log('Not Received')
                 element.style.display = "none"
                  notification.classList.remove('received')
+                notification.classList.remove('visibleNotification')
               }
                 }
           })
@@ -39,9 +42,15 @@ window.addEventListener("load", function () {
   
     checkBarNotification()
     hiddenNotification()
-    // const myTimeout = setTimeout(hiddenByTime, 5000);
-    // function myStopFunction() {
-    //     clearTimeout(myTimeout);
+
+
+
+    // let notificationExist = document.getElementById('notification').classList.contains('received')
+    // let hideNotify = document.getElementById('notification')
+    // if(notificationExist) {
+    //     setTimeout(function () {
+    //         // hideNotify.classList.remove('received')
+    //     }, 5000)
     // }
     
-})
+    

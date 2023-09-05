@@ -181,7 +181,7 @@ CartManagerRedux.getShoppingCartData()
 function cartHeader(totalPrice, cartCountItems) {
     return `
     <div class="sticky top-0 w-full bg-[#f7f7f7] shadow-md z-[9999]">
-        <div class="flex justify-between items-center gap-[60px] p-2 border-b-[1px] border-solid border-[#f0f0f0]">
+        <div class="flex justify-between items-center gap-[60px] pr-2 pl-4 py-2 border-b-[1px] border-solid border-[#f0f0f0]">
             <div
                 class="flex items-center">
                 <span class="text-[14px] text-zinc-500 p-1">سبد خرید</span>
