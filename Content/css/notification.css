@@ -77,12 +77,12 @@
 }
 
 .notification-message {
-    position:absolute;
-    top: 13rem;
+    position:fixed;
+    top: 12rem;
     z-index: 1000;
     right: 1rem;
-    width: 350px;
-    height: 70px;
+    width: 320px;
+    height: 90px;
     /*padding: 0 15px 0 0;*/
     margin: 1rem 0;
     /* style the div as a rounded rectangle with a border on the left segment */
@@ -90,7 +90,7 @@
     border-radius: 10px;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1), 0 2px 3px hsla(0, 0%, 0%, 0.1);
     /*border-left: 0.5rem solid hsl(347, 58%, 36%, 0.1);*/
-    border-left: 0.5rem solid #f30235;
+    /*border-left: 0.5rem solid #f30235;*/
     /* by default hide the element from sight and include a transition for the chosen properties */
     transform: translateX(100%);
     opacity: 0;
@@ -117,7 +117,7 @@
     color:#ec2b00;
 }
 .notification-message p {
-    max-width: 320px;
+    max-width: 300px;
     font-size: 0.8rem;
     grid-column: 1/-1;
 }

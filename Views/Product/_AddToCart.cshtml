@@ -614,14 +614,16 @@ else
     }
     class CustomerVoice{
       static custVoiceAddToCart = async (url, productId) => {
+         let voiceCustomerAttribute = document.getElementById('product_attribute_671')         
           let AddtoCartBtn = document.querySelector('.product-action-btn')
           ///////////////////////////////////////////////////////////////////////////////  Loading addToCart
                    AddtoCartBtn.classList.add('loading')
                    AddtoCartBtn.disabled = true
           ///////////////////////////////////////////////////////////////////////////////  
+          console.log('voiceCustomerAttribute',voiceCustomerAttribute.value)
               let productData = ''
                    productData = {
-                         [`product_attribute_671`] : '',
+                         [`product_attribute_671`] : voiceCustomerAttribute.value,
                          [`addtocart_${productId}.EnteredQuantity`] : 1,
                          ...PRODUCT_ATTRIBUTES,
                          }                     
@@ -631,7 +633,7 @@ else
                         type: "POST",
                         data: productData
                     });
-         // CartManagerRedux.getShoppingCartData() 
+          CartManagerRedux.getShoppingCartData() 
          setTimeout(function (){
               AddtoCartBtn.classList.remove('loading')
                        AddtoCartBtn.disabled = false
@@ -648,7 +650,6 @@ else
           ///////////////////////////////////////////  
           let cartItems = response.Items
           if (cartItems.length !== 0){
-                    console.log('Response-Customer-Voice',cartItems)
           }
 
         }

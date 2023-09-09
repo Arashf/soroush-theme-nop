@@ -1,6 +1,9 @@
 
 
 // const canvas = document.querySelector('.visualizer');
+const errorNotify = document.querySelector('#notification .notification-info p')
+let notificationExist = document.getElementById('notification').classList.contains('received')
+let hideNotify = document.getElementById('notification')
 
 var microphoneButton = document.getElementById("startRecordingBtn");
 var recordingControlButtonsContainer = document.getElementsByClassName("recording-contorl-buttons-container")[0];
@@ -12,11 +15,15 @@ var overlay = document.getElementsByClassName("overlay")[0];
 var audioElement = document.getElementsByClassName("audio-element")[0];
 var audioElementSource = document.getElementsByClassName("audio-element")[0]
     .getElementsByTagName("source")[0];
+// var audioElementSource = document.getElementsByClassName("audio-element")[0]
 var textIndicatorOfAudiPlaying = document.getElementsByClassName("text-indication-of-audio-playing")[0];
 
 const uploadSection = document.getElementById('uploadSection');
 const removeRecordingVoice = document.getElementById('removeRecordingVoice')
 const customerVoiceTitle = document.getElementById('customerVoiceTitle')
+const uploadBtn =  document.getElementById('upload')
+const uploadBtnsvg =  document.querySelector('#upload svg')
+const uploadBtnspan =  document.querySelector('#upload span')
 
 //Listeners
 
@@ -34,6 +41,7 @@ navigator.mediaDevices
             .getElementById('startRecordingBtn')
             .addEventListener('click', function () {
                 console.log('startRecordingBtn')
+                
                 mediaRecorder.start()
             })
             
@@ -41,9 +49,15 @@ navigator.mediaDevices
         document
             .getElementById('removeRecordingVoice')
             .addEventListener('click', function () {
-                const audio = document.getElementById('audio')
-                audio.src = ''
-                audio.setAttribute('controls', false)
+                 // audioRecorder.stop();
+                console.log('cancelAudioRecording')
+                 // cancelAudioRecording()
+                 // const source = document.querySelector('#audio source')
+                 //    source.src = ''
+                // document.querySelectorAll('audio').forEach((item)=>{
+                //     item.remove()
+                // })
+                 // audio.setAttribute('controls', false)
             })
 
         document
@@ -134,6 +148,12 @@ removeRecordingVoice.addEventListener( ('click'), function(){
     uploadSection.classList.add("hide");
     recordingControlButtonsContainer.classList.add("hide");
     microphoneButton.classList.remove("hide")
+    ////////////////////////////////////////////////
+    
+    const audio = document.querySelector('audio')
+    // audio.currentTime = 0
+    audio.pause()
+    
     
 })
 
@@ -217,6 +237,7 @@ function startAudioRecording() {
             handleDisplayingRecordingControlButtons();
         })
         .catch(error => { //on error
+            
             //No Browser Support Error
             if (error.message.includes("mediaDevices API or getUserMedia method is not supported in this browser.")) {
                 console.log("To record audio, use browsers like Chrome and Firefox.");
@@ -229,8 +250,10 @@ function startAudioRecording() {
                     console.log("An AbortError has occured.");
                     break;
                 case 'NotAllowedError': //error from navigator.mediaDevices.getUserMedia
-                    console.log("A NotAllowedError has occured. User might have denied permission.");
-                    break;
+                     console.log("A NotAllowedError has occured. User might have denied permission.");
+                    //  errorNotify.innerHTML = 'لطفا از قسمت تنظیمات اجازه دسترسی به میکروفن را بدهید'
+                    // document.getElementById('notification').classList.add('received')
+                     break;
                 case 'NotFoundError': //error from navigator.mediaDevices.getUserMedia
                     console.log("A NotFoundError has occured.");
                     break;
@@ -252,7 +275,14 @@ function startAudioRecording() {
                 default:
                     console.log("An error occured with the error name " + error.name);
             };
+            
         });
+    // console.log('notificationExist',notificationExist)
+    // if (notificationExist) {
+    //     setTimeout(function () {
+    //         document.getElementById('notification').classList.remove('received')
+    //     }, 5000)
+    // }
 }
 /** Stop the currently started audio recording & sends it
  */
@@ -281,7 +311,7 @@ function stopAudioRecording() {
 /** Cancel the currently started audio recording */
 function cancelAudioRecording() {
     console.log("Canceling audio...");
-    audioRecorder.cancel();
+    // audioRecorder.cancel();
     handleCancelingRecording()
 }
 
@@ -300,10 +330,12 @@ function playAudio(recorderAudioAsBlob) {
 
         //If this is the first audio playing, create a source element
         //as pre populating the HTML with a source of empty src causes error
-        if (!audioElementSource) //if its not defined create it (happens first time only)
+        if (!audioElementSource) { //if its not defined create it (happens first time only)
             createSourceForAudioElement();
+        }
 
         //set the audio element's source using the base64 URL
+        // console.log(audioElementSource)
         audioElementSource.src = base64URL;
 
         //set the type of the audio element based on the recorded audio's Blob type
@@ -547,13 +579,12 @@ function generateGuid() {
 }
 ////////////////////////////////////////////// UploadRecording
 function uploadRecording(formData) {
-    // const formdata = new FormData()
-    // formdata.append('qquuid', formData.get('qquuid'))
-    // formdata.append('qqfilename', formData.get('qqfilename'))
-    // formdata.append('qqtotalfilesize', formData.get('qqtotalfilesize'))
-    // formdata.append('qqfile', formData.get('qqfile'), { type: 'audio/wav' }, formData.get('audio/wav'))
-    // Send the Blob to the API endpoint using the Fetch API
-     let url = `${window.location.origin}/uploadfileproductattribute/671`
+    upload.disable = true
+    uploadBtnsvg.style.display = 'none'
+    uploadBtnspan.style.display = 'none'
+    upload.classList.add('loading')
+    const voiceCustomerAttribute = document.getElementById('product_attribute_671')
+    let url = `${window.location.origin}/uploadfileproductattribute/671`
     fetch(url, {
         headers: {
             accept: 'application/json',
@@ -565,15 +596,49 @@ function uploadRecording(formData) {
         .then((response) => response.json())
         .then(function (response) {
             console.log('Recording sent to API')
-
             if (response.success) {
-                console.log('File uploaded successfully!',response)
+                const audio = document.querySelector('audio')
+                // audio.currentTime = 0
+                audio.pause()
+                voiceCustomerAttribute.value = response.downloadGuid
+                //////////////////////////////////////////////////
+                uploadSection.classList.add('hide')
+                successUpload.classList.add('successUpload-show-block')
+                 setTimeout(function (){
+                    successUpload.classList.add('successUpload-show')
+                 },1000)
+                
+                //////////////////////////////////////////////////////
+                //  errorNotify.innerHTML = response.message
+                // document.getElementById('notification').classList.add('received')
                 // TODO: set downloadGuid on input
             } else {
-                console.error('Error uploading file:', response.message)
             }
+            upload.disable = false
+            uploadBtnsvg.style.display = 'block'
+            uploadBtnspan.style.display = 'block'
+            upload.classList.remove('loading')
+            // let notificationExist = document.getElementById('notification').classList.contains('received')
+            // let hideNotify = document.getElementById('notification')
+            //
+            // if(notificationExist) {
+            //     setTimeout(function () {
+            //         hideNotify.classList.remove('received')
+            //     }, 5000)
+            // }
         })
         .catch(function (error) {
-            console.error('Error sending recording to API:', error)
         })
+   
+    
+}
+//////////////////////////////////////////////////////////
+function confirmUploadVoice(){
+    successUpload.classList.remove('successUpload-show-block')
+    successUpload.classList.remove('successUpload-show')
+    uploadSection.classList.remove('hide')
+
+
+    handleCancelingRecording()
+    
 }

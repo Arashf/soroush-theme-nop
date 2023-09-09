@@ -2358,11 +2358,43 @@ div.closebtn .mainOptionHead {
   .topBlockHidden-desktop {
     display: none;
   }
+
+  .cart-sideNav {
+    width: 100%;
+    width: 350px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 100000;
+    bottom: 0;
+    left: -500px;
+    background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: .5s;
+  }
 }
 
 /* ////////////////////////////////////////////////////////////// Query Mobile */
 
 @media (min-width: 900px) {
+  .cart-sideNav {
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 100000;
+    bottom: 0;
+    left: -500px;
+    background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: .5s;
+  }
+
   ul.breadcrumb li a {
     text-decoration: none;
     padding: 0 6px 0 6px;
@@ -2625,8 +2657,8 @@ header.desktop .headerCtaMenu li svg {
   padding: 10px 14px !important;
   font-size: 13px;
   width: 100% !important;
-  max-width: 100%;
-  min-width: 190px !important;
+  /* max-width: 100%; */
+  /* min-width: 190px !important; */
   border-radius: 10px;
   background-color: #f0f0f1;
   transition-duration: 0.3s;
@@ -2882,7 +2914,8 @@ footer.desktopFooter .footerBox li a:hover {
   }
 
   .sidenav-mobile {
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     height: 100%;
     position: fixed;
     z-index: 1000;
@@ -4319,21 +4352,6 @@ svg .cls-1 {
 
 /* /////////////////////////////////////////////// Cart SideNav */
 
-.cart-sideNav {
-  width: 350px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  z-index: 100000;
-  bottom: 0;
-  left: -400px;
-  background-color: #fff;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: .5s;
-}
-
 .cart-counterbox {
   box-shadow: 0 1px 5px rgb(0 0 0/15%);
 }
@@ -4711,6 +4729,7 @@ svg .cls-1 {
 /* ////////////////////////////////////////////// */
 
 .customer-voiceRecoder {
+  width: 300px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -4741,13 +4760,13 @@ svg .cls-1 {
   font-size: 70px;
   color: #435f7a;
   cursor: pointer;
-  opacity: .5;
+  opacity: 1;
   margin-bottom: 30px;
 }
 
-.start-recording-button:hover {
+/* .start-recording-button:hover {
   opacity: 1;
-}
+} */
 
 .recording-contorl-buttons-container {
   /*targeting Chrome & Safari*/
@@ -4758,7 +4777,7 @@ svg .cls-1 {
   justify-content: center;
   /*horizontal centering*/
   align-items: center;
-  width: 334px;
+  width: 230px;
   margin-bottom: 30px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -4779,7 +4798,7 @@ svg .cls-1 {
 }
 
 .cancel-recording-button {
-  width: 100%;
+  width: 40%;
   height: 42px;
   display: flex;
   justify-content: center;
@@ -4793,7 +4812,7 @@ svg .cls-1 {
 }
 
 .stop-recording-button {
-  width: 100%;
+  width: 40%;
   height: 42px;
   display: flex;
   justify-content: center;
@@ -4920,6 +4939,10 @@ svg .cls-1 {
   border: none;
 }
 
+.audio-element {
+  max-width: 280px;
+}
+
 .audio-element.hide {
   display: none;
 }
@@ -4993,6 +5016,73 @@ svg .cls-1 {
 /* The animation code */
 
 /* The animation code */
+
+/* //////////////////////////////////////////// Upload Voice by File */
+
+.download-voice a {
+  width: 50%;
+  border: 2px solid lightgray;
+  padding: 5px 40px;
+  border-radius: 10px;
+}
+
+.remove-voice {
+  width: 40%;
+  border: 1px solid lightgray;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+
+.qq-upload-button {
+  border-radius: 10px;
+}
+
+/* /////////////////////////////////////////////// */
+
+.successUpload {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px;
+  transition-duration: .1s;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.successUpload-show-block {
+  display: block
+}
+
+.successUpload-show {
+  transition-duration: .3s !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ///////////////////////////////////////////////////////////// */
+
+.button-1:hover,
+.eu-cookie-bar-notification button:hover,
+.mini-shopping-cart .buttons button:hover,
+.login-form-in-header .login-button:hover,
+.search-box .search-box-button:hover,
+.newsletter-email .newsletter-subscribe-button:hover,
+.poll .buttons button:hover,
+.contact-vendor-button:hover,
+.product-reviews-page .title .write-review-title:hover,
+.mfp-container .apply-shipping-button:hover,
+.write-review .button-1:hover,
+.qq-uploader .qq-upload-button:hover,
+.blog-posts .read-more:hover,
+.news-items .read-more:hover,
+.open-comment-form:hover,
+.forums-table-section .view-all a:hover,
+.topic-post .post-actions .quote-post-button:hover,
+.ropc .complete-button button:hover {
+  background-color: none !important;
+}
+
+/* /////////////////////////////////////////////////////////// */
 
 /* .admin-header-links {
   display: flex;

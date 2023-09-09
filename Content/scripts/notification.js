@@ -45,12 +45,12 @@
 
 
 
-    // let notificationExist = document.getElementById('notification').classList.contains('received')
-    // let hideNotify = document.getElementById('notification')
-    // if(notificationExist) {
-    //     setTimeout(function () {
-    //         // hideNotify.classList.remove('received')
-    //     }, 5000)
-    // }
+    let notificationExist = document.getElementById('notification').classList.contains('received')
+    let hideNotify = document.getElementById('notification')
+    if(notificationExist) {
+        setTimeout(function () {
+             hideNotify.classList.remove('received')
+        }, 5000)
+    }
     
     

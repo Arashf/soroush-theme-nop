@@ -85,14 +85,15 @@ store.subscribe(() => {
        
     html = html + `<div>`
     data.Items.forEach((element) => {
+        console.log('Element: ',element)
         html = html + cartItemGenerator(element)
     })
     html = html + `</div>`
 
 
-    if(subTotal > 100000){
+    if(subTotal > 99000){
     html = html + cartFooterGeneratorMorePrice()
-    } else if(subTotal > 0 && subTotal < 100000) {
+    } else if(subTotal > 0 && subTotal < 99000) {
         html = html + cartFooterGeneratorLessPrice()
     }  else if(subTotal === 0){
         html = html + emptyCart()
@@ -215,7 +216,7 @@ function cartHeader(totalPrice, cartCountItems) {
                         مبلغ سفارش
                     </span>
                 </div>
-                <div class="text-[#12b886] text-[15px] font-semibold">
+                <div class="text-[#12b886] text-[15px] font-semibold pl-2">
                     ${totalPrice}
                 </div>
             </div>
@@ -229,11 +230,11 @@ function cartItemGenerator(element) {
         <div id="cartProductBox-${element.Id}" class="h-110px border-b-[1px] border-solid border-gray-cardMobileborder mt-4 mb-4">
             <div class="flex h-[120px] pl-3 pr-1">
                 <div class="flex-initial w-[30%]">
-                    <div>
+                    <a href="${window.location.origin}/${element.ProductSeName}">
                         <div class="relative w-full h-[100px]">
                             <img title="${element.Picture.Title}" alt="${element.Picture.AlternateText}" loading="lazy" sizes="100vw" src="${element.Picture.ImageUrl}" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="flex flex-initial w-[70%] flex-col">
                     <div class="text-[13px] leading-[20px] text-zinc-500 font-semibold">${element.ProductName}</div>
