@@ -5,6 +5,8 @@ const errorNotify = document.querySelector('#notification .notification-info p')
 let notificationExist = document.getElementById('notification').classList.contains('received')
 let hideNotify = document.getElementById('notification')
 
+// const  cancelRecordingButton = document.getElementById('cancelRecordingButton')
+
 var microphoneButton = document.getElementById("startRecordingBtn");
 var recordingControlButtonsContainer = document.getElementsByClassName("recording-contorl-buttons-container")[0];
 var stopRecordingButton = document.getElementsByClassName("stop-recording-button")[0];
@@ -18,66 +20,78 @@ var audioElementSource = document.getElementsByClassName("audio-element")[0]
 // var audioElementSource = document.getElementsByClassName("audio-element")[0]
 var textIndicatorOfAudiPlaying = document.getElementsByClassName("text-indication-of-audio-playing")[0];
 
+const voiceCustomerAttribute = document.getElementById('product_attribute_671')
+
+
 const uploadSection = document.getElementById('uploadSection');
 const removeRecordingVoice = document.getElementById('removeRecordingVoice')
-const customerVoiceTitle = document.getElementById('customerVoiceTitle')
+const customerVoiceTitle = document.querySelectorAll('customerVoiceTitle')
 const uploadBtn =  document.getElementById('upload')
 const uploadBtnsvg =  document.querySelector('#upload svg')
 const uploadBtnspan =  document.querySelector('#upload span')
 
-//Listeners
+let cancelRecordingVoice = true
 
+
+
+//Listeners
+let chunks = []
 ////////////////////////////////////////////////////////
 navigator.mediaDevices
     .getUserMedia({ audio: true })
     .then(function (stream) {
         // Create a new MediaRecorder object to record the audio
         const mediaRecorder = new MediaRecorder(stream)
-        let chunks = []
+       
         let formData = new FormData()
-
+        
+        
         // Start recording when the user clicks a button
         document
             .getElementById('startRecordingBtn')
             .addEventListener('click', function () {
                 console.log('startRecordingBtn')
-                
                 mediaRecorder.start()
             })
+        
+        // // Cancel Recording 
+        // document
+        //     .getElementById('cancelRecordingButton')
+        //     .addEventListener('click', function () {
+        //         console.log('click')
+        //
+        //     })
+        
+        
             
-        // // Stop recording when the user clicks a button
+        // // Remove recording when the user clicks a button
         document
             .getElementById('removeRecordingVoice')
             .addEventListener('click', function () {
-                 // audioRecorder.stop();
-                console.log('cancelAudioRecording')
-                 // cancelAudioRecording()
-                 // const source = document.querySelector('#audio source')
-                 //    source.src = ''
-                // document.querySelectorAll('audio').forEach((item)=>{
-                //     item.remove()
-                // })
-                 // audio.setAttribute('controls', false)
+                removeRecordingVoiceHandler()
             })
-
+        
+        
+        // // Stop recording when the user clicks a button
         document
             .getElementById('stop')
             .addEventListener('click', function () {
                 mediaRecorder.stop()
             })
-
+        
+        
+        // // Upload recording when the user clicks a button
         document
             .getElementById('upload')
             .addEventListener('click', function () {
                 uploadRecording(formData)
 
             })
-        
 
+        
         // When the MediaRecorder has data available, add it to the chunks array
         mediaRecorder.addEventListener('dataavailable', function (event) {
-            console.log('PushData', event.data)
-            chunks.push(event.data)
+                chunks.push(event.data)
         })
 
         // When the MediaRecorder stops, display the recorded audio as a voice and send it to the API endpoint
@@ -98,6 +112,8 @@ navigator.mediaDevices
             formData.append('qqtotalfilesize', fileSize)
             formData.append('qqfile', blob, { type: 'audio/wav' }, fileName)
         })
+        
+        
     })
     .catch(function (error) {
         console.error('Error getting user media:', error)
@@ -111,23 +127,14 @@ microphoneButton.onclick = startAudioRecording;
 stopRecordingButton.onclick = stopAudioRecording;
 
 //Listen to cancel recording button
+
 cancelRecordingButton.onclick = cancelAudioRecording;
 
 
 
-//Listen to when the ok button is clicked in the browser not supporting audio recording box
-
-// closeBrowserNotSupportedBoxButton.onclick = hideBrowserNotSupportedOverlay;
-
-//Listen to when the audio being played ends
-
-// audioElement.onended = hideTextIndicatorOfAudioPlaying;
-
 /** Displays recording control buttons */
 function handleDisplayingRecordingControlButtons() {
-    //Hide the microphone button that starts audio recording
      microphoneButton.classList.add("hide")
-    //Display the recording control buttons
     recordingControlButtonsContainer.classList.remove("hide");
     //Handle the displaying of the elapsed recording time
     handleElapsedRecordingTime();
@@ -139,28 +146,24 @@ function handleCancelingRecording() {
     uploadSection.classList.add("hide");
     recordingControlButtonsContainer.classList.add("hide");
     microphoneButton.classList.remove("hide")
-    clearInterval(elapsedTimeTimer);
+    clearInterval(elapsedTimeTimer)
+    
 }
 
 /** Remove Stop Recording Voice */
-removeRecordingVoice.addEventListener( ('click'), function(){
-    customerVoiceTitle.classList.remove("hide")
+function removeRecordingVoiceHandler(){
     uploadSection.classList.add("hide");
     recordingControlButtonsContainer.classList.add("hide");
     microphoneButton.classList.remove("hide")
     ////////////////////////////////////////////////
-    
+    voiceCustomerAttribute.value = ''
     const audio = document.querySelector('audio')
-    // audio.currentTime = 0
     audio.pause()
-    
-    
-})
+}
 
 /** Hide the displayed recording control buttons */
 function handleStopRecordingVoice() {
     microphoneButton.classList.add("hide")
-    customerVoiceTitle.classList.add("hide")
     recordingControlButtonsContainer.classList.add("hide");
     clearInterval(elapsedTimeTimer);
     uploadSection.classList.remove("hide");
@@ -207,9 +210,6 @@ var maximumRecordingTimeInHours = 1;
 
 /** Stores the reference of the setInterval function that controls the timer in audio recording*/
 var elapsedTimeTimer;
-
-
-
 
 
 /** Starts the audio recording*/
@@ -310,9 +310,10 @@ function stopAudioRecording() {
 
 /** Cancel the currently started audio recording */
 function cancelAudioRecording() {
+    voiceCustomerAttribute.value = ''
     console.log("Canceling audio...");
-    // audioRecorder.cancel();
-    handleCancelingRecording()
+    audioRecorder.cancel();
+     handleCancelingRecording()
 }
 
 /** Plays recorded audio using the audio element in the HTML document
@@ -480,8 +481,8 @@ var audioRecorder = {
             return navigator.mediaDevices.getUserMedia({ audio: true }/*of type MediaStreamConstraints*/)
                 //returns a promise that resolves to the audio stream
                 .then(stream /*of type MediaStream*/ => {
-
                     //save the reference of the stream to be able to stop it when necessary
+                    
                     audioRecorder.streamBeingCaptured = stream;
 
                     //create a media recorder instance by passing that stream into the MediaRecorder constructor
@@ -494,7 +495,12 @@ var audioRecorder = {
                     //add a dataavailable event listener in order to store the audio data Blobs when recording
                     audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
                         //store audio Blob object
+                       
+                      
                         audioRecorder.audioBlobs.push(event.data);
+                       
+                        console.log('store audio Blob', audioRecorder.audioBlobs)
+                        
                     });
 
                     //start the recording by calling the start method on the media recorder
@@ -547,7 +553,6 @@ var audioRecorder = {
     resetRecordingProperties: function () {
         audioRecorder.mediaRecorder = null;
         audioRecorder.streamBeingCaptured = null;
-
         /*No need to remove event listeners attached to mediaRecorder as
         If a DOM element which is removed is reference-free (no references pointing to it), the element itself is picked
         up by the garbage collector as well as any event handlers/listeners associated with it.
@@ -583,7 +588,6 @@ function uploadRecording(formData) {
     uploadBtnsvg.style.display = 'none'
     uploadBtnspan.style.display = 'none'
     upload.classList.add('loading')
-    const voiceCustomerAttribute = document.getElementById('product_attribute_671')
     let url = `${window.location.origin}/uploadfileproductattribute/671`
     fetch(url, {
         headers: {
@@ -633,12 +637,11 @@ function uploadRecording(formData) {
     
 }
 //////////////////////////////////////////////////////////
-function confirmUploadVoice(){
-    successUpload.classList.remove('successUpload-show-block')
-    successUpload.classList.remove('successUpload-show')
-    uploadSection.classList.remove('hide')
-
-
-    handleCancelingRecording()
-    
-}
+// function confirmUploadVoice(){
+//     successUpload.classList.remove('successUpload-show-block')
+//     successUpload.classList.remove('successUpload-show')
+//     uploadSection.classList.remove('hide')
+//     handleCancelingRecording()
+//    
+// }
+console.log('audioRecorder',audioRecorder.audioBlobs)

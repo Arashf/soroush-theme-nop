@@ -16,12 +16,12 @@
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.Info })
 }
 
-@section accountPageTitle
-    {
-    <div class="page-title">
-        <h1>@T("Account.MyAccount") - @T("Account.CustomerInfo")</h1>
-    </div>
-}
+@* @section accountPageTitle *@
+@*     { *@
+@*     <div class="page-title"> *@
+@*         <h1>@T("Account.MyAccount") - @T("Account.CustomerInfo")</h1> *@
+@*     </div> *@
+@* } *@
 
 @if (Model.CountryEnabled && Model.StateProvinceEnabled)
 {
@@ -54,7 +54,7 @@
     </script>
 }
 
-<div class="page account-page customer-info-page">
+<div class="container-base page account-page customer-info-page">
     <div class="page-body">
         <form asp-route="CustomerInfo" method="post">
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
@@ -62,7 +62,7 @@
                 <div class="title">
                     <strong>@T("Account.YourPersonalDetails")</strong>
                 </div>
-                <div class="form-fields">
+                <div class="form-fields ">
                     @if (Model.GenderEnabled)
                     {
                         <div class="inputs">
@@ -123,10 +123,14 @@
                         </div>
                     }
                     <div class="inputs">
-                        <label asp-for="Email" asp-postfix=":"></label>
-                        <input asp-for="Email" />
-                        <nop-required />
-                        <span asp-validation-for="Email"></span>
+                        <div class="email flex flex-col gap-2">
+                            <label asp-for="Email" asp-postfix=":"></label>
+                            <div class="flex gap-[10px]">
+                                <input asp-for="Email"/>
+                                <nop-required/>
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                        </div>
                     </div>
                     @if (!string.IsNullOrEmpty(Model.EmailToRevalidate))
                     {
@@ -155,7 +159,7 @@
                         }
                         else
                         {
-                            <div class="inputs">
+                            <div class="inputs mt-5">
                                 <label asp-for="Username" asp-postfix=":"></label>
                                 <span class="readonly-username">@Model.Username</span>
                             </div>
@@ -344,9 +348,11 @@
                         @if (Model.NewsletterEnabled)
                         {
                             <div class="inputs">
-                                <input asp-for="Newsletter" />
+                                <div class="flex gap-[6px] newsLetter">
+                                <input asp-for="Newsletter"/>
                                 <label asp-for="Newsletter"></label>
                                 <span asp-validation-for="Newsletter"></span>
+                                </div>
                             </div>
                         }
                         @if (Model.CustomerAttributes.Count > 0)

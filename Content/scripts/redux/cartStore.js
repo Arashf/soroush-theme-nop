@@ -276,7 +276,7 @@ function cartItemGenerator(element) {
 function cartFooterGeneratorMorePrice() {
     return ` <div class="w-full mt-auto sticky bottom-0 left-0">
           <div
-            class="bg-[#ffff] flex flex-col justify-between px-3 pb-[15px]
+            class="bg-[#ffff] flex flex-col justify-between px-3 pb-[20px]
                 border-t-[1px] border-solid border-gray-cardMobileborder"
           >
              <!-- <div
@@ -312,7 +312,7 @@ function cartFooterGeneratorMorePrice() {
 function cartFooterGeneratorLessPrice() {
     return ` <div class="w-full mt-auto sticky bottom-0 left-0">
           <div
-            class="bg-[#ffff] flex flex-col justify-between px-3 pb-[15px]
+            class="bg-[#ffff] flex flex-col justify-between px-3 pb-[20px]
                 border-t-[1px] border-solid border-gray-cardMobileborder"
           >
            <div class="w-full bg-[#e0e0e0] flex justify-center items-center gap-2 p-[10px] mt-2 rounded-[10px]">

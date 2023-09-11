@@ -182,7 +182,11 @@ class DOMManager {
   }
 }
 
+
+let outOfStockProduct = false
+
 class CartManager {
+    
   static productAddToCartAsync = async (url, productId) => {
       ///////////////////////////////////////////////////////////////////////////////  Loading addToCart
        let AddtoCartBtn =  document.querySelector('.product-action-btn')
@@ -400,6 +404,12 @@ class CartManager {
       let find = false
                        cartItems.map((childs) => {
                         if (childs.ProductId === @Model.ProductId) {
+       ////////////////////////////////////////////// Check Warning Product
+            if (childs.Warnings.length === 1){
+                outOfStockProduct = true
+            }
+                 // outOfStockProduct
+       //////////////////////////////////////////////           
       productMaxQuantity = childs.AllowedQuantities.length
                              if (childs.AttributeInfo !== ''){
       /////////////////////////////////////// WayOfChop
@@ -451,7 +461,7 @@ class CartManager {
                }
     else {
       find = true
-                                                 document.getElementById('cartId').value = childs.Id
+     document.getElementById('cartId').value = childs.Id
     document.getElementById("productId").value= @Model.ProductId;
     document.getElementById("productCount").value= childs.Quantity;
     document.getElementById("count").innerHTML= childs.Quantity;        
@@ -463,9 +473,9 @@ class CartManager {
     document.getElementById("count").innerHTML= 0;     
                                                             }
                                }
-    ButtonsManager.productAddToCartStyle();
+    ButtonsManager.productAddToCartStyle(outOfStockProduct);
     //////////////////////////////////////////////// Disable AddToACartPlusBtn / Over MaxQuantity 
-    if (productMaxQuantity === parseInt(addtoCartCounter.value)){
+    if (productMaxQuantity === parseInt(addtoCartCounter.value) || outOfStockProduct){
       document.querySelector(".addToCard-plus").disabled = true;
     const svgTag = document.querySelectorAll(".cls-1")
                     svgTag.forEach((element)=>{
@@ -487,7 +497,7 @@ class CartManager {
 
 
  class ButtonsManager {
-    static productAddToCartStyle = function () {
+    static productAddToCartStyle = function (outOfStockProduct) {
      ////////////////////////////////////////////////////  Loading Attribute 
     let AddtoCartBtn =  document.querySelector('.addToCard-button')
     let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
@@ -502,7 +512,11 @@ class CartManager {
       productCount = 0
     } else {
       productCount = Util.getIdValue("productCount")
+       // if (outOfStockProduct){
+       //             productCount = productCount - 1
+       //  }
     }
+    console.log('productCount',productCount)
     if (productCount < 1) {
       document.querySelector('.addToCard-button').classList.remove('inVisibleElement')
       Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
@@ -539,7 +553,9 @@ class CartManager {
   }
 
     static UpdateCard = function () {
-      let productCount = Util.getIdValue("productCount")
+       
+    let productCount = Util.getIdValue("productCount")
+    
     let counterBox = document.querySelector(".addToCard-counter");
     counterBox.innerHTML = productCount
     let counterBox_value = productCount;
@@ -567,7 +583,7 @@ class CartManager {
 
     let counterBox = document.querySelector(".addToCard-counter");
     let counterBox_value = parseInt(counterBox.innerText);
-
+    
     if (counterBox_value === 1) {
       document.querySelector("button.AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>';
     } else if (counterBox_value > 1) {
@@ -620,7 +636,6 @@ else
                    AddtoCartBtn.classList.add('loading')
                    AddtoCartBtn.disabled = true
           ///////////////////////////////////////////////////////////////////////////////  
-          console.log('voiceCustomerAttribute',voiceCustomerAttribute.value)
               let productData = ''
                    productData = {
                          [`product_attribute_671`] : voiceCustomerAttribute.value,
@@ -633,10 +648,17 @@ else
                         type: "POST",
                         data: productData
                     });
+         
           CartManagerRedux.getShoppingCartData() 
          setTimeout(function (){
-              AddtoCartBtn.classList.remove('loading')
-                       AddtoCartBtn.disabled = false
+             AddtoCartBtn.classList.remove('loading')
+             AddtoCartBtn.disabled = false
+             successUpload.classList.remove('successUpload-show-block')
+             successUpload.classList.remove('successUpload-show')
+             uploadSection.classList.remove('hide')
+             handleCancelingRecording()
+            voiceCustomerAttribute.value = " "
+             
          },1000)
       }
       //////////////////////////////////////////////////  Get Shopping Cart

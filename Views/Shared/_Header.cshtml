@@ -14,7 +14,7 @@
    
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderBefore })
     <div class="w-full topBlockHidden-desktop"></div>
-        <div class="w-full h-[110px] topBlockHidden-mobile"></div>
+        <div class="w-full topBlockHidden-mobile"></div>
     
     <div class="header-upper">
         <div class="header-selectors-wrapper">
@@ -28,3 +28,15 @@
     @await Component.InvokeAsync("TopMenu")
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderAfter })
 </div>
+<script>
+const elmntDesktop = document.querySelector(".topBlockHidden-desktop");
+const elmntMobile = document.querySelector(".topBlockHidden-mobile");
+
+setTimeout(function(){
+   const elmnt = document.getElementById("topHeaderBox");
+    elmntDesktop.style.height = elmnt.offsetHeight + "px";
+    elmntMobile.style.height = elmnt.offsetHeight + "px";
+}, 500);
+
+
+</script>

@@ -2411,7 +2411,17 @@ div.closebtn .mainOptionHead {
   .topBlockHidden-mobile {
     display: none;
   }
+
+  /* .topBlockHidden-desktop {
+    height: 192px;
+  } */
 }
+
+/* @media (min-width: 1400px) {
+  .topBlockHidden-desktop {
+    height: 210px !important;
+  }
+} */
 
 /* //////////////////////////////////////////////////////////////// End of Query */
 
@@ -3466,7 +3476,7 @@ footer.desktopFooter .footerBox li a:hover {
     right: 0;
     width: 100%;
     z-index: 999;
-    padding: 10px;
+    padding: 10px 10px 20px 10px;
     box-shadow: 0px -3px 3px rgba(86, 74, 90, 0.1);
   }
 
@@ -5083,6 +5093,66 @@ svg .cls-1 {
 }
 
 /* /////////////////////////////////////////////////////////// */
+
+.customer-info-page .page-body {
+  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, .1);
+  --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 15px !important;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+}
+
+.page-body label {
+  font-size: 15px;
+}
+
+.page-body .inputs span.readonly-username {
+  border: 0;
+  padding: 10px 18px;
+  max-width: 100%;
+  border-radius: 10px;
+  background-color: #f0f0f1;
+  color: #858585;
+  width: 100%;
+  height: 40px;
+}
+
+.customer-info-page .page-body .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+.customer-info-page .page-body .form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.customer-info-page .page-body .form-fields .inputs div.newsLetter input {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.customer-info-page .page-body .form-fields .date-of-birth .date-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.customer-info-page .page-body .form-fields .date-of-birth .date-picker-wrapper select {
+  font-size: 14px;
+}
 
 /* .admin-header-links {
   display: flex;
