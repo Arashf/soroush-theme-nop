@@ -184,6 +184,7 @@ class DOMManager {
 
 
 let outOfStockProduct = false
+let updateToRemoveProduct = false
 
 class CartManager {
     
@@ -394,21 +395,25 @@ class CartManager {
     let addtoCartCounter = document.getElementById('productCount')
     let productMaxQuantity = 0
     let response = []
+
     ///////////////////////////////////////////  Declare Store
     store.getState(
     response = store.getState()
+            
     )
+    
+    
     ///////////////////////////////////////////  
     let cartItems = response.Items
     if (cartItems.length !== 0){
-      let find = false
-                       cartItems.map((childs) => {
-                        if (childs.ProductId === @Model.ProductId) {
+     let find = false
+      cartItems.map((childs) => {
+           if (childs.ProductId === @Model.ProductId) {
        ////////////////////////////////////////////// Check Warning Product
             if (childs.Warnings.length === 1){
                 outOfStockProduct = true
             }
-                 // outOfStockProduct
+
        //////////////////////////////////////////////           
       productMaxQuantity = childs.AllowedQuantities.length
                              if (childs.AttributeInfo !== ''){
@@ -437,9 +442,9 @@ class CartManager {
     if (chopMethodAttr === chopMethodAttr1){
       document.getElementById('cartId').value = childs.Id
       document.getElementById("productId").value= @Model.ProductId;
-    document.getElementById("productCount").value= childs.Quantity;
-    document.getElementById("count").innerHTML= childs.Quantity;
-    find = true
+      document.getElementById("productCount").value= childs.Quantity;
+       document.getElementById("count").innerHTML= childs.Quantity;
+      find = true
          }
         } 
        }
@@ -451,31 +456,32 @@ class CartManager {
     let vazn = "وزن:" + element.replace(' ','').replace(' ','')
     let vazn1 = childs.AttributeInfo.replace(' ','').replace(' ','')
     if (vazn1 === vazn){
-      document.getElementById('cartId').value = childs.Id
-                                                               document.getElementById("productId").value= @Model.ProductId;
+    document.getElementById('cartId').value = childs.Id
+    document.getElementById("productId").value= @Model.ProductId;
     document.getElementById("productCount").value= childs.Quantity;
-    document.getElementById("count").innerHTML= childs.Quantity;
+     document.getElementById("count").innerHTML= childs.Quantity;
     find = true
             }    
               }
                }
     else {
       find = true
-     document.getElementById('cartId').value = childs.Id
+    document.getElementById('cartId').value = childs.Id
     document.getElementById("productId").value= @Model.ProductId;
     document.getElementById("productCount").value= childs.Quantity;
-    document.getElementById("count").innerHTML= childs.Quantity;        
-                                             }  
-                                      } 
-                                    });
+     document.getElementById("count").innerHTML= childs.Quantity;        
+ 
+         }  
+           } 
+            });
     if (!find) {
       document.getElementById("productCount").value = 0;
     document.getElementById("count").innerHTML= 0;     
                                                             }
                                }
-    ButtonsManager.productAddToCartStyle(outOfStockProduct);
+    ButtonsManager.productAddToCartStyle();
     //////////////////////////////////////////////// Disable AddToACartPlusBtn / Over MaxQuantity 
-    if (productMaxQuantity === parseInt(addtoCartCounter.value) || outOfStockProduct){
+    if (productMaxQuantity === parseInt(addtoCartCounter.value)){
       document.querySelector(".addToCard-plus").disabled = true;
     const svgTag = document.querySelectorAll(".cls-1")
                     svgTag.forEach((element)=>{
@@ -497,7 +503,7 @@ class CartManager {
 
 
  class ButtonsManager {
-    static productAddToCartStyle = function (outOfStockProduct) {
+    static productAddToCartStyle = function () {
      ////////////////////////////////////////////////////  Loading Attribute 
     let AddtoCartBtn =  document.querySelector('.addToCard-button')
     let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
@@ -511,12 +517,9 @@ class CartManager {
     if (Util.getIdValue("productCount") === null ||  Util.getIdValue("productCount") === undefined ){
       productCount = 0
     } else {
-      productCount = Util.getIdValue("productCount")
-       // if (outOfStockProduct){
-       //             productCount = productCount - 1
-       //  }
+          productCount = Util.getIdValue("productCount")
     }
-    console.log('productCount',productCount)
+    
     if (productCount < 1) {
       document.querySelector('.addToCard-button').classList.remove('inVisibleElement')
       Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
@@ -539,6 +542,7 @@ class CartManager {
     if (AddToCardMinusDisable !== null){
       AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
     }
+    
     document.querySelector("button.addToCard-plus").disabled = false;
     document.querySelector("button.AddToCardProduct-status").disabled = false;
      ////////////////////////////////////////////////////////////////////////////
@@ -548,15 +552,16 @@ class CartManager {
       node.classList.remove('inVisibleElement')
     })
     DOMManager.setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
-    ButtonsManager.addToCardPlus()
+     ButtonsManager.addToCardPlus()
     }
   }
 
     static UpdateCard = function () {
-       
-    let productCount = Util.getIdValue("productCount")
+    let productCount
+    const counterBox = document.querySelector(".addToCard-counter");
     
-    let counterBox = document.querySelector(".addToCard-counter");
+    productCount =  Util.getIdValue("productCount")
+  
     counterBox.innerHTML = productCount
     let counterBox_value = productCount;
     if (counterBox_value < 1) {
@@ -574,6 +579,7 @@ class CartManager {
   }
 
     static addToCardPlus = function () {
+
       //////////////////////////////////////////////////////////// Loading Attribute
      let AddtoCartBtn =  document.querySelector('.addToCard')
     let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
@@ -582,8 +588,10 @@ class CartManager {
     ////////////////////////////////////////////////////////////////////////// 
 
     let counterBox = document.querySelector(".addToCard-counter");
-    let counterBox_value = parseInt(counterBox.innerText);
-    
+    let counterBox_value 
+   
+     counterBox_value = parseInt(counterBox.innerText);
+
     if (counterBox_value === 1) {
       document.querySelector("button.AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>';
     } else if (counterBox_value > 1) {

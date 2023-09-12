@@ -109,11 +109,13 @@ store.subscribe(() => {
 /** CartManager Class Inorder to Fetch API for Update Cart  */
 
 // getShoppingCartData
-
+let adjustmentData
 class CartManagerRedux {
     static getShoppingCartData = async () => {
         let response = await RequestHandlerCart.requestContentFrom('/api/ShoppingCart', HTTP_METHODS_CARTREDUX.GET)
-         store.dispatch({type: 'SHOPPING_CART', payload: response})
+         // adjustmentData = response.Items.find(el => el.Warnings.length === 1 ? el.Quantity = 1 : '')
+        // console.log('adjustmentData',adjustmentData)
+        store.dispatch({type: 'SHOPPING_CART', payload: response})
     }
     static UpdateCardRedux = async (cartId,productId,count,method) => {
         let btnLoading =document.getElementById(`cart-counterbox-${cartId}`)
@@ -121,7 +123,9 @@ class CartManagerRedux {
         svgDisable[0].classList.add('disableSvgCartBtn')
         svgDisable[1].classList.add('disableSvgCartBtn')
         btnLoading.classList.add("loading");
+        if(document.getElementById(`cart-counterbox-${cartId}`) !== null){
         document.getElementById(`cart-counterbox-${cartId}`).disabled = true;
+        }
         // document.getElementById(`cart-counterbox-${productId}`).classList.add('disableAddToCartPlus')
         
         const counts = count
@@ -165,8 +169,9 @@ class CartManagerRedux {
             svgDisable[0].classList.remove('disableSvgCartBtn')
             svgDisable[1].classList.remove('disableSvgCartBtn')
             document.getElementById(`cart-counterbox-${cartId}`).classList.remove('disableAddToCartPlus')
-             
-             document.getElementById(`cart-counterbox-${cartId}`).disabled = false;
+            if(document.getElementById(`cart-counterbox-${cartId}`) !== null) {
+                document.getElementById(`cart-counterbox-${cartId}`).disabled = false;
+            }
             
         } catch (error) {
             // ErrorHandler.logAndThrow(error, 'Fetch Error');

@@ -45,24 +45,24 @@
                 <span class="text-[16px] font-semibold text-[#3a77ff]">شروع ضبط</span>
             </div>
             @* <canvas class="visualizer" height="60px"></canvas> *@
-            <div class="recording-contorl-buttons-container hide">
+            <div id="recordingContorlBtnContainer" class="recording-contorl-buttons-container hide">
                 @* <i class="cancel-recording-button fa fa-times-circle-o" aria-hidden="true"></i><svg id="Icons" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#232323;}</style></defs><path class="cls-1" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm4.707,14.293a1,1,0,1,1-1.414,1.414L12,13.414,8.707,16.707a1,1,0,1,1-1.414-1.414L10.586,12,7.293,8.707A1,1,0,1,1,8.707,7.293L12,10.586l3.293-3.293a1,1,0,1,1,1.414,1.414L13.414,12Z"/></svg> *@
-                <div id="cancel-recording-button" class="cancel-recording-button">
+                <div id="cancelRecordingBtn" class="cancel-recording-button">
                     <svg class="fill-red-400 stroke-red-400 stroke-3" height="25px" width="25px" id="Icons" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <style>.cls-1{fill:#f82d3e;stroke: #f82d3e !important;}</style>
                         </defs><path class="cls-1" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm4.707,14.293a1,1,0,1,1-1.414,1.414L12,13.414,8.707,16.707a1,1,0,1,1-1.414-1.414L10.586,12,7.293,8.707A1,1,0,1,1,8.707,7.293L12,10.586l3.293-3.293a1,1,0,1,1,1.414,1.414L13.414,12Z"/>
                     </svg>
                 </div>
-                <div class="recording-elapsed-time">
+                <div  class="recording-elapsed-time">
                     <svg class="red-recording-dot fill-red-400 stroke-red-400 stroke-3" height="20" width="20" id="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <style></style>
                         </defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/>
                     </svg>
-                    <p class="elapsed-time"></p>
+                    <p id="elapsed-time" class="elapsed-time"></p>
                 </div>
-                <div id="stop" class="stop-recording-button">
+                <div id="stopRecordingBtn" class="stop-recording-button">
                     <svg class="fill-[#00a93e] stroke-[##00a93e] stroke-3" height="25px" width="25px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="M328 160h-144C170.8 160 160 170.8 160 184v144C160 341.2 170.8 352 184 352h144c13.2 0 24-10.8 24-24v-144C352 170.8 341.2 160 328 160zM256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-114.7 0-208-93.31-208-208S141.3 48 256 48s208 93.31 208 208S370.7 464 256 464z"/>
                     </svg>
@@ -80,7 +80,7 @@
             @* </div> *@
             <div id='uploadSection' class="flex flex-col justify-center items-center gap-2 hide">
                 <div id="audio">
-                    <audio controls class="audio-element">
+                    <audio id="audioElement" controls class="audio-element">
                     </audio>
                 </div>
                 <div class="w-[95%] flex justify-between items-center">
