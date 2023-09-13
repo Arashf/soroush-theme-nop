@@ -85,12 +85,12 @@ store.subscribe(() => {
        
     html = html + `<div>`
     data.Items.forEach((element) => {
-        console.log('Element: ',element)
+        console.log('CartStore: ',element)
         html = html + cartItemGenerator(element)
+        
     })
     html = html + `</div>`
-
-
+    
     if(subTotal > 99000){
     html = html + cartFooterGeneratorMorePrice()
     } else if(subTotal > 0 && subTotal < 99000) {
@@ -104,7 +104,51 @@ store.subscribe(() => {
         // let cartItemquantity = document.getElementById(`quantity-${element.Id}`)
         ButtonsManagerCart.UpdateCard(element.ProductId,element.Id,element.Quantity,element.AllowedQuantities);
     })
+
+    ////////////////////////////////////////////////// Show productWarning
+    data.Items.forEach((element)=>{
+            const productWarning= document.getElementById(`productWarning-${element.Id}`)
+            const removeProductBtn= document.getElementById(`removeProductBtn-${element.Id}`)
+            if(element.Warnings.length !== 0){
+                removeProductBtn.style.display = 'block'
+                removeProductBtn.style.margin = '10px'
+                productWarning.style.display = 'block'
+                productWarning.style.height = '60px'
+                productWarning.innerHTML = element.Warnings
+            } else {
+                removeProductBtn.style.display = 'none'
+                removeProductBtn.style.margin = '0'
+                productWarning.style.display = 'none'
+                productWarning.style.height = '0'
+            }
+     })
+    ////////////////////////////////////////////////// Show Attribute Info
+    data.Items.forEach((element)=>{
+        const attributeInfo= document.getElementById(`attributeInfo-${element.Id}`)
+         const weightAmount= document.getElementById(`weightAmount-${element.Id}`)
+        const chopWay= document.getElementById(`chopWay-${element.Id}`)
+        if(element.AttributeInfo.length !== 0){
+            let result
+             result = element.AttributeInfo.includes("<br />");
+            if (result) {
+                let fields = element.AttributeInfo.split('<br />');
+                weightAmount.innerHTML  =  fields[0];
+                chopWay.innerHTML = fields[1];
+            }else {
+                 element.AttributeInfo
+            }
+        } else if (element.AttributeInfo.length === 0) {
+            attributeInfo.style.display = 'none'
+        }
+    })
+       
+
+    
 })
+
+
+
+
 
 /** CartManager Class Inorder to Fetch API for Update Cart  */
 
@@ -116,6 +160,7 @@ class CartManagerRedux {
          // adjustmentData = response.Items.find(el => el.Warnings.length === 1 ? el.Quantity = 1 : '')
         // console.log('adjustmentData',adjustmentData)
         store.dispatch({type: 'SHOPPING_CART', payload: response})
+        console.log('Redux',response)
     }
     static UpdateCardRedux = async (cartId,productId,count,method) => {
         let btnLoading =document.getElementById(`cart-counterbox-${cartId}`)
@@ -155,7 +200,14 @@ class CartManagerRedux {
                     { value: 0, key: "itemquantity1" },
                     { value: `${idCart}`, key: "removefromcart" }
                 ]
-                // document.getElementById("productCount").value= 0;
+                try{
+                    document.getElementById("productCount").value = 0;
+                    document.getElementById("count").innerHTML= 0;
+                }
+                catch (error){
+                    console.log('Error',error)
+                }
+               
             }
         }
 
@@ -164,6 +216,7 @@ class CartManagerRedux {
             await fetch('/api/ShoppingCart/UpdateCart', options);
              const response = await fetch('/api/ShoppingCart/UpdateCart', options);
             // return response
+            
              await  CartManagerRedux.getShoppingCartData()
              btnLoading.classList.remove("loading");
             svgDisable[0].classList.remove('disableSvgCartBtn')
@@ -232,17 +285,29 @@ function cartHeader(totalPrice, cartCountItems) {
 
 function cartItemGenerator(element) {
     return `
-        <div id="cartProductBox-${element.Id}" class="h-110px border-b-[1px] border-solid border-gray-cardMobileborder mt-4 mb-4">
-            <div class="flex h-[120px] pl-3 pr-1">
+        <div id="cartProductBox-${element.Id}" class="h-110px border-b-[1px] border-solid border-gray-cardMobileborder mt-2 mb-2">
+            <div class="flex h-full pl-3 pr-1 py-2">
                 <div class="flex-initial w-[30%]">
                     <a href="${window.location.origin}/${element.ProductSeName}">
                         <div class="relative w-full h-[100px]">
                             <img title="${element.Picture.Title}" alt="${element.Picture.AlternateText}" loading="lazy" sizes="100vw" src="${element.Picture.ImageUrl}" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
                         </div>
                     </a>
+                    <div class="w-full flex justify-center items-center cursor-pointer">
+                       <span id="removeProductBtn-${element.Id}" class="remove-product-warning"
+                       onclick="CartManagerRedux.UpdateCardRedux(${element.Id},${element.ProductId},1,BUTTON_METHODS.UPDATE);"
+                       >
+                       حذف</span>
+                    </div>
                 </div>
                 <div class="flex flex-initial w-[70%] flex-col">
+                    <a href="${window.location.origin}/${element.ProductSeName}">
                     <div class="text-[13px] leading-[20px] text-zinc-500 font-semibold">${element.ProductName}</div>
+                         <div id="attributeInfo-${element.Id}" class="flex flex-col text-[12px] font-semibold gap-[10px] py-[10px]">
+                            <div id="weightAmount-${element.Id}"> </div>
+                            <div id="chopWay-${element.Id}"></div>
+                         </div>
+                    </a>
                     <div class="flex items-center justify-between h-full">
                         <div>
                             <div class="pt-2">
@@ -250,7 +315,7 @@ function cartItemGenerator(element) {
                             </div>
                         </div>
                 <!-- ///////////////////////////////////////////// ADD TO CART BUTTON-->
-                            <div id="cart-counterbox-${element.Id}" class="cart-counterbox action-btn flex align-center justify-between w-[110px] h-[32px] rounded-[5px] during-300 font-bold">
+                       <div id="cart-counterbox-${element.Id}" class="cart-counterbox action-btn flex align-center justify-between w-[110px] h-[32px] rounded-[5px] during-300 font-bold">
                                 <button class="flex flex-1 p-[7px] text-red-custRed"
                                  id="plus-button-${element.Id}"
                                  onclick="CartManagerRedux.UpdateCardRedux(${element.Id},${element.ProductId},${element.Quantity},BUTTON_METHODS.ADD);">
@@ -273,7 +338,9 @@ function cartItemGenerator(element) {
 <!--                                    </svg>-->
 <!--                                </button>-->
                             </div>
+               <!--   /////////////////////////////////////////////////////        -->
                   </div>
+                        <div id="productWarning-${element.Id}" class="productWarnings"></div>
               </div>
         </div>
     </div>`
@@ -365,8 +432,10 @@ class ButtonsManagerCart {
         let AllowQuantities = allowQnty.length
         cartItemquantity.innerHTML = count
         let productCount = count
+
         
         if (productCount < 1) {
+            
         } else if (productCount >= 1) {
             if(AllowQuantities === parseInt(cartItemquantity.innerHTML)){
                 plusBtn.disabled = true;
@@ -401,10 +470,17 @@ function closeCartSideNav() {
 }
 
 function openCartSideNav() {
-                // CartManagerRedux.getShoppingCartData()
-                document.getElementById("cartSideNav").classList.add("cartNavbarActive")
-                document.getElementById('backdrop-cart').style.display = "block"
-                document.querySelector("html").classList.add("remove-scrolling")
+    // CartManagerRedux.getShoppingCartData()
+    document.getElementById("cartSideNav").classList.add("cartNavbarActive")
+    document.getElementById('backdrop-cart').style.display = "block"
+    document.querySelector("html").classList.add("remove-scrolling")
+
+    
 }
+
+
+
+
+
 
 

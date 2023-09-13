@@ -5154,6 +5154,39 @@ svg .cls-1 {
   font-size: 14px;
 }
 
+.productWarnings {
+  /* height: 60px; */
+  font-size: 12px;
+  color: var(--main-color);
+  font-weight: 600;
+  text-align: center;
+  /* border: 1px solid #ffc6c6; */
+  /* border-radius: 10px; */
+  /* margin: 7px 9px; */
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.remove-product-warning {
+  color: #ec2b34;
+  font-size: 12px;
+  width: 65px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #ffc6c6;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.productWarning-box {
+  font-size: 13px;
+  color: var(--main-color);
+  font-weight: 600;
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
 /* .admin-header-links {
   display: flex;
   align-items: center;
@@ -6549,7 +6582,7 @@ li {
 }
 
 .addToCard {
-  width: 140px !important;
+  width: 150px !important;
   height: 43px !important;
   display: flex;
   align-items: center;

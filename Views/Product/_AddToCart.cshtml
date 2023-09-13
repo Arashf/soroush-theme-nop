@@ -29,41 +29,45 @@
                 }
                 if (Model.ProductId != 134430)
                 {
-                    <div class="purchaseBtn mt-3 w-full">
-                        <button class="h-[43px] addToCard-button product-action-btn"
-                                data-productid="@Model.ProductId"
-                                id="add-to-cart-button-@Model.ProductId"
-                                onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId)">
-                            @addToCartText
-                        </button>
-                        <div class="addToCard inVisibleElement product-action-btnBox">
-                            <button class="addToCard-plus p-1" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId"
-                                    onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId);">
-                                <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
-                                     width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <title/>
-                                    <g id="plus">
-                                        <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
-                                        <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
-                                    </g>
-                                </svg>
+                    <div class="flex flex-col justify-center items-center">
+                        <div id="productWarning-@Model.ProductId" class="productWarning-box"></div>
+                        <div class="purchaseBtn mt-3 w-full flex justify-center items-center">
+                            <button class="h-[43px] addToCard-button product-action-btn"
+                                    data-productid="@Model.ProductId"
+                                    id="add-to-cart-button-@Model.ProductId"
+                                    onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId)">
+                                @addToCartText
                             </button>
+                            <div class="addToCard inVisibleElement product-action-btnBox">
+                                <button class="addToCard-plus p-1" data-productid="@Model.ProductId" id="add-to-cart-button-@Model.ProductId"
+                                        onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.ProductId);">
+                                    <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
+                                         width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                        <title/>
+                                        <g id="plus">
+                                            <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
+                                            <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
+                                        </g>
+                                    </svg>
+                                </button>
 
 
-                            <div class="addToCard-counter" id="count"></div>
-                            <button class="AddToCardProduct-status" data-productid="@Model.ProductId"
-                                    id="add-to-cart-button-@Model.ProductId" onclick="CartManager.updateCartItem(@Model.ProductId);">
-                            </button>
+                                <div class="addToCard-counter" id="count"></div>
+                                <button class="AddToCardProduct-status" data-productid="@Model.ProductId"
+                                        id="add-to-cart-button-@Model.ProductId" onclick="CartManager.updateCartItem(@Model.ProductId);">
+                                </button>
+                            </div>
+                            <input type="hidden" id="cartId"/>
+                            <input type="hidden" id="productId"/>
+                            <input type="hidden" id="productCount"/>
+
                         </div>
-                        <input type="hidden" id="cartId"/>
-                        <input type="hidden" id="productId"/>
-                        <input type="hidden" id="productCount"/>
-
                     </div>
                 }
                 else
                 {
-                    <div class="purchaseBtn mt-3 w-full">
+                    <div id="productWarning-@Model.ProductId" class="productWarning-box"></div>
+                    <div class="purchaseBtn mt-3 w-full flex justify-center items-center">
                         <button class="h-[43px] addToCard-button product-action-btn"
                                 data-productid="@Model.ProductId"
                                 id="add-to-cart-button-@Model.ProductId"
@@ -185,6 +189,8 @@ class DOMManager {
 
 let outOfStockProduct = false
 let updateToRemoveProduct = false
+const productWarning = document.getElementById(`productWarning-@Model.ProductId`)
+const barNotification = document.querySelectorAll(".bar-notification .content")
 
 class CartManager {
     
@@ -395,28 +401,26 @@ class CartManager {
     let addtoCartCounter = document.getElementById('productCount')
     let productMaxQuantity = 0
     let response = []
+     let find = false
 
     ///////////////////////////////////////////  Declare Store
     store.getState(
     response = store.getState()
-            
     )
-    
-    
     ///////////////////////////////////////////  
     let cartItems = response.Items
     if (cartItems.length !== 0){
-     let find = false
+     find = false
       cartItems.map((childs) => {
-           if (childs.ProductId === @Model.ProductId) {
+       if (childs.ProductId === @Model.ProductId) {
        ////////////////////////////////////////////// Check Warning Product
+       const productWarning = document.getElementById(`productWarning-${childs.ProductId}`)
             if (childs.Warnings.length === 1){
-                outOfStockProduct = true
+                productWarning.innerHTML = childs.Warnings
             }
-
        //////////////////////////////////////////////           
       productMaxQuantity = childs.AllowedQuantities.length
-                             if (childs.AttributeInfo !== ''){
+       if (childs.AttributeInfo !== ''){
       /////////////////////////////////////// WayOfChop
       let result = childs.AttributeInfo.includes("<br />");
     if (result){
@@ -432,19 +436,22 @@ class CartManager {
     let vazn1 = weightAmount.replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(' ','')
 
     if (vazn1 === vazn){
-      let wayofChop = chopMethod.split(':');
+     let chopAttrIdElement = ''
+    let wayofChop = chopMethod.split(':');
     let chopAttrId = document.getElementById('attributeIdWayCh').value
-    let chopAttrIdElement = document.getElementById(`chopAttrId-${chopAttrId}`).innerText
+    chopAttrIdElement = document.getElementById(`chopAttrId-${chopAttrId}`).innerText
+    
     let chopMethodAttr = wayofChop[1].replace(' ','')
     let chopMethodAttr1 = chopAttrIdElement
-
-
+            
     if (chopMethodAttr === chopMethodAttr1){
+        
       document.getElementById('cartId').value = childs.Id
       document.getElementById("productId").value= @Model.ProductId;
       document.getElementById("productCount").value= childs.Quantity;
-       document.getElementById("count").innerHTML= childs.Quantity;
-      find = true
+      document.getElementById("count").innerHTML= childs.Quantity;
+       find = true
+       
          }
         } 
        }
@@ -460,12 +467,12 @@ class CartManager {
     document.getElementById("productId").value= @Model.ProductId;
     document.getElementById("productCount").value= childs.Quantity;
      document.getElementById("count").innerHTML= childs.Quantity;
-    find = true
+      find = true
             }    
               }
                }
     else {
-      find = true
+          find = true
     document.getElementById('cartId').value = childs.Id
     document.getElementById("productId").value= @Model.ProductId;
     document.getElementById("productCount").value= childs.Quantity;
@@ -474,11 +481,16 @@ class CartManager {
          }  
            } 
             });
+      
+      
+     console.log('find',find)
+     
     if (!find) {
-      document.getElementById("productCount").value = 0;
+    document.getElementById("productCount").value = 0;
     document.getElementById("count").innerHTML= 0;     
                                                             }
-                               }
+    }
+    
     ButtonsManager.productAddToCartStyle();
     //////////////////////////////////////////////// Disable AddToACartPlusBtn / Over MaxQuantity 
     if (productMaxQuantity === parseInt(addtoCartCounter.value)){
@@ -493,7 +505,9 @@ class CartManager {
                          svgTag.forEach((element)=>{
       element.classList.remove('disableAddToCartPlus')
     }) 
-                  }
+    }
+    
+    
   }
 
   static updateCartItems = async (url, cartContents) => {
@@ -502,8 +516,11 @@ class CartManager {
 }
 
 
- class ButtonsManager {
+class ButtonsManager {
     static productAddToCartStyle = function () {
+      // if (barNotification !== null){
+      //     productWarning.innerHTML = barNotification.textContent
+      // }
      ////////////////////////////////////////////////////  Loading Attribute 
     let AddtoCartBtn =  document.querySelector('.addToCard-button')
     let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
@@ -547,6 +564,7 @@ class CartManager {
     document.querySelector("button.AddToCardProduct-status").disabled = false;
      ////////////////////////////////////////////////////////////////////////////
     } else if (productCount >= 1) {
+       productWarning.style.display = 'block'
       document.querySelector('.addToCard-button').classList.add('inVisibleElement')
       Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
       node.classList.remove('inVisibleElement')
@@ -572,6 +590,7 @@ class CartManager {
     counterBox_value = 0;
     counterBox.innerText = counterBox_value;
     document.querySelector("button.AddToCardProduct-status").innerHTML = '';
+    productWarning.style.display = 'none'
     } else if (counterBox_value === 1) {
       document.querySelector("button.AddToCardProduct-status").innerHTML = '<span class="trash-icon"></span>';
     document.querySelector("button.AddToCardProduct-status").style.padding = "12px";
@@ -616,6 +635,13 @@ class CartManager {
     document.querySelector("button.AddToCardProduct-status").disabled = false;
   }
 }
+
+function attributeInfo(attributeValueId){
+    const getAttributeValue = document.getElementById('attributeIdWayCh')
+    getAttributeValue.value = attributeValueId
+    CartManager.getShoppingCartData()
+   }
+
 
   </script>
 }
