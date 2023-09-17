@@ -87,9 +87,9 @@ store.subscribe(() => {
   })
   html = html + `</div>`
 
-  if (subTotal > 99000) {
+  if (subTotal > 199000) {
     html = html + cartFooterGeneratorMorePrice()
-  } else if (subTotal > 0 && subTotal < 99000) {
+  } else if (subTotal > 0 && subTotal < 199000) {
     html = html + cartFooterGeneratorLessPrice()
   } else if (subTotal === 0) {
     html = html + emptyCart()
@@ -393,26 +393,7 @@ function cartFooterGeneratorMorePrice() {
           <div
             class="bg-[#ffff] flex flex-col justify-between px-3 pb-[20px]
                 border-t-[1px] border-solid border-gray-cardMobileborder"
-          >
-             <!-- <div
-              class="bg-blue-50 p-2 w-full text-center rounded-[5px]">
-              <span class="text-blue-cardMobile">
-                <span class="text-[13px]">حداقل سفارش</span>
-                <span class="pr-1 pl-[2px]"> 200,000</span>
-                <span class="text-[10px]">تومان</span>
-              </span>
-            </div>
-            <div
-              class="bg-blue-50 px-3 py-2 mb-2 w-full text-[14px] rounded-[5px] flex items-center justify-between">
-              <div class="flex items-center gap-1">
-                <AiOutlineDollar size={20} class="text-blue-cardMobile" />
-                <span class="text-blue-cardMobile">قابل پرداخت</span>
-              </div>
-              <div class="flex gap-[2px] items-center">
-                <span class="text-[15px]">13,420,000</span>
-                <span class="text-[10px]">تومان</span>
-              </div>
-            </div> -->
+          >             
             <div>
                     <a href="/order/Checkout" class="buttons complete-button">
                                     <button type="submit"> 
