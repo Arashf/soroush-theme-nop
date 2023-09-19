@@ -14,14 +14,16 @@
 @inject AppSettings appSettings
 
 @{
-    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
     NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
+
     <script src="~/Themes/Emporium/Content/scripts/redux.min.js" asp-location="Footer"></script>
-    <script src="~/Themes/Emporium/Content/scripts/redux/cartStore.js" asp-location="Footer"></script>
     <script src="~/Themes/Emporium/Content/scripts/select2.min.js" asp-location="Footer"></script>
+    <script src="~/Themes/Emporium/Content/scripts/redux/cartStore.js" asp-location="Footer"></script>
     <script src="~/Themes/Emporium/Content/scripts/temp.js" asp-location="Footer"></script>
     <script src="~/Themes/Emporium/Content/scripts/public.ajaxcart.js" asp-location="Footer"></script>
 
+    //custom tag(s);
     if (!string.IsNullOrEmpty(seoSettings.CustomHeadTags))
     {
         NopHtml.AppendHeadCustomParts(seoSettings.CustomHeadTags);
@@ -30,6 +32,7 @@
     var displayMiniProfiler = appSettings.Get<CommonConfig>().MiniProfilerEnabled && await
     permissionService.AuthorizeAsync(StandardPermissionProvider.AccessProfiling);
 
+    //event
     await eventPublisher.PublishAsync(new PageRenderingEvent(NopHtml));
 
     var currentPageClass = (await (await Html.PartialAsync("_CurrentPageClass")).RenderHtmlContentAsync()).Trim();
@@ -66,7 +69,6 @@
     }
     @NopHtml.GenerateScripts(ResourceLocation.Head)
     @NopHtml.GenerateInlineScripts(ResourceLocation.Head)
-
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
@@ -77,7 +79,6 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-TDZRWNC');</script>
     <!-- End Google Tag Manager -->
-
 </head>
 
 <body class="@currentPageClass">
@@ -91,10 +92,10 @@
     @NopHtml.GenerateInlineScripts(ResourceLocation.Footer)
     <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
-             c[a] = c[a] function() { (c[a].q = c[a].q[]).push(arguments) };
+            c[a] = c[a]function() { (c[a].q = c[a].q[]).push(arguments) };
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "iwi75dupgg");
+        })(window, document, "clarity", "script", "bpzqfra105");
     </script>
 </body>
 
