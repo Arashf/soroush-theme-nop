@@ -15,9 +15,9 @@
 
 @section accountPageTitle
 {
-    <div class="page-title">
-        <h1>@T("Account.MyAccount") - @T("Account.CustomerAddresses.AddNew")</h1>
-    </div>
+    @* <div class="page-title"> *@
+    @*     <h1>@T("Account.MyAccount") - @T("Account.CustomerAddresses.AddNew")</h1> *@
+    @* </div> *@
 }
 <form asp-route="CustomerAddressAdd" method="post">
     <div class="page account-page address-edit-page">
@@ -28,7 +28,7 @@
                 dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
                 @await Html.PartialAsync("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
             }
-            <div class="buttons">
+            <div class="buttons mt-4">
                 <button type="submit" class="button-1 save-address-button">@T("Common.Save")</button>
             </div>
         </div>

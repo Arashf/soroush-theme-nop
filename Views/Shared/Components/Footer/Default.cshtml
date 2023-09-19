@@ -106,8 +106,8 @@
                 @if (Model.DisplayCustomerInfoFooterItem)
                 {
                     <li>
-                        @* <a href="@Url.RouteUrl("CustomerInfo")" target="_blank">@T("Account.MyAccount")</a> *@
-                        <a href="https://soroush.app/club" target="_blank">@T("Account.MyAccount")</a>
+                        <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a>
+                        @* <a href="https://soroush.app/club" target="_blank">@T("Account.MyAccount")</a> *@
                     </li>
                 }
                 <li>
@@ -118,8 +118,8 @@
                 @if (Model.DisplayCustomerAddressesFooterItem)
                 {
                     <li>
-                        @* <a href="@Url.RouteUrl("CustomerAddresses")" target="_blank">@T("Account.CustomerAddresses")</a> *@
-                        <a href="https://soroush.app/club" target="_blank">@T("Account.CustomerAddresses")</a>
+                        <a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a>
+                        @* <a href="https://soroush.app/club" target="_blank">@T("Account.CustomerAddresses")</a> *@
 
                     </li>
                 }
@@ -170,12 +170,18 @@
                         <a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a>
                     </li>
                 }
-                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
-                {
-                    <li>
-                        <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
-                    </li>
-                }
+                @* @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList()) *@
+                @* { *@
+                @*     <li> *@
+                @*         <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a> *@
+                @*     </li> *@
+                @* } *@
+                <li>
+                    <a href="/privacy-notice">قوانین و مقررات</a>
+                </li>
+                <li>
+                       <a href="/shipping-returns">تعرفه و شیوه ارسال</a>
+                  </li>
             </ul>
         </div>
         <div class="footerBox flex">
@@ -395,15 +401,21 @@
                                 <a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a>
                             </li>
                         }
-                        @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
-                        {
-                            @if(@topic.Name != null && @topic.Name != ""){
-                            
-                                <li>
-                                    <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
-                                </li>
-                            }
-                        }
+                        @* @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList()) *@
+                        @* { *@
+                        @*     @if(@topic.Name != null && @topic.Name != ""){ *@
+                        @*      *@
+                        @*         <li> *@
+                        @*             <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a> *@
+                        @*         </li> *@
+                        @*     } *@
+                        @* } *@
+                          <li>
+                              <a href="/privacy-notice">قوانین و مقررات</a>
+                           </li>
+                           <li>
+                              <a href="/shipping-returns">تعرفه و شیوه ارسال</a>
+                           </li>
                     </ul>
                 </div>
             </div>

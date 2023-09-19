@@ -648,6 +648,14 @@ video {
   top: 53px;
 }
 
+.left-\[17px\] {
+  left: 17px;
+}
+
+.top-\[13px\] {
+  top: 13px;
+}
+
 .z-\[99999\] {
   z-index: 99999;
 }
@@ -787,6 +795,10 @@ video {
 
 .mt-auto {
   margin-top: auto;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .block {
@@ -1023,6 +1035,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[22px\] {
+  width: 22px;
+}
+
+.w-\[30px\] {
+  width: 30px;
 }
 
 .min-w-\[90px\] {
