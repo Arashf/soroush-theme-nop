@@ -16,11 +16,11 @@
 
 @section accountPageTitle
 {
-    <div class="page-title">
-        <h1>@T("Account.MyAccount") - @T("Account.CustomerOrders")</h1>
-    </div>
+    @* <div class="page-title"> *@
+    @*     <h1>@T("Account.MyAccount") - @T("Account.CustomerOrders")</h1> *@
+    @* </div> *@
 }
-
+<div class="container-base">
 <div class="page account-page order-list-page">
     <div class="page-body">
         @if (Model.RecurringOrders.Count > 0)
@@ -46,82 +46,82 @@
                                 <col />
                             </colgroup>
                             <thead>
-                                <tr>
-                                    <th class="start-date" data-hide="w410, w480, w580">
-                                        @T("Account.CustomerOrders.RecurringOrders.StartDate")
+                            <tr>
+                                <th class="start-date" data-hide="w410, w480, w580">
+                                    @T("Account.CustomerOrders.RecurringOrders.StartDate")
+                                </th>
+                                <th class="cycle-info" data-hide="w410, w480, w580, w768, w980">
+                                    @T("Account.CustomerOrders.RecurringOrders.CycleInfo")
+                                </th>
+                                <th class="next-payment">
+                                    @T("Account.CustomerOrders.RecurringOrders.NextPayment")
+                                </th>
+                                <th class="total-cycles" data-hide="w410, w480, w580, w768, w980">
+                                    @T("Account.CustomerOrders.RecurringOrders.TotalCycles")
+                                </th>
+                                <th class="cycles-remaining" data-hide="w410, w480, w580, w768, w980">
+                                    @T("Account.CustomerOrders.RecurringOrders.CyclesRemaining")
+                                </th>
+                                <th class="initial-order" data-hide="w410, w480, w580, w768">
+                                    @T("Account.CustomerOrders.RecurringOrders.InitialOrder")
+                                </th>
+                                @if (canRetryRecurringOrders)
+                                {
+                                    <th class="retry">
+                                        @T("Account.CustomerOrders.RecurringOrders.RetryLastPayment")
                                     </th>
-                                    <th class="cycle-info" data-hide="w410, w480, w580, w768, w980">
-                                        @T("Account.CustomerOrders.RecurringOrders.CycleInfo")
-                                    </th>
-                                    <th class="next-payment">
-                                        @T("Account.CustomerOrders.RecurringOrders.NextPayment")
-                                    </th>
-                                    <th class="total-cycles" data-hide="w410, w480, w580, w768, w980">
-                                        @T("Account.CustomerOrders.RecurringOrders.TotalCycles")
-                                    </th>
-                                    <th class="cycles-remaining" data-hide="w410, w480, w580, w768, w980">
-                                        @T("Account.CustomerOrders.RecurringOrders.CyclesRemaining")
-                                    </th>
-                                    <th class="initial-order" data-hide="w410, w480, w580, w768">
-                                        @T("Account.CustomerOrders.RecurringOrders.InitialOrder")
-                                    </th>
-                                    @if (canRetryRecurringOrders)
-                                    {
-                                        <th class="retry">
-                                            @T("Account.CustomerOrders.RecurringOrders.RetryLastPayment")
-                                        </th>
-                                    }
-                                    <th class="cancel">
-                                        @T("Account.CustomerOrders.RecurringOrders.Cancel")
-                                    </th>
-                                </tr>
+                                }
+                                <th class="cancel">
+                                    @T("Account.CustomerOrders.RecurringOrders.Cancel")
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @{var counter = 0;}
-                                @foreach (var item in Model.RecurringOrders)
-                                {
-                                    counter++;
-                                    <tr>
-                                        <td class="start-date">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.StartDate"): </label>
-                                            <span>@item.StartDate</span>
-                                        </td>
-                                        <td class="cycle-info">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.CycleInfo"): </label>
-                                            <span>@item.CycleInfo</span>
-                                        </td>
-                                        <td class="next-payment">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.NextPayment"): </label>
-                                            <span>@item.NextPayment</span>
-                                        </td>
-                                        <td class="total-cycles">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.TotalCycles"): </label>
-                                            <span>@item.TotalCycles</span>
-                                        </td>
-                                        <td class="cycles-remaining">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.CyclesRemaining"): </label>
-                                            <span>@item.CyclesRemaining</span>
-                                        </td>
-                                        <td class="initial-order">
-                                            <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.InitialOrder"): </label><a href="@Url.RouteUrl("OrderDetails", new { orderId = item.InitialOrderId })">@string.Format(T("Account.CustomerOrders.RecurringOrders.ViewInitialOrder").Text, item.InitialOrderNumber)</a>
-                                        </td>
-                                        @if (canRetryRecurringOrders)
-                                        {
-                                            <td class="retry">
-                                                @if (item.CanRetryLastPayment)
-                                                {
-                                                    <button type="submit" name="retryLastPayment_@(item.Id)" class="button-2 retry-recurring-order-button">@T("Account.CustomerOrders.RecurringOrders.RetryLastPayment")</button>
-                                                }
-                                            </td>
-                                        }
-                                        <td class="cancel">
-                                            @if (item.CanCancel)
+                            @{var counter = 0;}
+                            @foreach (var item in Model.RecurringOrders)
+                            {
+                                counter++;
+                                <tr>
+                                    <td class="start-date">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.StartDate"): </label>
+                                        <span>@item.StartDate</span>
+                                    </td>
+                                    <td class="cycle-info">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.CycleInfo"): </label>
+                                        <span>@item.CycleInfo</span>
+                                    </td>
+                                    <td class="next-payment">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.NextPayment"): </label>
+                                        <span>@item.NextPayment</span>
+                                    </td>
+                                    <td class="total-cycles">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.TotalCycles"): </label>
+                                        <span>@item.TotalCycles</span>
+                                    </td>
+                                    <td class="cycles-remaining">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.CyclesRemaining"): </label>
+                                        <span>@item.CyclesRemaining</span>
+                                    </td>
+                                    <td class="initial-order">
+                                        <label class="td-title">@T("Account.CustomerOrders.RecurringOrders.InitialOrder"): </label><a href="@Url.RouteUrl("OrderDetails", new { orderId = item.InitialOrderId })">@string.Format(T("Account.CustomerOrders.RecurringOrders.ViewInitialOrder").Text, item.InitialOrderNumber)</a>
+                                    </td>
+                                    @if (canRetryRecurringOrders)
+                                    {
+                                        <td class="retry">
+                                            @if (item.CanRetryLastPayment)
                                             {
-                                                <button type="submit" name="cancelRecurringPayment@(item.Id)" class="button-2 cancel-recurring-order-button">@T("Account.CustomerOrders.RecurringOrders.Cancel")</button>
+                                                <button type="submit" name="retryLastPayment_@(item.Id)" class="button-2 retry-recurring-order-button">@T("Account.CustomerOrders.RecurringOrders.RetryLastPayment")</button>
                                             }
                                         </td>
-                                    </tr>
-                                }
+                                    }
+                                    <td class="cancel">
+                                        @if (item.CanCancel)
+                                        {
+                                            <button type="submit" name="cancelRecurringPayment@(item.Id)" class="button-2 cancel-recurring-order-button">@T("Account.CustomerOrders.RecurringOrders.Cancel")</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -147,7 +147,9 @@
                 {
                     <div class="section order-item">
                         <div class="title">
-                            <strong>@T("Account.CustomerOrders.OrderNumber"): @order.CustomOrderNumber</strong>
+                            @* <strong>@T("Account.CustomerOrders.OrderNumber"): @order.CustomOrderNumber</strong> *@
+                            <div> <span class="text-[14px]"> @T("Account.CustomerOrders.OrderNumber"):</span> <span class="font-semibold"> @order.CustomOrderNumber</span></div>
+                            
                         </div>
                         <ul class="info">
                             <li>@T("Account.CustomerOrders.OrderStatus"): <span class="order-status @order.OrderStatusEnum.ToString().ToLowerInvariant()">@order.OrderStatus</span></li>
@@ -172,4 +174,5 @@
             </div>
         }
     </div>
+</div>
 </div>

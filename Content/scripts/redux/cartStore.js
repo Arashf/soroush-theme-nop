@@ -82,7 +82,6 @@ store.subscribe(() => {
 
   html = html + `<div>`
   data.Items.forEach((element) => {
-    console.log('CartStore: ', element)
     html = html + cartItemGenerator(element)
   })
   html = html + `</div>`
@@ -159,9 +158,7 @@ class CartManagerRedux {
       HTTP_METHODS_CARTREDUX.GET
     )
     // adjustmentData = response.Items.find(el => el.Warnings.length === 1 ? el.Quantity = 1 : '')
-    // console.log('adjustmentData',adjustmentData)
     store.dispatch({ type: 'SHOPPING_CART', payload: response })
-    console.log('Redux', response)
   }
   static UpdateCardRedux = async (cartId, productId, count, method) => {
     let btnLoading = document.getElementById(`cart-counterbox-${cartId}`)

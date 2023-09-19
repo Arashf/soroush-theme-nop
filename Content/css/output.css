@@ -1161,6 +1161,10 @@ video {
   gap: 6px;
 }
 
+.gap-\[30px\] {
+  gap: 30px;
+}
+
 .gap-x-10 {
   -moz-column-gap: 2.5rem;
        column-gap: 2.5rem;
@@ -1331,11 +1335,6 @@ video {
   background-color: rgb(255 0 0 / var(--tw-bg-opacity));
 }
 
-.bg-blue-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 246 255 / var(--tw-bg-opacity));
-}
-
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(17 41 109 / var(--tw-bg-opacity));
@@ -1494,6 +1493,10 @@ video {
   padding: 7px;
 }
 
+.p-\[8px\] {
+  padding: 8px;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1613,10 +1616,6 @@ video {
 
 .pl-5 {
   padding-left: 1.25rem;
-}
-
-.pl-\[2px\] {
-  padding-left: 2px;
 }
 
 .pr-1 {
@@ -1744,6 +1743,18 @@ video {
   line-height: 20px;
 }
 
+.leading-7 {
+  line-height: 1.75rem;
+}
+
+.leading-4 {
+  line-height: 1rem;
+}
+
+.leading-5 {
+  line-height: 1.25rem;
+}
+
 .text-\[\#1028ff\] {
   --tw-text-opacity: 1;
   color: rgb(16 40 255 / var(--tw-text-opacity));
@@ -1762,11 +1773,6 @@ video {
 .text-\[\#f30235\] {
   --tw-text-opacity: 1;
   color: rgb(243 2 53 / var(--tw-text-opacity));
-}
-
-.text-blue-cardMobile {
-  --tw-text-opacity: 1;
-  color: rgb(2 33 243 / var(--tw-text-opacity));
 }
 
 .text-green-600 {

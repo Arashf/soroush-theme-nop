@@ -111,8 +111,8 @@
                     </li>
                 }
                 <li>
-                    @* <a href="@Url.RouteUrl("CustomerOrders")" target="_blank">@T("Account.CustomerOrders")</a> *@
-                    <a href="https://soroush.app/club" target="_blank">@T("Account.CustomerOrders")</a>
+                    <a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a>
+                    @* <a href="https://soroush.app/club" target="_blank">@T("Account.CustomerOrders")</a> *@
 
                 </li>
                 @if (Model.DisplayCustomerAddressesFooterItem)
@@ -211,21 +211,20 @@
 <div class="footerContact flex justify-between">
     <div class="flex justify-between flex-row-reverse">
         <div class="flex align-center flex-row-reverse">
-            <Link href="#" class="colorPSecond flex items-center">
+            <div href="#" class="colorPSecond flex items-center">
                 support@souroush.app
-
                 <HiOutlineMail class="overflow-hidden w-6 text-zinc-500"></HiOutlineMail>
-            </Link>
-            <Link href="#" class="colorPSecond flex items-center">
+            </div>
+            <a href="tel:+98713397" class="colorPSecond flex items-center">
                 0713397
                 <BsTelephone class="overflow-hidden w-6 text-zinc-500"></BsTelephone>
-            </Link>
-            <Link href="#" class="social">
+            </a>
+            <div href="#" class="social">
                 <FaBan class="overflow-hidden w-6 text-zinc-500"></FaBan>
-            </Link>
-            <Link href="#" class="social">
+            </div>
+            <div href="#" class="social">
                 <FaBan class="overflow-hidden w-6 text-zinc-500"></FaBan>
-            </Link>
+            </div>
         </div>
         <div class="flex items-center">
             <p class="colorPSecond">
