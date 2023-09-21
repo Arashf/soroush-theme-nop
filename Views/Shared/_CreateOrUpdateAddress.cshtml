@@ -5,27 +5,33 @@
     <div class="inputs">
         <label asp-for="FirstName" asp-postfix=":"></label>
         <div class="flex gap-[10px]">
-        <input asp-for="FirstName" />
-        <nop-required />
-        <span asp-validation-for="FirstName"></span>
+            <input asp-for="FirstName" />
+            <nop-required />
+        </div>
+        <div class="text-[13px] text-red-400">
+            <span asp-validation-for="FirstName"></span>
         </div>
     </div>
     <div class="inputs">
         <label asp-for="LastName" asp-postfix=":"></label>
         <div class="flex gap-[10px]">
-        <input asp-for="LastName" />
-        <nop-required />
-        <span asp-validation-for="LastName"></span>
+            <input asp-for="LastName" />
+            <nop-required />
+        </div>
+        <div class="text-[13px] text-red-400">
+            <span asp-validation-for="LastName"></span>
         </div>
     </div>
-    <div class="inputs">
-        <label asp-for="Email" asp-postfix=":"></label>
-        <div class="flex gap-[10px]">
-        <input asp-for="Email" />
-        <nop-required />
-        <span asp-validation-for="Email"></span>
-        </div>
-    </div>
+    @* <div class="inputs"> *@
+    @*     <label asp-for="Email" asp-postfix=":"></label> *@
+    @*     <div class="flex gap-[10px]"> *@
+    @*         <input asp-for="Email" /> *@
+    @*         $1$ <nop-required /> #1# *@
+    @*     </div> *@
+    @*        <div class="text-[13px] text-red-400"> *@
+    @*                  <span asp-validation-for="Email"></span> *@
+    @*              </div> *@
+    @* </div> *@
     @if (Model.CompanyEnabled)
     {
         <div class="inputs">
@@ -41,33 +47,36 @@
         </div>
     }
     <div class="flex gap-[10px]">
-    @if (Model.CountryEnabled)
-    {
-        <div class="inputs">
-            <label asp-for="CountryId" asp-postfix=":"></label>
-            <div class="flex gap-[10px]">
-                <select asp-for="CountryId" asp-items="Model.AvailableCountries"
-                        data-trigger="country-select"
-                        data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
-                        data-stateprovince="#@Html.IdFor(model => model.StateProvinceId)"
-                        data-loading="#states-loading-progress"></select>
-                <nop-required />
-                <span asp-validation-for="CountryId"></span>
+        @if (Model.CountryEnabled)
+        {
+            <div class="inputs">
+                <label asp-for="CountryId" asp-postfix=":"></label>
+                <div class="flex gap-[10px]">
+                    <select  id="province" onchange="getName(this)" class="js-example-basic-single" asp-for="CountryId" asp-items="Model.AvailableCountries"
+                            data-trigger="country-select"
+                            data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                            data-stateprovince="#@Html.IdFor(model => model.StateProvinceId)"
+                            data-loading="#states-loading-progress"></select>
+                    <nop-required />
+           
+                </div>
+                <div class="text-[13px] text-red-400">
+                    <span asp-validation-for="CountryId"></span>
+                </div>
             </div>
-        </div>
-    }
+        }
 
-    @if (Model.CountryEnabled && Model.StateProvinceEnabled)
-    {
-        <div class="inputs">
-            <label asp-for="StateProvinceId" asp-postfix=":"></label>
-            <select asp-for="StateProvinceId" asp-items="Model.AvailableStates"
-                    data-trigger="state-select">
-            </select>
-            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>
-            <span asp-validation-for="StateProvinceId"></span>
-        </div>
-    }
+        @if (Model.CountryEnabled && Model.StateProvinceEnabled)
+        {
+            <div class="inputs">
+                <label asp-for="StateProvinceId" asp-postfix=":"></label>
+                <select id="city" class="js-example-basic-single"  asp-for="StateProvinceId" asp-items="Model.AvailableStates"
+                        data-trigger="state-select">
+                </select>
+                <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>
+                <span asp-validation-for="StateProvinceId"></span>
+            </div>
+        }
     </div>
     @if (Model.CountyEnabled)
     {
@@ -91,6 +100,8 @@
                 {
                     <nop-required/>
                 }
+            </div>
+            <div class="text-[13px] text-red-400">
                 <span asp-validation-for="City"></span>
             </div>
         </div>
@@ -100,11 +111,13 @@
         <div class="inputs">
             <label asp-for="Address1" asp-postfix=":"></label>
             <div class="flex gap-[10px]">
-                <input asp-for="Address1" />
+                <input asp-for="Address1"/>
                 @if (Model.StreetAddressRequired)
                 {
                     <nop-required />
                 }
+            </div>
+            <div class="text-[13px] text-red-400">
                 <span asp-validation-for="Address1"></span>
             </div>
         </div>
@@ -118,7 +131,9 @@
             {
                 <nop-required />
             }
-            <span asp-validation-for="Address2"></span>
+            <div class="text-[13px] text-red-400">
+                <span asp-validation-for="Address2"></span>
+            </div>
         </div>
     }
     @if (Model.ZipPostalCodeEnabled)
@@ -143,6 +158,8 @@
                 {
                     <nop-required />
                 }
+            </div>
+            <div class="text-[13px] text-red-400">
                 <span asp-validation-for="PhoneNumber"></span>
             </div>
         </div>
@@ -165,3 +182,91 @@
     }
     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.AddressBottom, additionalData = Model })
 </div>
+
+<script>
+
+// fetch('https://ekala.app/country/getstatesbycountryid?countryId=253&addSelectStateItem=true&_=1695198676539' )
+//     .then( response => response.json() )
+//     .then( response => {
+//        console.log('Response:',response );
+//     } );
+
+
+
+setInterval(function() {
+
+const select2SearchInput = document.querySelector('input.select2-search__field');
+const select2Alert = document.querySelector('ul.select2-results__options li.select2-results__message');
+
+if (select2SearchInput !== null){
+select2SearchInput.addEventListener('change', (e) => {
+    console.log(e.target.value);
+})
+if (select2Alert !== null){
+     select2Alert.innerHTML = 'موردی یافت نشد'
+}
+}
+ }, 1);
+
+// window.addEventListener("change", function(){
+//   const select2SearchInput = document.querySelector('input.select2-search__field');
+//   const select2Alert = document.querySelector('ul.select2-results__options li.select2-results__message');
+//
+//   if (select2SearchInput !== null){
+//   select2SearchInput.addEventListener('change', (e) => {
+//       console.log(e.target.value);
+//   })
+//   if (select2Alert !== null){
+//        select2Alert.innerHTML = 'موردی یافت نشد'
+//   }
+//   }  
+// })
+
+
+
+function getName(select) {
+ // let select2container = document.getElementById('select2-container');
+ let city = document.getElementById('city');
+    city.innerHTML = '';
+    
+  var provinceId = select.value;
+  getCity(provinceId)
+
+}
+
+
+async function  getCity(provinceId) {
+ let city = document.getElementById('city');
+  try {
+    const response = await fetch(`${window.location.origin}/country/getstatesbycountryid?countryId=${provinceId}&addSelectStateItem=true&_=1695198676539`, {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Error! status: ${response.status}`);
+    }
+    const result = await response.json();
+ 
+    
+    
+result.forEach((element) => {
+    newOption = new Option(element.name, element.id, false, false);
+    city.append(newOption)
+})
+ newOption = new Option('', '', false, false);
+    city.append(newOption)
+    
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+// getCity()
+
+
+
+
+</script>

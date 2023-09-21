@@ -2959,7 +2959,7 @@ footer.desktopFooter .footerBox li a:hover {
 
   .profileMenu-mobile {
     width: 100%;
-    height: 65%;
+    height: 60%;
     position: fixed;
     z-index: 9999;
     bottom: -1000px;
@@ -3007,7 +3007,6 @@ footer.desktopFooter .footerBox li a:hover {
     align-items: center;
     padding: 10px 15px;
     border-bottom: 2px solid #eaeaea;
-    margin-bottom: 10px;
   }
 
   .sideNavHeader-mobile span {
@@ -4186,6 +4185,7 @@ input[type="checkbox"]:checked+label:before,
 .select2-container--default .select2-selection--single {
   border: 0 !important;
   height: inherit !important;
+  min-width: 150px;
 }
 
 .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
@@ -4470,10 +4470,10 @@ svg .cls-1 {
   .order-details-page .page-body div.order-overview,
   div.order-details-area,
   div.products {
-    padding: 20px;
     display: flex;
+    width: 100%;
     /* flex-direction: column; */
-    box-shadow: 0 1px 5px rgb(0 0 0/23%);
+    /* box-shadow: 0 1px 5px rgb(0 0 0/23%); */
     border-radius: 10px;
     gap: 19px;
   }
@@ -4503,12 +4503,24 @@ svg .cls-1 {
     --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: 15px !important;
-    padding: 15px;
+    padding: 25px;
     width: 100%;
     /* max-width: 600px; */
     /* margin: auto; */
     margin-top: 30px !important;
     margin-bottom: 30px !important;
+  }
+
+  .page-body .order-detail {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    gap: 20px;
+  }
+
+  .product-section-title {
+    display: flex;
+    font-weight: 600;
   }
 }
 
@@ -4597,10 +4609,9 @@ svg .cls-1 {
   .order-details-page .page-body div.order-overview,
   div.order-details-area,
   div.products {
-    padding: 10px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 1px 5px rgb(0 0 0/23%);
+    /* box-shadow: 0 1px 5px rgb(0 0 0/23%); */
     border-radius: 10px;
     gap: 19px;
   }
@@ -4641,14 +4652,37 @@ svg .cls-1 {
     margin-top: 30px !important;
     margin-bottom: 30px !important;
   }
+
+  .page-body .order-detail {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .product-section-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
 }
 
 /* ////////////////////////////////////////////////////////// quary End */
 
-.page-body .order-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.order-review-box {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 1px 5px rgb(0 0 0/23%);
+  padding: 15px;
+}
+
+.product-section-sperator {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  transform: scaleY(0.4);
 }
 
 .login-soroush-logo {
@@ -5387,7 +5421,6 @@ svg .cls-1 {
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 350px;
   margin-bottom: auto;
 }
 
@@ -5411,12 +5444,14 @@ svg .cls-1 {
 
 .order-detail .order-details-area .billing-info-wrap {
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 20px
 }
 
 .order-detail .order-details-area .shipping-info-wrap {
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 20px
 }
@@ -5566,7 +5601,7 @@ li.repost {
   justify-content: center;
 }
 
-.page-body div.actions a {
+.page-body div.actions button {
   color: #323232;
   background-color: transparent;
   border: 1px solid var(--border-color);
@@ -5577,6 +5612,32 @@ li.repost {
   padding: 9px;
   font-size: 14px;
   text-align: center;
+}
+
+.privacy-notice-box {
+  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, .1);
+  --tw-shadow-colored: 0 0 10px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 15px !important;
+  padding: 15px;
+  width: 100%;
+  /* max-width: 600px; */
+  /* margin: auto; */
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+}
+
+.privacy-notice-box .page-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.privacy-notice-box .page-body {
+  line-height: 28px;
+  font-size: 15px;
 }
 
 /* .admin-header-links {

@@ -28,21 +28,21 @@
 <div class="page order-details-page">
 @if (!Model.PrintMode)
 {
-    <div class="page-title">
-        @* <h1>@T("Order.OrderInformation")</h1> *@
-        <div class="flex gap-[30px]">
-        <a href="@Url.RouteUrl("PrintOrderDetails", new { orderId = Model.Id })" target="_blank" class="button-2 print-order-button">@T("Order.Print")</a>
-        @if (!Model.PdfInvoiceDisabled)
-        {
-            <a href="@Url.RouteUrl("GetOrderPdfInvoice", new { orderId = Model.Id })" class="button-2 pdf-invoice-button">@T("Order.GetPDFInvoice")</a>
-        }
-        </div>
-    </div>
+    @* <div class="page-title"> *@
+    @*     $1$ <h1>@T("Order.OrderInformation")</h1> #1# *@
+    @*     <div class="flex gap-[30px]"> *@
+    @*     <a href="@Url.RouteUrl("PrintOrderDetails", new { orderId = Model.Id })" target="_blank" class="button-2 print-order-button">@T("Order.Print")</a> *@
+    @*     @if (!Model.PdfInvoiceDisabled) *@
+    @*     { *@
+    @*         <a href="@Url.RouteUrl("GetOrderPdfInvoice", new { orderId = Model.Id })" class="button-2 pdf-invoice-button">@T("Order.GetPDFInvoice")</a> *@
+    @*     } *@
+    @*     </div> *@
+    @* </div> *@
 }
 <div class="page-body order-detail-pagebody">
 @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.OrderDetailsPageTop, additionalData = Model })
 <div class="order-detail">
-<div class="order-overview">
+<div class="order-overview order-review-box">
     <div class="order-number">
         <strong>@T("Order.Order#")@Model.CustomOrderNumber</strong>
     </div>
@@ -562,10 +562,15 @@
         </div>
     }
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.OrderDetailsPageBeforeproducts, additionalData = Model })
+    <div class="product-section-sperator"></div>
+    <div>
+        <span class="product-section-title">محصول</span>
+    </div>
     <div class="section products">
-        @*<div class="title">
-                    <strong>@T("Order.Product(s)")</strong>
-                </div>*@
+        @* <div class="title"> *@
+        @*             <strong>@T("Order.Product(s)")</strong> *@
+        @*         </div> *@
+        
         <div class="table-wrapper">
             <table class="data-table">
                 <colgroup>
@@ -610,6 +615,7 @@
                     @* </th> *@
                 </tr>
                 </thead>
+                
                 <tbody>
                 @{var counter = 0;}
                 @foreach (var item in Model.Items)
@@ -698,6 +704,8 @@
             </div>
         }
     </div>
+    <div class="product-section-sperator"></div>
+
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.OrderDetailsPageAfterproducts, additionalData = Model })
     <div class="section options">
         @if (!string.IsNullOrEmpty(Model.CheckoutAttributeInfo))
@@ -832,12 +840,12 @@
         <div class="actions">
             @if (Model.IsReOrderAllowed)
             {
-                <a href="/">سفارش مجدد</a>
+                @* <a href="/">سفارش مجدد</a> *@
                 @* <button type="button" class="button-1 re-order-button" onclick="setLocation('@Url.RouteUrl("ReOrder", new { orderId = Model.Id })')">@T("Order.Reorder")</button> *@
             }
             @if (Model.IsReturnRequestAllowed)
             {
-                <a href="/">سفارش مجدد</a>
+                @* <a href="/">سفارش مجدد</a> *@
                 @* <button type="button" class="button-2 return-items-button" onclick="setLocation('@Url.RouteUrl("ReturnRequest", new { orderId = Model.Id })')">@T("Order.ReturnItems")</button> *@
             }
         </div>
