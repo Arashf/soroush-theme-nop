@@ -19,7 +19,7 @@
 
 <!-- ////////////////////////////////////////////////////  Mobile Header -->
 <header id="mobileHeader" class="mobile lg:hidden bg-white shadow-md">
-<div class="flex gap-1 w-full items-center justify-between p-1 h-[57px]">
+<div class="relative w-full flex gap-1 items-center justify-between p-1 h-[57px]">
 <div id="toggleMobileSideNav" class="px-[6px]">
     <svg class="fill-iconSecondary stroke-iconSecondary" height="29" width="29" fill="none"
          viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
@@ -36,32 +36,31 @@
 </div>
 @* ///////////////////////////////////////////////////// mobile-header-search *@
 <div class="mobile-header-search px-1 w-full">
-    @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
-    @* <form class="relative"> *@
-    @*     <input type="text" placeholder="جستجو"> *@
-    @*     <svg id="Layer_1" class="w-[20px] h-[20px] !fill-[#bbbbbb] !stroke-[#bbbbbb]" *@
-    @*          style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve" *@
-    @*          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> *@
-    @*         <g> *@
-    @*             <g> *@
-    @*                 <path *@
-    @*                     d="M26.402,48.286C14.325,48.286,4.5,38.461,4.5,26.384S14.325,4.482,26.402,4.482    c12.077,0,21.902,9.825,21.902,21.902S38.479,48.286,26.402,48.286z M26.402,10.012c-9.028,0-16.372,7.345-16.372,16.372    s7.345,16.372,16.372,16.372s16.372-7.345,16.372-16.372S35.43,10.012,26.402,10.012z" *@
-    @*                     style="fill:#515151;"/> *@
-    @*             </g> *@
-    @*             <g> *@
-    @*                 <path *@
-    @*                     d="M36.36,29.149c-1.527,0-2.765-1.238-2.765-2.765c0-2.431-1.215-4.681-3.25-6.018    c-1.171-0.769-2.534-1.176-3.943-1.176c-1.527,0-2.765-1.238-2.765-2.765s1.238-2.765,2.765-2.765    c2.491,0,4.904,0.721,6.979,2.084c3.597,2.363,5.744,6.34,5.744,10.639C39.125,27.911,37.887,29.149,36.36,29.149z" *@
-    @*                     style="fill:#515151;"/> *@
-    @*             </g> *@
-    @*             <g> *@
-    @*                 <path *@
-    @*                     d="M51.018,59.518c-2.266,0-4.396-0.882-5.998-2.484L33.296,45.31    c-0.622-0.622-0.911-1.504-0.778-2.374c0.133-0.87,0.673-1.625,1.453-2.032c2.975-1.553,5.371-3.943,6.929-6.91    c0.409-0.778,1.163-1.316,2.032-1.448c0.869-0.132,1.749,0.157,2.371,0.778l11.713,11.712c1.602,1.602,2.484,3.732,2.484,5.998    s-0.882,4.396-2.484,5.998C55.414,58.636,53.283,59.518,51.018,59.518z M39.642,43.836l9.288,9.287    c0.558,0.558,1.299,0.865,2.088,0.865c0.789,0,1.53-0.307,2.088-0.865c1.151-1.151,1.151-3.025,0-4.176l-9.282-9.282    C42.625,41.24,41.221,42.641,39.642,43.836z" *@
-    @*                     style="fill:#515151;"/> *@
-    @*             </g> *@
-    @*         </g> *@
-    @*     </svg> *@
-    @* </form> *@
+    @* @await Component.InvokeAsync(typeof(SearchBoxViewComponent)) *@
+    <form id="searchFormMobile" class="relative searchBox-action-btn" asp-route="ProductSearch" method="get" id="small-search-box-form">
+        <input id="searchInputMobile" class="searchInput" type="text" placeholder="جستجو" autocomplete="off" name="q"
+               placeholder="@T("Search.SearchBox.Tooltip")" aria-label="@T("Search.SearchBox.Text.Label")"
+               onkeyup="processChangeMobile()"/>
+         
+        <button type="submit">
+            <img class="w-[22px]" src="~/Themes/Emporium/Content/icons/search.svg"/>
+        </button>
+    </form>
+    <div id="searchSuggestionMobile" class="search-suggestion bg-white
+                            h-[350px] max-w-[370px] shadow-custom absolute right-0 left-0 top-[50px]
+                    z-[999] overflow-y-scroll mt-[2px] ml-[9px] mr-[6px] m-auto">
+         <div class="relative">
+                <div id="searchSugMobileContent" class="max-h-[350px] overflow-scroll z-10 pb-[30px]">
+                </div>
+                 <div class="flex w-full items-center justify-center absolute bottom-0 left-0 right-0">
+                    <a id="displayAllResultMobile" class="displayAllResult w-full bg-[#efefef] flex justify-center text-[13px] p-3">
+                        <span>مشاهده تمام نتایج</span></a>
+                </div>
+           </div>
+    
+    </div>
 </div>
+
 <!-- ///////////////////////////////////////////// mobile Menu Content -->
 <div id="mobileSideNav" class="sidenav-mobile overflow-y-auto">
 <div class="sideNavHeader-mobile lg:hidden">
@@ -552,6 +551,7 @@
 
 <div id="backDropOverlay" class="backDrop-overlay"></div>
 </div>
+
 </header>
 <!-- ////////////////////////////////////////////////////  Desktop Header -->
 <header id="desktopHeader" class="desktop bg-white shadow-md">
@@ -767,5 +767,157 @@ if (pathName === '/order/Checkout'){
 // }
 // openCartSideNav()
 
+
+const searchFormDesktop = document.getElementById('searchFormDesktop')
+const searchFormMobile = document.getElementById('searchFormMobile')
+
+  const searchInputDesktop = document.getElementById('searchInputDesktop')
+  const searchInputMobile = document.getElementById('searchInputMobile')
+  const searchSuggestionDesktop = document.getElementById('searchSuggestionDesktop')
+  const searchSuggestionMobile = document.getElementById('searchSuggestionMobile')
+  
+  const displayAllResultDesktop = document.getElementById('displayAllResultDesktop') 
+  const displayAllResultMobile = document.getElementById('displayAllResultMobile') 
+  
+  
+  const searchSugDesktopContent = document.getElementById('searchSugDesktopContent')
+  const searchSugMobileContent = document.getElementById('searchSugMobileContent')  
+    
+
+
+      
+   const processChangeDesktop = debounce(() => {
+         if (searchInputDesktop.value.length < 3) {
+           return
+         }
+         searchHeader(searchInputDesktop.value)
+        })
+      
+      const processChangeMobile = debounce(() => {
+        if (searchInputMobile.value.length < 3) {
+          return
+        }
+        searchHeader(searchInputMobile.value)
+       })
+     
+      
+      function debounce(func, timeout = 300) {
+        let timer
+        return (...args) => {
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            func.apply(this, args)
+          }, timeout)
+        }
+      }
+
+      function searchHeader(searchInput) {
+         searchFormDesktop.classList.add('loading')
+         searchFormMobile.classList.add('loading')
+         
+        let suggestionItem = ''
+        var myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
+        var raw = JSON.stringify({
+          q: searchInput,
+        })
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+        }
+
+        fetch(`${window.location.origin}/api/catalog/search`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('result',result)
+              
+            let resultFilter = result.Products.slice(0,10)
+            console.log('resultFilter',resultFilter)
+            
+            // searchSugDesktop.innerHTML =  searchSuggestion()
+            
+            if (resultFilter.length !== 0 && resultFilter !== null && resultFilter !== undefined){
+                
+                searchSuggestionDesktop.classList.add('search-suggestion-display')
+                searchSuggestionMobile.classList.add('search-suggestion-display')
+               
+            // suggestionItem = suggestionItem + `<div class="relative">`
+                
+            resultFilter.forEach((data)=>{
+                if (data === null || data === undefined){
+                    return
+                } else{
+                suggestionItem = suggestionItem + displaySuggestion(data) 
+                }
+            })
+              // suggestionItem.innerHTML = suggestionItem + `</div>`
+            
+              searchSugDesktopContent.innerHTML = suggestionItem  
+              searchSugMobileContent.innerHTML = suggestionItem 
+              displayAllResultDesktop.href = "/search?q=" + searchInput;
+              displayAllResultMobile.href = "/search?q=" + searchInput;
+                
+              
+             // searchSuggestionDesktop.innerHTML = suggestionItem + `</div>`
+           }
+         
+          })
+          .catch((error) => console.log('error', error))
+          .finally(() => {
+            searchFormDesktop.classList.remove('loading')
+            searchFormMobile.classList.remove('loading')
+          })
+      }
+        // SeName
+        function displaySuggestion(element){
+            return(`
+              <a href="/${element.SeName}" class="flex gap-[10px] p-2 border-b-[1px] border-solid border-zinc-200 last:border-none">
+                            <div class="w-full h-full max-w-[80px] max-h-[80px]">
+                                <img src="${element.DefaultPictureModel.ImageUrl}"/>
+                            </div>
+                            <div class="w-full flex flex-col gap-[10px] pt-2 pl-2">
+                                <div class="min-h-[40px]">
+                                  <span class="leading-5 font-weight-light text-[13px]">${element.Name}</span>
+                                </div>
+                                <div class="w-full flex justify-end items-center text-[14px]">
+                                    <span class="text-[#12b886]">${element.ProductPrice.Price}</span>
+                                 </div>
+                            </div>
+                  </a>
+            `)
+        }   
+        // function displayAllResult(element){
+        //     return(`
+        //     <div>
+        //     <a class="displayAllResult bg-[#efefef] flex justify-start text-[13px] font-semibold p-3" href="/search?q=${element}">  
+        //         <span>مشاهده تمام نتایج</span></a>
+        //     </div>
+        //        
+        //     `)
+        // }   
+      
+      ///////////////////////////////////////////////////////// Close Suggestion Menu By Click
+         document.addEventListener("click", function (event) {
+             if (
+               !searchSuggestionDesktop.contains(event.target) &&
+               !searchInputDesktop.current?.contains(event.target) 
+             ) {
+                searchSuggestionDesktop.classList.remove('search-suggestion-display')
+             } else {
+                searchSuggestionDesktop.classList.add('search-suggestion-display')
+             }
+         })
+         document.addEventListener("click", function (event) {
+                      if (
+                        !searchSuggestionMobile.contains(event.target) &&
+                        !searchInputMobile.current?.contains(event.target) 
+                      ) {
+                         searchSuggestionMobile.classList.remove('search-suggestion-display')
+                      } else {
+                         searchSuggestionMobile.classList.add('search-suggestion-display')
+                      }
+                  })
 
 </script>

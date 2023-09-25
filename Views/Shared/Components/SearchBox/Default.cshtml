@@ -1,11 +1,12 @@
 ﻿@model SearchBoxModel
-<form class="relative" asp-route="ProductSearch" method="get" id="small-search-box-form">
+<form id="searchFormDesktop" class="relative searchBox-action-btn" asp-route="ProductSearch" method="get" id="small-search-box-form">
     @if (Model.ShowSearchBox)
     {
         // id="small-searchterms"
-        <input id="search" type="text" placeholder="جستجو"  autocomplete="off" name="q"
-               placeholder="@T("Search.SearchBox.Tooltip")" aria-label="@T("Search.SearchBox.Text.Label")" 
-               />
+        <input id="searchInputDesktop" class="searchInput " type="text" placeholder="جستجو" autocomplete="off" name="q"
+               placeholder="@T("Search.SearchBox.Tooltip")" aria-label="@T("Search.SearchBox.Text.Label")"
+               onkeyup="processChangeDesktop()" />
+      
         @* <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" name="q"
     placeholder="@T("Search.SearchBox.Tooltip")" aria-label="@T("Search.SearchBox.Text.Label")"/> *@
         @await Component.InvokeAsync(typeof(WidgetViewComponent), new
@@ -38,64 +39,19 @@
         <img class="w-[22px]" src="~/Themes/Emporium/Content/icons/search.svg"/>
     </button>
 </form>
-@* <script> *@
-@*       const searchInput = document.getElementById('search') *@
-@* *@
-@* *@
-@*       searchInput.addEventListener('blur', () => { *@
-@*         const suggestionList = document.querySelector('.suggestion-list') *@
-@*         if (suggestionList) { *@
-@*           suggestionList.remove() *@
-@*         } *@
-@*       })         *@
-@*        *@
-@*       const processChange = debounce(() => { *@
-@*         if (searchInput.value.length < 3) { *@
-@*           return *@
-@*         } *@
-@*         SearchHeader(searchInput) *@
-@*       }) *@
-@* *@
-@*       function debounce(func, timeout = 300) { *@
-@*         let timer *@
-@*         return (...args) => { *@
-@*           clearTimeout(timer) *@
-@*           timer = setTimeout(() => { *@
-@*             func.apply(this, args) *@
-@*           }, timeout) *@
-@*         } *@
-@*       } *@
-@*       function SearchHeader(searchInput) { *@
-@*         console.log('SearchHeader') *@
-@* *@
-@*         var myHeaders = new Headers() *@
-@*         myHeaders.append('Content-Type', 'application/json') *@
-@*         var raw = JSON.stringify({ *@
-@*           q: searchInput, *@
-@*         }) *@
-@* *@
-@*         var requestOptions = { *@
-@*           method: 'POST', *@
-@*           headers: myHeaders, *@
-@*           body: raw, *@
-@*         } *@
-@* *@
-@*         fetch('https://soroush.app/api/catalog/search', requestOptions) *@
-@*           .then((response) => response.json()) *@
-@*           .then((result) => { *@
-@*             console.log(result) *@
-@*             displaySuggestions(suggestions.Products) *@
-@*           }) *@
-@*           .catch((error) => console.log('error', error)) *@
-@*       } *@
-@*       function displaySuggestions(suggestions) { *@
-@*         const suggestionList = document.createElement('ul') *@
-@*         suggestionList.classList.add('suggestion-list') *@
-@*         suggestions.forEach((suggestion) => { *@
-@*           const suggestionItem = document.createElement('li') *@
-@*           suggestionItem.textContent = suggestion.Name *@
-@*           suggestionList.appendChild(suggestionItem) *@
-@*         }) *@
-@*         searchInput.parentNode.appendChild(suggestionList) *@
-@*       } *@
-@*     </script> *@
+
+<div id="searchSuggestionDesktop" class="search-suggestion bg-white
+             w-full h-[350px] shadow-custom absolute z-[999] overflow-y-scroll mt-[2px]">
+    <div class="relative">
+        <div id="searchSugDesktopContent" class="max-h-[350px] overflow-scroll z-10 pb-[30px]">
+        </div>
+         <div class="flex w-full items-center justify-center absolute bottom-0 left-0 right-0">
+            <a id="displayAllResultDesktop" class="displayAllResult w-full bg-[#efefef] flex justify-center text-[13px] p-3">
+                <span>مشاهده تمام نتایج</span></a>
+        </div>
+   </div>
+</div>
+
+<script>
+
+</script>

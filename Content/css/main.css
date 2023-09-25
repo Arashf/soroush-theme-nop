@@ -2639,7 +2639,7 @@ header.desktop .headerCtaMenu li svg {
 
 .desktop-header-search input {
   border: none;
-  padding: 10px 20px;
+  padding: 10px 40px;
   font-size: 13px;
   max-width: 100%;
   min-width: 400px;
@@ -2666,7 +2666,7 @@ header.desktop .headerCtaMenu li svg {
 
 .mobile-header-search input {
   border: none;
-  padding: 10px 14px !important;
+  padding: 10px 40px !important;
   font-size: 13px;
   width: 100% !important;
   /* max-width: 100%; */
@@ -5638,6 +5638,38 @@ li.repost {
 .privacy-notice-box .page-body {
   line-height: 28px;
   font-size: 15px;
+}
+
+/* /////////////////////////////////////////////////////// */
+
+.search-suggestion {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  opacity: 0;
+  opacity: 200ms ease-in-out;
+  transition-duration: 0.3s;
+  visibility: hidden;
+}
+
+.search-suggestion-display {
+  opacity: 1;
+  visibility: visible;
+}
+
+.displayAllResult {
+  box-shadow: 0 0 25px -2px rgba(0, 0, 0, .1);
+}
+
+#searchSugDesktopContent {
+  transition: 0.3s;
+}
+
+#searchSugDesktopContent a:hover {
+  --tw-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+  --tw-shadow-colored: 0 0 15px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+  var(--tw-ring-shadow, 0 0 #0000),
+  var(--tw-shadow);
 }
 
 /* .admin-header-links {
