@@ -48,16 +48,15 @@
     </form>
     <div id="searchSuggestionMobile" class="search-suggestion bg-white
                             h-[350px] max-w-[370px] shadow-custom absolute right-0 left-0 top-[50px]
-                    z-[999] overflow-y-scroll mt-[2px] ml-[9px] mr-[6px] m-auto">
-         <div class="relative">
+                    z-[999] mt-[2px] ml-[9px] mr-[6px] m-auto">
+         <div class="relative h-full">
                 <div id="searchSugMobileContent" class="max-h-[350px] overflow-scroll z-10 pb-[30px]">
                 </div>
-                 <div class="flex w-full items-center justify-center absolute bottom-0 left-0 right-0">
+                 <div class="displayAllResult-box flex w-full items-center justify-center absolute bottom-0 left-0 right-0">
                     <a id="displayAllResultMobile" class="displayAllResult w-full bg-[#efefef] flex justify-center text-[13px] p-3">
                         <span>مشاهده تمام نتایج</span></a>
                 </div>
            </div>
-    
     </div>
 </div>
 
@@ -743,14 +742,13 @@
 <script asp-location="Footer" defer="defer">
 /////////////////////////////////////////////////////// Check Location Path
 let pathName = window.location.pathname
-if (pathName === '/order/Checkout'){
+if (pathName === '/order/checkout' || pathName === '/order/Checkout'){
     let pathLocation = document.querySelectorAll('.toggleCartSideNav')
     pathLocation.forEach((el)=>{
         el.style.display = 'none'
 
     })
 }
-
 
 
 // function openCartSideNav() {
@@ -771,17 +769,17 @@ if (pathName === '/order/Checkout'){
 const searchFormDesktop = document.getElementById('searchFormDesktop')
 const searchFormMobile = document.getElementById('searchFormMobile')
 
-  const searchInputDesktop = document.getElementById('searchInputDesktop')
-  const searchInputMobile = document.getElementById('searchInputMobile')
-  const searchSuggestionDesktop = document.getElementById('searchSuggestionDesktop')
-  const searchSuggestionMobile = document.getElementById('searchSuggestionMobile')
+const searchInputDesktop = document.getElementById('searchInputDesktop')
+const searchInputMobile = document.getElementById('searchInputMobile')
+const searchSuggestionDesktop = document.getElementById('searchSuggestionDesktop')
+const searchSuggestionMobile = document.getElementById('searchSuggestionMobile')
   
-  const displayAllResultDesktop = document.getElementById('displayAllResultDesktop') 
-  const displayAllResultMobile = document.getElementById('displayAllResultMobile') 
+const displayAllResultDesktop = document.getElementById('displayAllResultDesktop') 
+const displayAllResultMobile = document.getElementById('displayAllResultMobile') 
   
   
-  const searchSugDesktopContent = document.getElementById('searchSugDesktopContent')
-  const searchSugMobileContent = document.getElementById('searchSugMobileContent')  
+const searchSugDesktopContent = document.getElementById('searchSugDesktopContent')
+const searchSugMobileContent = document.getElementById('searchSugMobileContent')  
     
 
 
@@ -815,6 +813,9 @@ const searchFormMobile = document.getElementById('searchFormMobile')
          searchFormDesktop.classList.add('loading')
          searchFormMobile.classList.add('loading')
          
+        searchInput = searchInput.replace(/ك/g, 'ک')
+        searchInput = searchInput.replace(/ي/g, 'ی') 
+         // كي كي كاله
         let suggestionItem = ''
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
@@ -831,7 +832,7 @@ const searchFormMobile = document.getElementById('searchFormMobile')
         fetch(`${window.location.origin}/api/catalog/search`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            console.log('result',result)
+            // console.log('result',result)
               
             let resultFilter = result.Products.slice(0,10)
             console.log('resultFilter',resultFilter)

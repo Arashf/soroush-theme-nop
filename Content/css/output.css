@@ -632,8 +632,8 @@ video {
   left: 4px;
 }
 
-.right-\[10px\] {
-  right: 10px;
+.right-0 {
+  right: 0px;
 }
 
 .top-0 {
@@ -656,24 +656,16 @@ video {
   top: 13px;
 }
 
-.top-\[53px\] {
-  top: 53px;
-}
-
-.left-auto {
-  left: auto;
-}
-
-.right-auto {
-  right: auto;
-}
-
 .top-\[50px\] {
   top: 50px;
 }
 
-.right-0 {
-  right: 0px;
+.top-\[53px\] {
+  top: 53px;
+}
+
+.z-10 {
+  z-index: 10;
 }
 
 .z-\[99999\] {
@@ -686,10 +678,6 @@ video {
 
 .z-\[999\] {
   z-index: 999;
-}
-
-.z-10 {
-  z-index: 10;
 }
 
 .col-span-2 {
@@ -773,6 +761,14 @@ video {
   margin-left: 2.5rem;
 }
 
+.ml-\[9px\] {
+  margin-left: 9px;
+}
+
+.mr-\[6px\] {
+  margin-right: 6px;
+}
+
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -823,26 +819,6 @@ video {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.ml-\[2px\] {
-  margin-left: 2px;
-}
-
-.mr-\[2px\] {
-  margin-right: 2px;
-}
-
-.ml-\[3px\] {
-  margin-left: 3px;
-}
-
-.ml-\[9px\] {
-  margin-left: 9px;
-}
-
-.mr-\[6px\] {
-  margin-right: 6px;
 }
 
 .block {
@@ -917,16 +893,16 @@ video {
   height: 260px;
 }
 
-.h-\[300px\] {
-  height: 300px;
-}
-
 .h-\[30px\] {
   height: 30px;
 }
 
 .h-\[32px\] {
   height: 32px;
+}
+
+.h-\[350px\] {
+  height: 350px;
 }
 
 .h-\[35px\] {
@@ -969,24 +945,16 @@ video {
   height: 100%;
 }
 
-.h-\[350px\] {
-  height: 350px;
-}
-
 .max-h-\[150px\] {
   max-height: 150px;
-}
-
-.max-h-\[80px\] {
-  max-height: 80px;
 }
 
 .max-h-\[350px\] {
   max-height: 350px;
 }
 
-.max-h-\[370px\] {
-  max-height: 370px;
+.max-h-\[80px\] {
+  max-height: 80px;
 }
 
 .min-h-\[35px\] {
@@ -1123,18 +1091,6 @@ video {
 
 .max-w-\[80px\] {
   max-width: 80px;
-}
-
-.max-w-\[350px\] {
-  max-width: 350px;
-}
-
-.max-w-\[360px\] {
-  max-width: 360px;
-}
-
-.max-w-\[365px\] {
-  max-width: 365px;
 }
 
 .flex-1 {
@@ -1466,11 +1422,6 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-red-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 45 62 / var(--tw-bg-opacity));
-}
-
 .\!fill-\[\#bbbbbb\] {
   fill: #bbbbbb !important;
 }
@@ -1720,6 +1671,10 @@ video {
   padding-bottom: 2px;
 }
 
+.pb-\[30px\] {
+  padding-bottom: 30px;
+}
+
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -1790,10 +1745,6 @@ video {
 
 .pt-\[4px\] {
   padding-top: 4px;
-}
-
-.pb-\[30px\] {
-  padding-bottom: 30px;
 }
 
 .text-center {
