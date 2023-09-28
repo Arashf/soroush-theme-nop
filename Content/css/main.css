@@ -3327,6 +3327,9 @@ footer.desktopFooter .footerBox li a:hover {
   background-color: #ffffff;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .actual-price {
@@ -4255,9 +4258,9 @@ input[type="checkbox"]:checked+label:before,
   display: none !important
 }
 
-/* .product-selectors {
+.product-selectors {
   display: none !important
-} */
+}
 
 /* ///////////////////////////////////////////////////// order-Complete */
 
@@ -5679,6 +5682,13 @@ li.repost {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
   var(--tw-ring-shadow, 0 0 #0000),
   var(--tw-shadow);
+}
+
+.breadcrumbBox ul.breadcrumb {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 /* .admin-header-links {

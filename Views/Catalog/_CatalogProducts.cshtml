@@ -29,4 +29,69 @@
             return false;
         });
     }
-</script>
+  //////////////////////////////////////////////// Add To Cart Button
+
+  'use strict'
+  
+  const HTTP_METHODS = { POST: 'POST', GET: 'GET' }
+  const PRODUCT_ATTRIBUTES = { 
+      EnteredQuantity: 1,
+      Title: '',
+      ReviewText: '', 
+      Rating: 5,
+      FullName: '',
+      Email: '',
+      Enquiry: ''
+  }
+  
+
+  ///////////////////////////////////////////
+  
+  class ErrorHandler {
+    static logAndThrow(error, message = 'Error') {
+      // console.error(`${message}:`, error)
+      throw error
+    }
+  }
+  
+  class RequestHandler {
+    static buildHeaders(method) {
+      const contentTypes = {
+        [HTTP_METHODS.POST]: 'application/json',
+      }
+      return { 'Content-Type': contentTypes[method] }
+    }
+  
+    static generateRequestOptions(method, data) {
+      const headers = this.buildHeaders(method);
+      const body = data ? JSON.stringify(data) : null;
+      return { method, headers, body };
+    }
+  
+    static async requestContentFrom(url, method, data = null) {
+      const options = this.generateRequestOptions(method, data);
+      try {
+        const response = await fetch(url, options);
+        if (method === 'GET'){
+               return response.json();
+         } else{
+               return response
+         }
+      } catch (error) {
+        ErrorHandler.logAndThrow(error, 'Fetch Error');
+      }
+    }
+  }
+  
+
+  
+  
+  let outOfStockProduct = false
+  let updateToRemoveProduct = false
+  const barNotification = document.querySelectorAll(".bar-notification .content")
+  
+  
+  
+  
+    </script>
+

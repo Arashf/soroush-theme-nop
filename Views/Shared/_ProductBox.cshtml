@@ -163,33 +163,79 @@
             }
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
-        <div class="buttons">
+        <div>
 
             <nop-antiforgery-token/>
             @*<button type="button" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')">@T("Products.Details")</button>*@
             @if (!Model.ProductPrice.DisableBuyButton)
             {
-                    @* <div class="product-add-to-cart"> *@
-                    @*     <button class="addToCard-minus-category"> *@
-                    @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
-                    @*             <g> *@
-                    @*                 <line stroke-width="3px" class="cls-1" x1="7" x2="25" y1="16" y2="16" /> *@
-                    @*             </g> *@
-                    @*         </svg> *@
-                    @*     </button> *@
-                    @*     <div id="addToCartCounter" class="add-to-cart-counter"></div> *@
-                    @*     <button onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;" class="addToCard-plus-category"> *@
-                    @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
-                    @*             <g> *@
-                    @*                 <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25" /> *@
-                    @*                 <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16" /> *@
-                    @*             </g> *@
-                    @*         </svg> *@
-                    @*     </button> *@
-                    @* </div> *@
-
                 var addToCartText = T("ShoppingCart.AddToCart").Text;
                 var data = "{\"addtocart_" + Model.Id + ".EnteredQuantity\": 1,\"AddProductReview.Title\": \"\",\"AddProductReview.ReviewText\":\"\",\"AddProductReview.Rating\": 5,\"FullName\": \"\",\"Email\": \"\",\"Email\": \"\",\"Enquiry\":\"\" }";
+                
+                ///////////////////////////////////////// AddToCard with Plus and Minus
+                @*     <div class="product-add-to-cart"> *@
+                @*         <button class="addToCard-minus-category" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
+                @*                 onclick="CartManager.productAddToCartAsync('@addtocartlink', @Model.Id)"> *@
+                @*             <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+                @*                 <g> *@
+                @*                     <line stroke-width="3px" class="cls-1" x1="7" x2="25" y1="16" y2="16" /> *@
+                @*                 </g> *@
+                @*             </svg> *@
+                @*         </button> *@
+                @*         <div id="addToCartCounter" class="add-to-cart-counter"></div> *@
+                @*         <button class="addToCard-plus-category"> *@
+                @*             <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+                @*                 <g> *@
+                @*                     <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25" /> *@
+                @*                     <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16" /> *@
+                @*                 </g> *@
+                @*             </svg> *@
+                @*         </button> *@
+                @*     </div> *@
+                @* *@
+                @* <input type="hidden" id="cartId"/> *@
+                @* <input type="hidden" id="productId"/> *@
+                @* <input type="hidden" id="productCount"/> *@
+                <div class="purchaseBtn w-full flex justify-center items-center">
+                    <button id="addToCard-button-@Model.Id" class="h-[43px] addToCard-button"
+                            data-productid="@Model.Id"
+                            id="add-to-cart-button-@Model.Id"
+                            onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink +"'," + Model.Id + ")")>
+                        @* @addToCartText *@
+                        <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
+                                                         width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                                        <title/>
+                                                        <g id="plus">
+                                                            <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
+                                                            <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
+                                                        </g>
+                                                    </svg>
+                        
+                    </button>
+                    <div id="product-action-btnBox-@Model.Id" class="addToCard inVisibleElement product-action-btnBox">
+                        <button id="addToCard-plus-@Model.Id" class="addToCard-plus p-1" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
+                                onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink +"'," + Model.Id + ")")>
+                            <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
+                                 width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                <title/>
+                                <g id="plus">
+                                    <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
+                                    <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
+                                </g>
+                            </svg>
+                        </button>
+
+
+                        <div class="addToCard-counter" id="count-@Model.Id"></div>
+                        <button id="AddToCardProduct-status-@Model.Id" class="AddToCardProduct-status" data-productid="@Model.Id"
+                                onclick=@("CartManager" + Model.Id + ".updateCartItem(" + Model.Id + ")")>
+                        </button>
+                    </div>
+                    <input type="hidden" id="cartId-@Model.Id"/>
+                    <input type="hidden" id="productId-@Model.Id"/>
+                    <input type="hidden" id="productCount-@Model.Id"/>
+
+                </div>
 
                 if (Model.ProductPrice.IsRental)
                 {
@@ -214,24 +260,501 @@
                     @*         </span> *@
                     @*     </div> *@
                     @* </button> *@
-                <div  class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
-                     onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;">
-                    @* @addToCartText *@
-                    @* <div class="product-add-to-cart"> *@
-                    <span  class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;">
-                        <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                            <g>
-                                <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25"/>
-                                <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16"/>
-                            </g>
-                        </svg>
-                    </span>
-                    @* </div> *@
-                </div>
+                
+                ///////////////////////////////////////// Simple AddToCard           
+                
+                @* <div  class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
+                @*      onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;"> *@
+                @*     $1$ @addToCartText #1# *@
+                @*     $1$ <div class="product-add-to-cart"> #1# *@
+                @*     <span  class="addToCard-plus-category" style="border-radius: 15px;text-align: center;padding: 2px;"> *@
+                @*         <svg width="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> *@
+                @*             <g> *@
+                @*                 <line stroke-width="3px" x1="16" x2="16" y1="7" y2="25"/> *@
+                @*                 <line stroke-width="3px" x1="7" x2="25" y1="16" y2="16"/> *@
+                @*             </g> *@
+                @*         </svg> *@
+                @*     </span> *@
+                @*     $1$ </div> #1# *@
+                @* </div> *@
             }
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
     </div>
 </div>
 </div>
+@if(!Model.ProductPrice.DisableBuyButton){
+    <script asp-location="Footer">
+     class  @("Util" + Model.Id) {
+       static getIdValue(id) {
+           if (document.getElementById(id).value){      
+                     return parseInt(document.getElementById(id).value)
+           }
+       }
+     
+       static checkSubProductFlag() {
+         return !!document.getElementById("product_attribute_3")?.value
+       }
+     }
+     
+     class @("DOMManager" + Model.Id) {
+       static getElementById(id) {
+         return document.getElementById(id);
+       }
+     
+       static getElementsBySelector(selector) {
+         return document.querySelectorAll(selector);
+       }
+     
+       static addClass(element, className) {
+         element.classList.add(className);
+       }
+     
+       static removeClass(element, className) {
+         element.classList.remove(className);
+       }
+     
+       static setElementPadding(element, padding) {
+         element.style.padding = padding;
+       }
+     
+       static setElementInnerText(element, text) {
+         element.innerText = text;
+       }
+     
+       static setElementInnerHTML(element, html) {
+         element.innerHTML = html;
+       }
+     }
+  /////////////////////////////////////////// Store 
+  store.subscribe(() => {
+      @("CartManager" + Model.Id).getShoppingCartData()
+  })
+  ///////////////////////////////////////////
+
+   class @("CartManager" + Model.Id) {
+    static productAddToCartAsync = async (url,productId) => {
+        
+        ///////////////////////////////////////////////////////////////////////////////  Loading addToCart
+        //  let AddtoCartBtn =  document.querySelector('.product-action-btn')
+         let AddtoCartBtnBox = document.getElementById("product-action-btnBox-@Model.Id")
+         // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")   
+         // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+         // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
+         
+          let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
+          let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
+          let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
+         
+         
+                  if (addToCardPlusDisable !== null){
+                    addToCardPlusDisable.forEach((el)=>{
+                          el.classList.add('disableSvgCartBtn')
+                       })
+                 }
+                   if (AddToCardTrashDisable !== null){
+                      AddToCardTrashDisable.classList.add('disableTrashIcon') 
+                   }  
+  
+                 if (AddToCardMinusDisable !== null){
+                        AddToCardMinusDisable.classList.add('disableSvgCartBtn')
+                    }
+  
+         document.querySelector("button.addToCard-plus").disabled = true;
+         document.querySelector("button.AddToCardProduct-status").disabled = true;
+  
+         // AddtoCartBtn.classList.add('loading')
+         // AddtoCartBtn.disabled = true
+         AddtoCartBtnBox.classList.add('loading')
+        ///////////////////////////////////////////////////////////////////////////////  
+       // let boxAttributeId = document.getElementById('boxAttributeId')
+       // let boxWayofChopAttrId = document.getElementById('boxChoppingAttributeId')
+       // let attributeId = document.getElementById("attributeId")
+       // let attrValue = document.getElementById("attrValue")
+       // let wayofChopAttrId = document.getElementById("attributeIdWayCh")
+         
+            let productData = ''
+            // let boxAttributeIdString = null
+            // let boxWayofChopAttrIdString = null
+             let attributeIdInt = 0   
+            // let wayofChopAttrIdInt = 0 
+             let attrValueInt = null
+               
+           // if (boxAttributeId !== null || boxWayofChopAttrId !== null){  
+           //   if (attributeId !== null && attrValue !== null){
+           //         attrValueInt =  attrValue.value
+           //         attributeIdInt = parseInt(attributeId.value)
+           //      }
+           //    if (wayofChopAttrId !== null){
+           //         wayofChopAttrIdInt = parseInt(wayofChopAttrId.value)
+           //         boxWayofChopAttrIdString = boxWayofChopAttrId.value
+           //     }
+           //         boxAttributeIdString = boxAttributeId.value
+           //        
+           //   } 
+             
+             if (attributeIdInt === 0 && attrValueInt === null){
+                 productData = {
+                       ProductId: productId,
+                       ...PRODUCT_ATTRIBUTES,
+                       }                     
+              }
+                     // else{
+                     //       productData = {
+                     //         [`product_attribute_${boxAttributeIdString}`] : attributeIdInt,
+                     //          [`addtocart_${productId}.EnteredQuantity`] : 1,
+                     //          'EnteredQuantity' : 1,
+                     //           ...PRODUCT_ATTRIBUTES,
+                     //               }
+                     //           }
+                           
+              //             
+              //                if (wayofChopAttrIdInt !== 0) {
+              //                     productData = {...productData,
+              //                  [`product_attribute_${boxWayofChopAttrIdString}`] : wayofChopAttrIdInt,
+              //            }
+              // }
+       
+       addAntiForgeryToken(productData)
+       await $.ajax({
+                      url: url,
+                      type: "POST",
+                      data: productData
+                  });
+       // let response =  await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, productData)
+       CartManagerRedux.getShoppingCartData() 
+    }
+  
+    static updateCartItem = async (productId) => {
+         let AddtoCartBtnBox = document.getElementById("product-action-btnBox-@Model.Id")
+        
+          // let AddtoCartBtn =  document.querySelector('.product-action-btnBox')
+     
+          // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
+          // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+          // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
+          let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
+         let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
+          let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`) 
+          
+          if (addToCardPlusDisable !== null){
+                 addToCardPlusDisable.forEach((el)=>{
+                      el.classList.add('disableSvgCartBtn')
+                   })
+             }
+               if (AddToCardTrashDisable !== null){
+                  AddToCardTrashDisable.classList.add('disableTrashIcon') 
+               }  
+                   
+             if (AddToCardMinusDisable !== null){
+                                    AddToCardMinusDisable.classList.add('disableSvgCartBtn')
+                }
+                 
+              // document.querySelector("button.addToCard-plus").disabled = true;
+              // document.querySelector("button.AddToCardProduct-status").disabled = true;
+                document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;
+                document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
+          AddtoCartBtnBox.classList.add('loading')
+          AddtoCartBtnBox.disabled = true
+    /////////////////////////////////////////////////////////////////////////
+      const counts = parseInt(document.getElementById(`productCount-@Model.Id`).value)
+      const idCart =parseInt(document.getElementById(`cartId-@Model.Id`).value)
+      
+      let attrValue = document.getElementById("attrValueId")
+      let attributeId = document.getElementById("attributeId")
+      let cartContents = ''
+      let attributeIdInt = 0    
+      let attrValueInt = 0
+      
+      
+      if (attributeId !== null && attrValue !== null){
+         attrValueInt =  parseInt(attrValue.value)
+         attributeIdInt = parseInt(attributeId.value)
+      }
+      
+      
+      if (counts > 1){
+          if (attributeIdInt === 0 && attrValueInt === 0){
+              cartContents =  [
+                              {key:`addtocart_${productId}.EnteredQuantity`, value:counts -1},
+                              {key:`itemquantity${idCart}`, value:counts -1},
+                              {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
+                            ]
+          }
+          else{
+              cartContents =  [
+                  {key:`product_attribute_${productId}_3_${attributeId}`, value:attributeId},
+                  {key:`itemquantity${idCart}`, value:counts -1},
+                  {key:`addtocart_${productId}.EnteredQuantity`, value:counts},
+                  {key:`addtocart_${productId}.UpdatedShoppingCartItemId`, value:idCart}
+                ]
+            }
+      }
+      else {
+          cartContents =  [
+              { value: 0, key: "itemquantity1" },
+              { value: `${idCart}`, key: "removefromcart" }
+            ]
+             document.getElementById(`productCount-@Model.Id`).value= 0; 
+      }
+      
+      await this.updateCartItems('/api/ShoppingCart/UpdateCart', cartContents);
+      
+      CartManagerRedux.getShoppingCartData()
+       await @("ButtonsManager" + Model.Id).UpdateCard()
+      }
+    
+    static getShoppingCartData = async () => {
+    /////////////////////////////////////////////////////////////  Loading addToCart Attribute
+    //  let AddtoCartBtn = document.querySelector('.product-action-btn')
+    
+      // let addToCardPlusDisable = document.querySelectorAll("button.addToCard-plus svg .cls-1")
+      // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+      // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
+      
+       let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
+       let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
+       let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
+      
+      
+      if (addToCardPlusDisable !== null){
+        addToCardPlusDisable.forEach((el) => {
+          el.classList.add('disableSvgCartBtn')
+        })
+      }
+      if (AddToCardTrashDisable !== null){
+        AddToCardTrashDisable.classList.add('disableTrashIcon')
+      }
+  
+      if (AddToCardMinusDisable !== null){
+        AddToCardMinusDisable.classList.add('disableSvgCartBtn')
+      }
+  
+      // document.querySelector("button.addToCard-plus").disabled = true;
+      // document.querySelector("button.AddToCardProduct-status").disabled = true;
+  
+      document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;    
+      document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
+      
+      
+      // AddtoCartBtn.classList.add('loading')
+      // AddtoCartBtn.disabled = true
+      ///////////////////////////////////////////////////////////////////////////////       
+      let addtoCartCounter = document.getElementById(`productCount-@Model.Id`)
+      let productMaxQuantity = 0
+      let response = []
+        let find = false
+      ///////////////////////////////////////////  Declare Store
+      store.getState(
+      response = store.getState()
+      )
+      ///////////////////////////////////////////  
+      let cartItems = response.Items
+      if (cartItems.length !== 0){
+        cartItems.map((childs) => {
+         if (childs.ProductId === @Model.Id) {
+         //////////////////////////////////////////////           
+        productMaxQuantity = childs.AllowedQuantities.length
+     
+        document.getElementById(`cartId-@Model.Id`).value = childs.Id
+        document.getElementById(`productId-@Model.Id`).value= @Model.Id;
+        document.getElementById(`productCount-@Model.Id`).value= childs.Quantity;
+        document.getElementById(`count-@Model.Id`).innerHTML= childs.Quantity;        
+            find = true
+             } 
+           }) 
+        
+             if (!find){
+               document.getElementById("productCount-@Model.Id").value = 0;
+               document.getElementById("count-@Model.Id").innerHTML= 0;     
+               }
+      // 
+     
+      
+     
+      }
+      
+      @("ButtonsManager" + Model.Id).productAddToCartStyle();
+      //////////////////////////////////////////////// Disable AddToACartPlusBtn / Over MaxQuantity 
+      
+      if (productMaxQuantity === parseInt(addtoCartCounter.value)){
+        document.getElementById(`addToCard-plus-@Model.Id`).disabled = true;
+        const svgTag = document.querySelectorAll(".cls-1")
+                      svgTag.forEach((element)=>{
+         element.classList.add('disableAddToCartPlus')
+      }) 
+                  }else if (productMaxQuantity !== parseInt(addtoCartCounter.value)){
+        document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;
+              const svgTag = document.querySelectorAll(".cls-1")
+                           svgTag.forEach((element)=>{
+             element.classList.remove('disableAddToCartPlus')
+           }) 
+         }
+      
+      
+    }
+  
+    static updateCartItems = async (url, cartContents) => {
+      return await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, cartContents)
+    }
+  }
+  
+  
+   class @("ButtonsManager" + Model.Id) {
+      static productAddToCartStyle = function () {
+        // if (barNotification !== null){
+        //     productWarning.innerHTML = barNotification.textContent
+        // }
+       ////////////////////////////////////////////////////  Loading Attribute 
+      // let AddtoCartBtn =  document.querySelector('.addToCard-button')
+      let AddtoCartBtn =  document.getElementById(`addToCard-button-@Model.Id`)
+      let AddtoCartBtnBox = document.getElementById(`product-action-btnBox-@Model.Id`)
+      let counterBox = document.getElementById(`count-@Model.Id`);
+        
+      // let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
+        
+      let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
+      let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
+      let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
+  
+      ////////////////////////////////////////////////////   
+      let productCount = 0
+      if (@("Util" + Model.Id).getIdValue(`productCount-@Model.Id`) === null ||  @("Util" + Model.Id).getIdValue(`productCount-@Model.Id`) === undefined ){
+        productCount = 0
+      } else {
+            productCount = @("Util" + Model.Id).getIdValue(`productCount-@Model.Id`)
+      }
+      
+      if (productCount < 1) {
+        // document.querySelector('.addToCard-button').classList.remove('inVisibleElement')
+        AddtoCartBtn.classList.remove('inVisibleElement')
+        
+      //   Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+      //   node.classList.add('inVisibleElement')
+      // })
+      AddtoCartBtnBox.classList.add('inVisibleElement')
+      @("DOMManager" + Model.Id).setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
+      @("DOMManager" + Model.Id).setElementInnerText(counterBox,productCount ? productCount : 0)
+      //////////////////////////////////////////////////////////// Loading Attribute When Remove Product
+      AddtoCartBtn.classList.remove('loading')
+      AddtoCartBtn.disabled = false
+      if (addToCardPlusDisable !== null){
+        addToCardPlusDisable.forEach((el) => {
+          el.classList.remove('disableSvgCartBtn')
+        })
+      }
+      if (AddToCardTrashDisable !== null){
+        AddToCardTrashDisable.classList.remove('disableTrashIcon')
+      }
+      if (AddToCardMinusDisable !== null){
+        AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+      }
+      
+      // document.querySelector("button.addToCard-plus").disabled = false;
+      document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;    
+      // document.querySelector("button.AddToCardProduct-status").disabled = false;
+      document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
+      
+       ////////////////////////////////////////////////////////////////////////////
+      } else if (productCount >= 1) {
+         // productWarning.style.display = 'block'
+         
+        // document.querySelector('.addToCard-button').classList.add('inVisibleElement')
+        AddtoCartBtn.classList.add('inVisibleElement')
+        
+        // Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+      //   Array.from(document.querySelectorAll(`#product-action-btnBox-@Model.Id`)).forEach(function(node) {
+      //       console.log('node',node)
+      //   node.classList.remove('inVisibleElement')
+      // })
+                  
+       AddtoCartBtnBox.classList.remove('inVisibleElement')
+           
+       @("DOMManager" + Model.Id).setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
+       @("ButtonsManager" + Model.Id).addToCardPlus()
+      }
+    }
+  
+      static UpdateCard = function () {
+       let counterBox = document.getElementById(`count-@Model.Id`);
+          
+       let productCount
+      // const counterBox = document.querySelector(".addToCard-counter");
+      
+      productCount =  @("Util" + Model.Id).getIdValue(`productCount-@Model.Id`)
+    
+      counterBox.innerHTML = productCount
+      let counterBox_value = productCount;
+      if (counterBox_value < 1) {
+        document.getElementById("addToCard-button-@Model.Id").classList.remove('inVisibleElement');
+      // Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
+      //   node.classList.add('inVisibleElement');
+      //   });
+     
+        document.getElementById("product-action-btnBox-@Model.Id").classList.add('inVisibleElement');
+              
+      counterBox_value = 0;
+      counterBox.innerText = counterBox_value;
+       document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '';
+      // productWarning.style.display = 'none'
+      } else if (counterBox_value === 1) {
+         document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<span class="trash-icon"></span>';
+       document.getElementById("AddToCardProduct-status-@Model.Id").style.padding = "12px";
+      }
+    }
+  
+      static addToCardPlus = function () {
+       let AddtoCartBtn =  document.getElementById(`addToCard-button-@Model.Id`)
+        let AddtoCartBtnBox = document.getElementById(`product-action-btnBox-@Model.Id`)
+        let counterBox = document.getElementById(`count-@Model.Id`);
+          
+        // let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
+          
+        let addToCardPlusDisable = document.querySelectorAll("#addToCard-plus-@Model.Id svg .cls-1")
+        let AddToCardMinusDisable = document.querySelector("#AddToCardProduct-status-@Model.Id svg")
+        let AddToCardTrashDisable = document.querySelector("#AddToCardProduct-status-@Model.Id span")
+          
+          
+        //////////////////////////////////////////////////////////// Loading Attribute
+      //  let AddtoCartBtn =  document.querySelector('.addToCard')
+      // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
+      // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
+      // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
+      ////////////////////////////////////////////////////////////////////////// 
+  
+      // let counterBox = document.querySelector(".addToCard-counter");
+      let counterBox_value 
+     
+       counterBox_value = parseInt(counterBox.innerText);
+  
+      if (counterBox_value === 1) {
+        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<span class="trash-icon"></span>';
+      } else if (counterBox_value > 1) {
+        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z" fill="currentColor" /></svg>'
+        // document.querySelector("AddToCardProduct-status-@Model.Id").style.padding = "7px";
+      }
+      //////////////////////////////////////////////////////////////////////////  Loading Attribute
+      AddtoCartBtnBox.classList.remove('loading')
+      AddtoCartBtnBox.disabled = false
+      if (addToCardPlusDisable !== null){
+          
+        addToCardPlusDisable.forEach((el) => {
+          console.log('addToCardPlusDisable',el)
+            
+          el.classList.remove('disableAddToCartPlus')
+        })
+      }
+      if (AddToCardTrashDisable !== null){
+          
+        AddToCardTrashDisable.classList.remove('disableTrashIcon')
+      }
+      if (AddToCardMinusDisable !== null){
+        AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+      }
+       document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;
+      document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
+    }
+  }
+</script>
+}
 

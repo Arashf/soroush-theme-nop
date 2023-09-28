@@ -1,40 +1,9 @@
 .searchBox-action-btn {
-    /*background-color: #FF7F00;*/
-    /*border: none;*/
-    /*font-size: 20px;*/
-    /*font-weight: 600;*/
-    /*text-transform: uppercase;*/
-    /*padding: 0.5em 1.25em;*/
-    /*color: white;*/
-    /*border-radius: 0.15em;*/
     transition: 0.3s;
-    /*cursor: pointer;*/
     position: relative;
-    /*display: block;*/
-}
-
-/*.action-btn:hover {*/
-/*    background-color: #ff6600;*/
-/*}*/
-
-.searchBox-action-btn:focus {
-    outline: 0.05em dashed #ff6600;
-    outline-offset: 0.05em;
 }
 
 .searchBox-action-btn::after {
-    /*content: '';*/
-    /*!*display: block;*!*/
-    /*width: 1.4em;*/
-    /*height: 1.4em;*/
-    /*position: absolute;*/
-    /*left: calc(50% - 0.75em);*/
-    /*top: calc(50% - 0.75em);*/
-    /*border: 0.15em solid transparent;*/
-    /*border-right-color: #f30235;*/
-    /*border-radius: 50%;*/
-    /*animation: button-anim 0.7s linear infinite;*/
-    /*opacity: 1;*/
     display: none;
     content: '';
     width: 1.6em;
@@ -60,7 +29,7 @@
 }
 
 .searchBox-action-btn.loading {
-    color: transparent;
+    /*color: transparent;*/
 }
 
 .searchBox-action-btn.loading::after {

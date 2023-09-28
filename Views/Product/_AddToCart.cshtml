@@ -89,7 +89,8 @@
 
 @if (Model.ProductId != 134430)
 {
-    <script asp-location="Footer">
+    
+<script asp-location="Footer">
 'use strict'
 const HTTP_METHODS = { POST: 'POST', GET: 'GET' }
 const PRODUCT_ATTRIBUTES = { 
@@ -487,8 +488,9 @@ class CartManager {
      
     if (!find) {
     document.getElementById("productCount").value = 0;
-    document.getElementById("count").innerHTML= 0;     
-                                                            }
+    document.getElementById("count").innerHTML= 0;    
+              }
+    
     }
     
     ButtonsManager.productAddToCartStyle();
