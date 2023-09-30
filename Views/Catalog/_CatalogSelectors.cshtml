@@ -50,10 +50,10 @@
 
     @if (Model.AllowProductSorting)
     {
-        @* <div class="product-sorting"> *@
-        @*     <span>@T("Catalog.OrderBy")</span> *@
-        @*     @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") }) *@
-        @* </div> *@
+        <div class="product-sorting">
+            <span>@T("Catalog.OrderBy")</span>
+            @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") })
+        </div>
         <script asp-location="Footer">
             $(document).ready(function () {
                 var $orderByEl = $('#products-orderby');

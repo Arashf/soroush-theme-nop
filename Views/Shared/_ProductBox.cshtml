@@ -21,19 +21,19 @@
     var addtocartlink = "";
     var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
     var quantity = 1;
-    
+
     if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
     {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId, quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
     }
     else
     {
-        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId, quantity });
     }
 
-    addtocartlink = @Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart });
+    addtocartlink = Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart });
 
-    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity });
     var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
 
     var storeId = (await storeContext.GetCurrentStoreAsync()).Id;
@@ -41,9 +41,9 @@
 
     // addtocartlink = "https://localhost:5001/addproducttocart/details/82634/1";
 }
- 
+
 <div class="product-item" data-productid="@Model.Id">
-  
+
 <!-- ////////////////////////////////// AddToCard -->
 @* <div class="product-add-to-cart"> *@
 @*     <button class="addToCard-minus-category"> *@
@@ -69,7 +69,7 @@
 
 @* style="background-image: url('{{@picture.ImageUrl}}');" *@
 <div class="rounded-tr-2xl rounded-tl-2xl">
-    <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))" title="@picture.Title">
+    <a href="@(Url.RouteUrl<Product>(new { Model.SeName }))" title="@picture.Title">
         <img class="rounded-tr-2xl rounded-tl-2xl h-[180px]" src="@picture.ImageUrl"
              alt="@picture.AlternateText" title="@picture.Title" loading="lazy"/>
     </a>
@@ -88,7 +88,7 @@
 <div class="details">
     <div class="product-title-limited">
         <h2 class="product-title">
-            <a href="@(Url.RouteUrl<Product>(new { SeName = Model.SeName }))">@Model.Name</a>
+            <a href="@(Url.RouteUrl<Product>(new { Model.SeName }))">@Model.Name</a>
         </h2>
     </div>
     @if (catalogSettings.ShowSkuOnCatalogPages && !string.IsNullOrEmpty(Model.Sku))
@@ -111,21 +111,21 @@
     @*         </div> *@
     @*     </div> *@
     @* } *@
-        
+
     @* <div class="description"> *@
     @*     @Html.Raw(Model.ShortDescription) *@
     @* </div> *@
-    <div class="add-info add-info-Price">
+    <div class="add-info add-info-Price relative w-full">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
         @* prices *@
         <div class="flex flex-col gap-1 px-3 pt-3" style="text-align: center">
             @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-                
+
             {
                     @* <span class="price old-price">@Model.ProductPrice.OldPrice</span> *@
             }
-                
-                
+
+
             @* <div> *@
             @*     <span class="price old-price"> *@
             @*         154,888 *@
@@ -134,8 +134,9 @@
             @*         تومان *@
             @*     </span> *@
             @* </div> *@
-                
-            <span class="price actual-price">@String.Format("{0:N0}", Model.ProductPrice.PriceValue) 
+
+            <span class="price actual-price">
+                @string.Format("{0:N0}", Model.ProductPrice.PriceValue)
                 <span class="priceToman">@T("ProductBox.PriceToman")</span>
             </span>
             @if (Model.ProductPrice.DisplayTaxShippingInfo)
@@ -163,7 +164,7 @@
             }
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
-        <div>
+        <div class="pl-3">
 
             <nop-antiforgery-token/>
             @*<button type="button" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')">@T("Products.Details")</button>*@
@@ -171,7 +172,7 @@
             {
                 var addToCartText = T("ShoppingCart.AddToCart").Text;
                 var data = "{\"addtocart_" + Model.Id + ".EnteredQuantity\": 1,\"AddProductReview.Title\": \"\",\"AddProductReview.ReviewText\":\"\",\"AddProductReview.Rating\": 5,\"FullName\": \"\",\"Email\": \"\",\"Email\": \"\",\"Enquiry\":\"\" }";
-                
+
                 ///////////////////////////////////////// AddToCard with Plus and Minus
                 @*     <div class="product-add-to-cart"> *@
                 @*         <button class="addToCard-minus-category" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
@@ -197,37 +198,30 @@
                 @* <input type="hidden" id="productId"/> *@
                 @* <input type="hidden" id="productCount"/> *@
                 <div class="purchaseBtn w-full flex justify-center items-center">
-                    <button id="addToCard-button-@Model.Id" class="h-[43px] addToCard-button"
+                    <button id="addToCard-button-@Model.Id" class="h-[43px] addToCard-button-category action-btn-category"
                             data-productid="@Model.Id"
                             id="add-to-cart-button-@Model.Id"
-                            onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink +"'," + Model.Id + ")")>
+                            onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink + "'," + Model.Id + ")")>
                         @* @addToCartText *@
-                        <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
-                                                         width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                                        <title/>
-                                                        <g id="plus">
-                                                            <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
-                                                            <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
-                                                        </g>
-                                                    </svg>
-                        
+                            
+                        @* <svg stroke="currentColor" fill="currentColor" stroke-width="0" t="1551322312294" viewBox="0 0 1024 1024" version="1.1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"> *@
+                        @*     <defs></defs><path d="M474 152m8 0l60 0q8 0 8 8l0 704q0 8-8 8l-60 0q-8 0-8-8l0-704q0-8 8-8Z"></path><path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z"></path> *@
+                        @* </svg> *@
+                       <img  src="~/Themes/Emporium/Content/icons/plus.svg" class="w-[20px] text-red-custRed"/>
+
                     </button>
-                    <div id="product-action-btnBox-@Model.Id" class="addToCard inVisibleElement product-action-btnBox">
-                        <button id="addToCard-plus-@Model.Id" class="addToCard-plus p-1" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
-                                onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink +"'," + Model.Id + ")")>
-                            <svg class="fill-textPrimary stroke-textPrimary stroke-[2px]" height="30px"
-                                 width="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                <title/>
-                                <g id="plus">
-                                    <line class="cls-1" x1="16" x2="16" y1="7" y2="25"/>
-                                    <line class="cls-1" x1="7" x2="25" y1="16" y2="16"/>
-                                </g>
-                            </svg>
+                    <div id="addToCard-category-@Model.Id" class="addToCard-category inVisibleElement action-btn">
+                        <button id="addToCard-plus-@Model.Id" class="addToCard-plus p-2 text-red-custRed" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id"
+                                onclick=@("CartManager" + Model.Id + ".productAddToCartAsync('" + addtocartlink + "'," + Model.Id + ")")>
+                            @* <svg stroke="currentColor" fill="currentColor" stroke-width="0" t="1551322312294" viewBox="0 0 1024 1024" version="1.1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"> *@
+                            @*     <defs></defs><path d="M474 152m8 0l60 0q8 0 8 8l0 704q0 8-8 8l-60 0q-8 0-8-8l0-704q0-8 8-8Z"></path><path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z"></path> *@
+                            @* </svg> *@
+                            <img  src="~/Themes/Emporium/Content/icons/plus.svg" class="w-[18px] text-red-custRed"/>
                         </button>
 
 
                         <div class="addToCard-counter" id="count-@Model.Id"></div>
-                        <button id="AddToCardProduct-status-@Model.Id" class="AddToCardProduct-status" data-productid="@Model.Id"
+                        <button id="AddToCardProduct-status-@Model.Id" class="AddToCardProduct-status p-2 text-red-custRed" data-productid="@Model.Id"
                                 onclick=@("CartManager" + Model.Id + ".updateCartItem(" + Model.Id + ")")>
                         </button>
                     </div>
@@ -260,9 +254,9 @@
                     @*         </span> *@
                     @*     </div> *@
                     @* </button> *@
-                
+
                 ///////////////////////////////////////// Simple AddToCard           
-                
+
                 @* <div  class="product-add-to-cart" data-productid="@Model.Id" id="add-to-cart-button-@Model.Id" *@
                 @*      onclick="AjaxCart.addproducttocart_details('@addtocartlink', null, true,@JObject.Parse(data));return false;"> *@
                 @*     $1$ @addToCartText #1# *@
@@ -283,7 +277,8 @@
     </div>
 </div>
 </div>
-@if(!Model.ProductPrice.DisableBuyButton){
+@if (!Model.ProductPrice.DisableBuyButton)
+{
     <script asp-location="Footer">
      class  @("Util" + Model.Id) {
        static getIdValue(id) {
@@ -334,23 +329,15 @@
 
    class @("CartManager" + Model.Id) {
     static productAddToCartAsync = async (url,productId) => {
-        
         ///////////////////////////////////////////////////////////////////////////////  Loading addToCart
-        //  let AddtoCartBtn =  document.querySelector('.product-action-btn')
-         let AddtoCartBtnBox = document.getElementById("product-action-btnBox-@Model.Id")
-         // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")   
-         // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
-         // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
-         
-          let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
-          let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
-          let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
-         
-         
+          let AddtoCartBtnBox = document.getElementById("addToCard-category-@Model.Id")
+          let addToCardPlusDisable = document.querySelector("#addToCard-plus-@Model.Id svg")
+          let AddToCardMinusDisable = document.querySelector("#AddToCardProduct-status-@Model.Id svg")
+          let AddToCardTrashDisable = document.querySelector("#AddToCardProduct-status-@Model.Id span")
+          let AddtoCartBtn = document.getElementById("addToCard-button-@Model.Id")
+        
                   if (addToCardPlusDisable !== null){
-                    addToCardPlusDisable.forEach((el)=>{
-                          el.classList.add('disableSvgCartBtn')
-                       })
+                          addToCardPlusDisable.classList.add('disableSvgCartBtn')
                  }
                    if (AddToCardTrashDisable !== null){
                       AddToCardTrashDisable.classList.add('disableTrashIcon') 
@@ -362,85 +349,60 @@
   
          document.querySelector("button.addToCard-plus").disabled = true;
          document.querySelector("button.AddToCardProduct-status").disabled = true;
-  
-         // AddtoCartBtn.classList.add('loading')
-         // AddtoCartBtn.disabled = true
+       
          AddtoCartBtnBox.classList.add('loading')
+         AddtoCartBtn.classList.add('loading')
         ///////////////////////////////////////////////////////////////////////////////  
-       // let boxAttributeId = document.getElementById('boxAttributeId')
-       // let boxWayofChopAttrId = document.getElementById('boxChoppingAttributeId')
-       // let attributeId = document.getElementById("attributeId")
-       // let attrValue = document.getElementById("attrValue")
-       // let wayofChopAttrId = document.getElementById("attributeIdWayCh")
-         
             let productData = ''
-            // let boxAttributeIdString = null
-            // let boxWayofChopAttrIdString = null
-             let attributeIdInt = 0   
-            // let wayofChopAttrIdInt = 0 
-             let attrValueInt = null
-               
-           // if (boxAttributeId !== null || boxWayofChopAttrId !== null){  
-           //   if (attributeId !== null && attrValue !== null){
-           //         attrValueInt =  attrValue.value
-           //         attributeIdInt = parseInt(attributeId.value)
-           //      }
-           //    if (wayofChopAttrId !== null){
-           //         wayofChopAttrIdInt = parseInt(wayofChopAttrId.value)
-           //         boxWayofChopAttrIdString = boxWayofChopAttrId.value
-           //     }
-           //         boxAttributeIdString = boxAttributeId.value
-           //        
-           //   } 
-             
+            let attributeIdInt = 0   
+            let attrValueInt = null
+            
              if (attributeIdInt === 0 && attrValueInt === null){
                  productData = {
                        ProductId: productId,
                        ...PRODUCT_ATTRIBUTES,
                        }                     
               }
-                     // else{
-                     //       productData = {
-                     //         [`product_attribute_${boxAttributeIdString}`] : attributeIdInt,
-                     //          [`addtocart_${productId}.EnteredQuantity`] : 1,
-                     //          'EnteredQuantity' : 1,
-                     //           ...PRODUCT_ATTRIBUTES,
-                     //               }
-                     //           }
-                           
-              //             
-              //                if (wayofChopAttrIdInt !== 0) {
-              //                     productData = {...productData,
-              //                  [`product_attribute_${boxWayofChopAttrIdString}`] : wayofChopAttrIdInt,
-              //            }
-              // }
        
        addAntiForgeryToken(productData)
-       await $.ajax({
-                      url: url,
-                      type: "POST",
-                      data: productData
-                  });
-       // let response =  await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, productData)
+       // await $.ajax({
+       //                url: url,
+       //                type: "POST",
+       //                data: productData
+       //            });
+        // let response =  await RequestHandler.requestContentFrom(url, HTTP_METHODS.POST, productData)
+        
+        let response =  await $.ajax({url: url, type: "POST",data: productData });
+             
+         ///////////////////////////////////////////// show Error when Product have attribute    
+          if (!response.success){
+           const errorNotify = document.querySelector('#notification .notification-info p')
+                              errorNotify.innerHTML = response.message
+                              document.getElementById('notification').classList.add('received')
+                         }
+           let notificationExist = document.getElementById('notification').classList.contains('received')
+                                      let hideNotify = document.getElementById('notification')
+                                      if(notificationExist) {
+                                          setTimeout(function () {
+                                                   hideNotify.classList.remove('received')
+                         }, 5000)
+            }     
+            //////////////////////////////////////////////////                              
+       
        CartManagerRedux.getShoppingCartData() 
+       
+       // AddtoCartBtn.classList.remove('loading')
+       
     }
   
     static updateCartItem = async (productId) => {
-         let AddtoCartBtnBox = document.getElementById("product-action-btnBox-@Model.Id")
-        
-          // let AddtoCartBtn =  document.querySelector('.product-action-btnBox')
-     
-          // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
-          // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
-          // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span") 
-          let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
-         let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
-          let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`) 
+         let AddtoCartBtnBox = document.getElementById("addToCard-category-@Model.Id")
+         let addToCardPlusDisable = document.querySelector("#addToCard-plus-@Model.Id svg")
+         let AddToCardMinusDisable = document.querySelector("#AddToCardProduct-status-@Model.Id svg")
+         let AddToCardTrashDisable = document.querySelector("#AddToCardProduct-status-@Model.Id span") 
           
           if (addToCardPlusDisable !== null){
-                 addToCardPlusDisable.forEach((el)=>{
-                      el.classList.add('disableSvgCartBtn')
-                   })
+                      addToCardPlusDisable.classList.add('disableSvgCartBtn')
              }
                if (AddToCardTrashDisable !== null){
                   AddToCardTrashDisable.classList.add('disableTrashIcon') 
@@ -450,12 +412,10 @@
                                     AddToCardMinusDisable.classList.add('disableSvgCartBtn')
                 }
                  
-              // document.querySelector("button.addToCard-plus").disabled = true;
-              // document.querySelector("button.AddToCardProduct-status").disabled = true;
                 document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;
                 document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
-          AddtoCartBtnBox.classList.add('loading')
-          AddtoCartBtnBox.disabled = true
+                AddtoCartBtnBox.classList.add('loading')
+                AddtoCartBtnBox.disabled = true
     /////////////////////////////////////////////////////////////////////////
       const counts = parseInt(document.getElementById(`productCount-@Model.Id`).value)
       const idCart =parseInt(document.getElementById(`cartId-@Model.Id`).value)
@@ -506,21 +466,13 @@
     
     static getShoppingCartData = async () => {
     /////////////////////////////////////////////////////////////  Loading addToCart Attribute
-    //  let AddtoCartBtn = document.querySelector('.product-action-btn')
-    
-      // let addToCardPlusDisable = document.querySelectorAll("button.addToCard-plus svg .cls-1")
-      // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
-      // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
-      
-       let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
-       let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
-       let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
+       let addToCardPlusDisable = document.querySelector("#addToCard-plus-@Model.Id svg")
+       let AddToCardMinusDisable = document.querySelector("#AddToCardProduct-status-@Model.Id svg")
+       let AddToCardTrashDisable = document.querySelector("#AddToCardProduct-status-@Model.Id span")
       
       
       if (addToCardPlusDisable !== null){
-        addToCardPlusDisable.forEach((el) => {
-          el.classList.add('disableSvgCartBtn')
-        })
+          addToCardPlusDisable.classList.add('disableSvgCartBtn')
       }
       if (AddToCardTrashDisable !== null){
         AddToCardTrashDisable.classList.add('disableTrashIcon')
@@ -530,15 +482,10 @@
         AddToCardMinusDisable.classList.add('disableSvgCartBtn')
       }
   
-      // document.querySelector("button.addToCard-plus").disabled = true;
-      // document.querySelector("button.AddToCardProduct-status").disabled = true;
-  
       document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;    
       document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
       
       
-      // AddtoCartBtn.classList.add('loading')
-      // AddtoCartBtn.disabled = true
       ///////////////////////////////////////////////////////////////////////////////       
       let addtoCartCounter = document.getElementById(`productCount-@Model.Id`)
       let productMaxQuantity = 0
@@ -568,9 +515,6 @@
                document.getElementById("productCount-@Model.Id").value = 0;
                document.getElementById("count-@Model.Id").innerHTML= 0;     
                }
-      // 
-     
-      
      
       }
       
@@ -579,17 +523,25 @@
       
       if (productMaxQuantity === parseInt(addtoCartCounter.value)){
         document.getElementById(`addToCard-plus-@Model.Id`).disabled = true;
-        const svgTag = document.querySelectorAll(".cls-1")
-                      svgTag.forEach((element)=>{
-         element.classList.add('disableAddToCartPlus')
-      }) 
+         if (addToCardPlusDisable !== null){
+                        addToCardPlusDisable.classList.add('disableSvgCartBtn')
+                    }
                   }else if (productMaxQuantity !== parseInt(addtoCartCounter.value)){
         document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;
-              const svgTag = document.querySelectorAll(".cls-1")
-                           svgTag.forEach((element)=>{
-             element.classList.remove('disableAddToCartPlus')
-           }) 
+              if (addToCardPlusDisable !== null){
+                             addToCardPlusDisable.classList.remove('disableSvgCartBtn')
+                         }
          }
+     
+            // if (addToCardPlusDisable !== null){
+            //     addToCardPlusDisable.classList.remove('disableSvgCartBtn')
+            // }
+            if (AddToCardTrashDisable !== null){
+              AddToCardTrashDisable.classList.remove('disableTrashIcon')
+            }
+            if (AddToCardMinusDisable !== null){
+              AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
+            }
       
       
     }
@@ -602,18 +554,13 @@
   
    class @("ButtonsManager" + Model.Id) {
       static productAddToCartStyle = function () {
-        // if (barNotification !== null){
-        //     productWarning.innerHTML = barNotification.textContent
-        // }
        ////////////////////////////////////////////////////  Loading Attribute 
-      // let AddtoCartBtn =  document.querySelector('.addToCard-button')
       let AddtoCartBtn =  document.getElementById(`addToCard-button-@Model.Id`)
-      let AddtoCartBtnBox = document.getElementById(`product-action-btnBox-@Model.Id`)
+      let AddtoCartBtnBox = document.getElementById(`addToCard-category-@Model.Id`)
       let counterBox = document.getElementById(`count-@Model.Id`);
         
-      // let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
         
-      let addToCardPlusDisable = document.querySelectorAll(`#addToCard-plus-@Model.Id svg .cls-1`)
+      let addToCardPlusDisable = document.querySelector(`#addToCard-plus-@Model.Id svg`)
       let AddToCardMinusDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id svg`)
       let AddToCardTrashDisable = document.querySelector(`#AddToCardProduct-status-@Model.Id span`)
   
@@ -626,22 +573,14 @@
       }
       
       if (productCount < 1) {
-        // document.querySelector('.addToCard-button').classList.remove('inVisibleElement')
-        AddtoCartBtn.classList.remove('inVisibleElement')
-        
-      //   Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
-      //   node.classList.add('inVisibleElement')
-      // })
+      AddtoCartBtn.classList.remove('inVisibleElement')
       AddtoCartBtnBox.classList.add('inVisibleElement')
-      @("DOMManager" + Model.Id).setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
       @("DOMManager" + Model.Id).setElementInnerText(counterBox,productCount ? productCount : 0)
-      //////////////////////////////////////////////////////////// Loading Attribute When Remove Product
-      AddtoCartBtn.classList.remove('loading')
+      
+      
       AddtoCartBtn.disabled = false
       if (addToCardPlusDisable !== null){
-        addToCardPlusDisable.forEach((el) => {
-          el.classList.remove('disableSvgCartBtn')
-        })
+          addToCardPlusDisable.classList.remove('disableSvgCartBtn')
       }
       if (AddToCardTrashDisable !== null){
         AddToCardTrashDisable.classList.remove('disableTrashIcon')
@@ -650,36 +589,24 @@
         AddToCardMinusDisable.classList.remove('disableSvgCartBtn')
       }
       
-      // document.querySelector("button.addToCard-plus").disabled = false;
       document.getElementById(`addToCard-plus-@Model.Id`).disabled = false;    
-      // document.querySelector("button.AddToCardProduct-status").disabled = false;
       document.getElementById(`AddToCardProduct-status-@Model.Id`).disabled = false;
       
        ////////////////////////////////////////////////////////////////////////////
       } else if (productCount >= 1) {
-         // productWarning.style.display = 'block'
-         
-        // document.querySelector('.addToCard-button').classList.add('inVisibleElement')
         AddtoCartBtn.classList.add('inVisibleElement')
-        
-        // Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
-      //   Array.from(document.querySelectorAll(`#product-action-btnBox-@Model.Id`)).forEach(function(node) {
-      //       console.log('node',node)
-      //   node.classList.remove('inVisibleElement')
-      // })
                   
        AddtoCartBtnBox.classList.remove('inVisibleElement')
-           
-       @("DOMManager" + Model.Id).setElementPadding(document.querySelector("button.AddToCardProduct-status"),"12px")
+       
        @("ButtonsManager" + Model.Id).addToCardPlus()
       }
+      AddtoCartBtn.classList.remove('loading')
+      
     }
   
       static UpdateCard = function () {
        let counterBox = document.getElementById(`count-@Model.Id`);
-          
        let productCount
-      // const counterBox = document.querySelector(".addToCard-counter");
       
       productCount =  @("Util" + Model.Id).getIdValue(`productCount-@Model.Id`)
     
@@ -687,62 +614,42 @@
       let counterBox_value = productCount;
       if (counterBox_value < 1) {
         document.getElementById("addToCard-button-@Model.Id").classList.remove('inVisibleElement');
-      // Array.from(document.querySelectorAll("div.addToCard")).forEach(function(node) {
-      //   node.classList.add('inVisibleElement');
-      //   });
      
-        document.getElementById("product-action-btnBox-@Model.Id").classList.add('inVisibleElement');
+        document.getElementById("addToCard-category-@Model.Id").classList.add('inVisibleElement');
               
       counterBox_value = 0;
       counterBox.innerText = counterBox_value;
        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '';
-      // productWarning.style.display = 'none'
       } else if (counterBox_value === 1) {
-         document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<span class="trash-icon"></span>';
-       document.getElementById("AddToCardProduct-status-@Model.Id").style.padding = "12px";
+          // <span class="trash-icon"></span>
+        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path></svg>';
       }
     }
   
       static addToCardPlus = function () {
-       let AddtoCartBtn =  document.getElementById(`addToCard-button-@Model.Id`)
-        let AddtoCartBtnBox = document.getElementById(`product-action-btnBox-@Model.Id`)
+        let AddtoCartBtn =  document.getElementById(`addToCard-button-@Model.Id`)
+        let AddtoCartBtnBox = document.getElementById(`addToCard-category-@Model.Id`)
         let counterBox = document.getElementById(`count-@Model.Id`);
           
-        // let AddtoCartBtnBox = document.querySelector('.product-action-btnBox')
-          
-        let addToCardPlusDisable = document.querySelectorAll("#addToCard-plus-@Model.Id svg .cls-1")
+        let addToCardPlusDisable = document.querySelector("#addToCard-plus-@Model.Id svg")
         let AddToCardMinusDisable = document.querySelector("#AddToCardProduct-status-@Model.Id svg")
         let AddToCardTrashDisable = document.querySelector("#AddToCardProduct-status-@Model.Id span")
-          
-          
-        //////////////////////////////////////////////////////////// Loading Attribute
-      //  let AddtoCartBtn =  document.querySelector('.addToCard')
-      // let addToCardPlusDisable =document.querySelectorAll("button.addToCard-plus svg .cls-1")
-      // let AddToCardMinusDisable = document.querySelector("button.AddToCardProduct-status svg")
-      // let AddToCardTrashDisable = document.querySelector("button.AddToCardProduct-status span")
-      ////////////////////////////////////////////////////////////////////////// 
-  
-      // let counterBox = document.querySelector(".addToCard-counter");
+       
       let counterBox_value 
      
        counterBox_value = parseInt(counterBox.innerText);
   
       if (counterBox_value === 1) {
-        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<span class="trash-icon"></span>';
+          // <span class="trash-icon"></span>
+        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path></svg>';
       } else if (counterBox_value > 1) {
-        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<svg class="fill-textPrimary stroke-textPrimary stroke-0" height="25px" width="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12Z" fill="currentColor" /></svg>'
-        // document.querySelector("AddToCardProduct-status-@Model.Id").style.padding = "7px";
+        document.getElementById("AddToCardProduct-status-@Model.Id").innerHTML = '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path></svg>'
       }
       //////////////////////////////////////////////////////////////////////////  Loading Attribute
       AddtoCartBtnBox.classList.remove('loading')
       AddtoCartBtnBox.disabled = false
       if (addToCardPlusDisable !== null){
-          
-        addToCardPlusDisable.forEach((el) => {
-          console.log('addToCardPlusDisable',el)
-            
-          el.classList.remove('disableAddToCartPlus')
-        })
+          addToCardPlusDisable.classList.remove('disableAddToCartPlus')
       }
       if (AddToCardTrashDisable !== null){
           
@@ -757,4 +664,3 @@
   }
 </script>
 }
-

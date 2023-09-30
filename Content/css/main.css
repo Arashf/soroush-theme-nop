@@ -4258,8 +4258,12 @@ input[type="checkbox"]:checked+label:before,
   display: none !important
 }
 
-.product-selectors {
+/* .product-selectors {
   display: none !important
+} */
+
+.filterToggle {
+  display: none !important;
 }
 
 /* ///////////////////////////////////////////////////// order-Complete */
@@ -7071,9 +7075,6 @@ li {
 
 .addToCard-button {
   width: 100%;
-  /* width: 140px !important;
-  height: 40px !important; */
-  /* background-color: #5d616fdc; */
   background-color: var(--main-color) !important;
   transition: height 0.6s ease-in-out;
   -webkit-transition: height 0.6s ease-in-out;
@@ -7083,6 +7084,20 @@ li {
   border-radius: 12px;
   padding: 9px;
   font-weight: 600;
+}
+
+.addToCard-button-category {
+  color: var(--main-color) !important;
+  background-color: white;
+  box-shadow: 0 1px 15px rgb(0 0 0/15%);
+  border: 1px solid #e6e6e6;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none !important;
 }
 
 .addToCard {
@@ -7099,6 +7114,29 @@ li {
   /* padding: 8px; */
   box-shadow: 0 1px 5px rgb(0 0 0 / 15%);
   border: 1px solid rgb(233, 233, 233);
+}
+
+.addToCard-category {
+  width: 95px !important;
+  height: 32px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  transition: height 0.6s ease-in-out;
+  -webkit-transition: height 0.6s ease-in-out;
+  -moz-transition: height 0.6s ease-in-out;
+  color: #3d3d3d;
+  /* padding: 8px; */
+  box-shadow: 0 1px 5px rgb(0 0 0 / 15%);
+  border: 1px solid rgb(233, 233, 233);
+  /* ///////////////////////////////////////////  */
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  /* right: 2px; */
+  z-index: 99;
+  background: white;
 }
 
 /* /////////////////////////////////////////  Trash Icon */

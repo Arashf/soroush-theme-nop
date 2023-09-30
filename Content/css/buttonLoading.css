@@ -237,3 +237,47 @@
     /*opacity: 1;*/
     display: block;
 }
+/*///////////////////////////////////////////////////////// Category Add to Cart*/
+.action-btn-category {
+    text-transform: uppercase;
+    transition: 0.3s;
+    position: relative;
+    outline: none;
+}
+
+.action-btn-category:focus {
+    outline: 0.05em dashed #ff6600;
+    outline-offset: 0.05em;
+}
+
+.action-btn-category::after {
+    display: none;
+    content: '';
+    width: 1.8em;
+    height: 1.8em;
+    position: absolute;
+    left: calc(40% - 0.75em);
+    top: calc(42% - 0.75em);
+    border: 0.15em solid #d3d3d3b8;
+    border-right-color: #f30235;
+    border-radius: 50%;
+    animation: button-anim .7s linear infinite;
+}
+
+@keyframes button-anim {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.action-btn-category.loading {
+    color: transparent;
+}
+
+.action-btn-category.loading::after {
+    /*opacity: 1;*/
+    display: block;
+}

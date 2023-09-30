@@ -39,7 +39,7 @@
                         <div class="basic-search">
                             <div class="inputs">
                                 <label asp-for="q">@T("Search.SearchTerm"):</label>
-                                <input asp-for="q" class="search-text" />
+                                <input asp-for="q" class="search-text" onkeyup="searchArabic()"/>
                             </div>
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductSearchPageBasic, additionalData = Model })
                             <div class="inputs reversed">
@@ -118,3 +118,10 @@
         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductSearchPageAfterResults, additionalData = Model })
     </div>
 </div>
+<script asp-location="Footer">
+function searchArabic() {
+		var s = document.getElementById("q")
+        s.value = s.value.replace(/ك/g, 'ک')
+        s.value = s.value.replace(/ي/g, 'ی')
+      }
+</script>

@@ -788,14 +788,14 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
          if (searchInputDesktop.value.length < 3) {
            return
          }
-         searchHeader(searchInputDesktop.value)
+         searchHeader(searchInputDesktop)
         })
       
       const processChangeMobile = debounce(() => {
         if (searchInputMobile.value.length < 3) {
           return
         }
-        searchHeader(searchInputMobile.value)
+        searchHeader(searchInputMobile)
        })
      
       
@@ -813,14 +813,14 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
          searchFormDesktop.classList.add('loading')
          searchFormMobile.classList.add('loading')
          
-        searchInput = searchInput.replace(/ك/g, 'ک')
-        searchInput = searchInput.replace(/ي/g, 'ی') 
-         // كي كي كاله
+        searchInput.value = searchInput.value.replace(/ك/g, 'ک')
+        searchInput.value = searchInput.value.replace(/ي/g, 'ی') 
+         // كي ك ي كاله
         let suggestionItem = ''
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
         var raw = JSON.stringify({
-          q: searchInput,
+          q: searchInput.value,
         })
 
         var requestOptions = {
@@ -857,8 +857,8 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
             
               searchSugDesktopContent.innerHTML = suggestionItem  
               searchSugMobileContent.innerHTML = suggestionItem 
-              displayAllResultDesktop.href = "/search?q=" + searchInput;
-              displayAllResultMobile.href = "/search?q=" + searchInput;
+              displayAllResultDesktop.href = "/search?q=" + searchInput.value;
+              displayAllResultMobile.href = "/search?q=" + searchInput.value;
                 
               
              // searchSuggestionDesktop.innerHTML = suggestionItem + `</div>`
