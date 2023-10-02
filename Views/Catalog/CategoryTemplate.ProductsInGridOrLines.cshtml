@@ -2,8 +2,9 @@
 
 @using Nop.Core.Domain.Common
 @using Nop.Core.Domain.Seo
+@using DocumentFormat.OpenXml.Wordprocessing
 
-@inject Nop.Core.IWebHelper webHelper
+@inject IWebHelper webHelper
 @inject SeoSettings seoSettings
 @inject CommonSettings commonSettings
 @inject IViewComponentSelector viewComponentSelector
@@ -21,7 +22,7 @@
 
     if (seoSettings.CanonicalUrlsEnabled)
     {
-        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, webHelper.GetCurrentRequestProtocol()).ToLowerInvariant();
+        var categoryUrl = Url.RouteUrl("Category", new { Model.SeName }, webHelper.GetCurrentRequestProtocol()).ToLowerInvariant();
         NopHtml.AddCanonicalUrlParts(categoryUrl, seoSettings.QueryStringInCanonicalUrlsEnabled);
     }
 
@@ -33,45 +34,44 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFilters, additionalData = Model })
     @await Html.PartialAsync("_CatalogFilters", Model.CatalogProductsModel)
 }
+
 <div class="page category-page">
     @if (Model.DisplayCategoryBreadcrumb)
     {
         // class="breadcrumb"
-        <div>
-            <div class="breadcrumbBox lg:bg-white w-full lg:shadow-Box 
+        <div class="breadcrumbBox lg:bg-white w-full lg:shadow-Box 
                                 flex items-center justify-start h-[40px] lg:rounded-[15px]">
-                <ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
-                    <li>
-                        <a href="@Url.RouteUrl("Homepage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
-                        @* <span class="delimiter">@breadcrumbDelimiter</span> *@
-                    </li>
-                    @{ int position = 1; }
-                    @foreach (var cat in Model.CategoryBreadcrumb)
-                    {
-                        var isLastCategory = cat.Id == Model.Id;
-                        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                            @if (isLastCategory)
-                            {
-                                <strong class="current-item" itemprop="name">
-                                    <span class="padding-right:3px"> @cat.Name</span>
-                                </strong>
-                                <span itemprop="item" itemscope itemtype="http://schema.org/Thing"
-                                      id="@Url.RouteUrl("Category", new { SeName = cat.SeName })">
-                                </span>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" title="@cat.Name" itemprop="item">
-                                    <span itemprop="name">@cat.Name</span>
-                                </a>
+            <ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                <li>
+                    <a href="@Url.RouteUrl("Homepage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
+                    @* <span class="delimiter">@breadcrumbDelimiter</span> *@
+                </li>
+                @{ var position = 1; }
+                @foreach (var cat in Model.CategoryBreadcrumb)
+                {
+                    var isLastCategory = cat.Id == Model.Id;
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        @if (isLastCategory)
+                        {
+                            <strong class="current-item" itemprop="name">
+                                <span class="padding-right:3px"> @cat.Name</span>
+                            </strong>
+                            <span itemprop="item" itemscope itemtype="http://schema.org/Thing"
+                                  id="@Url.RouteUrl("Category", new { cat.SeName })">
+                            </span>
+                        }
+                        else
+                        {
+                            <a href="@Url.RouteUrl("Category", new { cat.SeName })" title="@cat.Name" itemprop="item">
+                                <span itemprop="name">@cat.Name</span>
+                            </a>
                                 @* <span class="delimiter">@breadcrumbDelimiter</span> *@
-                            }
-                            <meta itemprop="position" content="@position"/>
-                        </li>
-                        position++;
-                    }
-                </ul>
-            </div>
+                        }
+                        <meta itemprop="position" content="@position"/>
+                    </li>
+                    position++;
+                }
+            </ul>
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CategoryDetailsAfterBreadcrumb, additionalData = Model })
     }
@@ -106,7 +106,7 @@
                             <div class="flex flex-col items-center">
                                 @* class="picture" *@
                                 <div class="-mt-[60px] categoryCardSize">
-                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    <a href="@Url.RouteUrl("Category", new { item.SeName })" title="@item.PictureModel.Title">
                                         @if (viewComponentSelector.SelectComponent("LazyLoadImage") != null)
                                         {
                                             @await Component.InvokeAsync("LazyLoadImage", new (string Key, string Value)[]
@@ -124,7 +124,7 @@
                                 </div>
                                 @* <h2 class="title"> *@
                                 <h2 class="text-center text-[14px] pb-3">
-                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    <a href="@Url.RouteUrl("Category", new { item.SeName })" title="@item.PictureModel.Title">
                                         @item.Name
                                     </a>
                                 </h2>
@@ -133,6 +133,39 @@
                     }
                 </div>
             </div>
+            //////////////////////////////////////////////////////// SubCategory MobileDesign
+            <div class="relative categoryItems-mobile-box mb-6">
+                <div class="flex flex-col gap-3 p-2 shadow-Box rounded-[10px]">
+                    <div id="category-mobile-scroll" class="flex gap-4 w-full h-full overflow-x-scroll whitespace-nowrap overflow-y-hidden
+                 pt-[5px] pr-[18px] pb-[5px] pl-[10px]">
+
+                        @foreach (var item in Model.SubCategories)
+                        {
+                            // categoryItems
+                            <div class="categoryItems-mobile">
+                                @* class="sub-category-item" *@
+                                <div class="flex justify-center items-center">
+                                    @* <h2 class="title"> *@
+                                    <h2 class="text-center text-[14px] text-white font-semibold">
+                                        <a href="@Url.RouteUrl("Category", new { item.SeName })" title="@item.PictureModel.Title">
+                                            @item.Name
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                        }
+                         <div>
+                             <div class="w-[24px] h-[24px] bg-white absolute top-[30%] left-[2px] rounded-[50%] p-0" id="prev">
+                                 <img src="../Themes/Emporium/Content/icons/left.svg" class="h-[23px] pr-[2px]">
+                             </div>
+                             <div class="w-[24px] h-[24px] bg-white absolute top-[30%] right-[2px] rounded-[50%] pt-[5px]" id="next">
+                                 <img src="../Themes/Emporium/Content/icons/right.svg" class="h-[15px] pr-[2px]">
+                             </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-sections-separator"></div>
         }
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFeaturedProducts, additionalData = Model })
 
@@ -164,7 +197,18 @@
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CategoryDetailsBottom, additionalData = Model })
     </div>
 </div>
+<script asp-location="Footer">
+$(document).ready(function () {
+$('#prev').on('click', function() {
+  $('#category-mobile-scroll').animate({
+    scrollLeft: '+=100'
+  }, 300, 'swing');
+});
 
-
-
-
+$('#next').on('click', function() {
+  $('#category-mobile-scroll').animate({
+    scrollLeft: '-=100'
+  }, 300, 'swing');
+});
+})
+</script>

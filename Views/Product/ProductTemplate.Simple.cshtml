@@ -97,7 +97,7 @@
         @* @await Html.PartialAsync("_Discontinued", Model) *@
         <div class="product-content-details">
             <div class="product-name">
-                <h1>
+                <h1 id="productTitle">
                     @Model.Name
                 </h1>
                 <!--manufacturers-->
@@ -379,5 +379,16 @@
                 if (voiceCustomer !== null && voiceCustomerUploader !== null) {
                    voiceCustomer.style.display = 'none'
                     // voiceCustomerUploader.style.display = 'none'
-                }
+       }
+     //////////////////////////////////////////////////
+    const productTitle = document.getElementById('productTitle')  
+    const pictureGallery = document.querySelector('.picture-gallery')
+    console.log('productTitle:',productTitle.textContent) 
+    let textContentProduct = productTitle.textContent
+    // سفارش صوتی
+    if(productTitle.textContent === 'سفارش صوتی'){
+              pictureGallery.classList.add('hideProductPicture')
+        }
+    
+                
 </script>

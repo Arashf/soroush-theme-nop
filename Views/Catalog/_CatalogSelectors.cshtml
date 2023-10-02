@@ -8,7 +8,7 @@
     return;
 }
 
-<div class="flex justify-between items-center product-selectors">
+<div class="flex justify-between items-center px-2 pt-3 product-selectors">
     @* <div class="filters-button-wrapper"> *@
     @*     <button class="filters-button">@T("SevenSpikes.Themes.Emporium.Common.Filter")</button> *@
     @* </div> *@
@@ -51,21 +51,34 @@
     @if (Model.AllowProductSorting)
     {
         <div class="product-sorting">
-            <span>@T("Catalog.OrderBy")</span>
+            @* <span>@T("Catalog.OrderBy")</span> *@
+                <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="m6 20 4-4H7V4H5v12H2zm5-12h9v2h-9zm0 4h7v2h-7zm0-8h11v2H11zm0 12h5v2h-5z" />
+                </svg>
             @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") })
+             <span>
+                <svg class="feather feather-chevron-down" fill="none" width="20" height="20" stroke="#515151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
         </div>
+
         <script asp-location="Footer">
             $(document).ready(function () {
                 var $orderByEl = $('#products-orderby');
                 $orderByEl.on('change', function () {
                     CatalogProducts.getProducts();
                 });
-        
+
                 $(CatalogProducts).on('before', function (e) {
                     e.payload.urlBuilder
                         .addParameter('orderby', $orderByEl.val());
                 });
+                 //////////////////////////////////////////////// Add Icon to DropDownSelect Sort
+                 //  var $dropDownIcon = $('.product-sorting'); 
+                
             });
+           
+            
         </script>
     }
 

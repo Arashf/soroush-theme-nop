@@ -22,7 +22,7 @@ const removeRecordingVoice = document.getElementById(
 )
 
 const voiceCustomerAttribute = document.getElementById(
-  'product_attribute_671'
+    'product_attribute_671'
 )
 const uploadSection = document.getElementById('uploadSection')
 const customerVoiceTitle = document.querySelectorAll('customerVoiceTitle')
@@ -74,12 +74,12 @@ navigator.mediaDevices
 
         audioRecorder.addEventListener('stop', () => {
             // Convert the chunks array to a Blob object
-            const fileName = `recording_${Date.now()}.ogg`
+            const fileName = `recording_${Date.now()}.mp3`
 
             // create a blob from the recorded chunks
             const blob =
                 chunks.length > 0
-                    ? new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
+                    ? new Blob(chunks, { type: 'audio/mpeg; codecs=opus' })
                     : null
             // create a URL from the blob
             const url = URL.createObjectURL(blob)
@@ -146,7 +146,7 @@ navigator.mediaDevices
                 audio.pause()
                 chunks = []
             })
-        
+
         cancelRecordingButton.addEventListener('click', function () {
             console.log('Canceling audio...')
             audioRecorder.stop()
@@ -164,7 +164,7 @@ navigator.mediaDevices
         audioRecorder.addEventListener('dataavailable', function (event) {
             console.log('event.data',event.data)
             chunks.push(event.data)
-            
+
         })
     })
     .catch(function (error) {
