@@ -3748,9 +3748,9 @@ footer.desktopFooter .footerBox li a:hover {
 
 /* ///////////////////////////////////////÷ */
 
-.categoryItems h2 {
+/* .categoryItems h2 {
   font-size: 14px !important;
-}
+} */
 
 /* /////////////////////////////////////////////////////  */
 
@@ -5759,6 +5759,14 @@ li.repost {
 .topic-post .post-actions .quote-post-button:hover,
 .ropc .complete-button button:hover {
   background-color: #2877ff !important;
+}
+
+div#categoryItem div a {
+  background: rgb(255, 255, 255);
+  /* background: linear-gradient(180deg, rgba(255, 255, 255, 1) 53%, rgba(214, 214, 214, 1) 100%, rgba(195, 195, 195, 1) 100%); */
+  /* background: linear-gradient(180deg, rgba(255, 255, 255, 1) 53%, rgba(222, 222, 222, 1) 100%, rgba(204, 204, 204, 1) 100%); */
+  /* background: linear-gradient(180deg, rgba(255, 255, 255, 1) 63%, rgba(244, 244, 244, 1) 76%, rgba(235, 235, 235, 1) 93%); */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 49%, rgba(250, 250, 250, 1) 60%, rgba(235, 235, 235, 1) 93%);
 }
 
 /* .admin-header-links {

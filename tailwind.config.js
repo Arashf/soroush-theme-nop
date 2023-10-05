@@ -27,6 +27,14 @@ module.exports = {
         md: { min: "768px" },
         lg: { min: "900px" },
         xl: { min: "1240px" },
+
+
+        extraS: { max: "349px" },
+        semiM:{ min: "350px"},
+        medium: { min: "640px" },
+        large: { min: "900px" },
+        xlarge: { min: "1240px" },
+        
         // => @media (min-width: 640px and max-width: 767px) { ... }
         // sm: { max: "640px" },
         // => @media (min-width: 640px and max-width: 767px) { ... }
