@@ -787,6 +787,10 @@ video {
   margin-top: 2.5rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1153,6 +1157,10 @@ video {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-row-reverse {
@@ -1661,6 +1669,11 @@ video {
   padding-right: 6px;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -1901,6 +1914,11 @@ video {
   color: rgb(58 119 255 / var(--tw-text-opacity));
 }
 
+.text-\[\#808080\] {
+  --tw-text-opacity: 1;
+  color: rgb(128 128 128 / var(--tw-text-opacity));
+}
+
 .text-\[\#f30235\] {
   --tw-text-opacity: 1;
   color: rgb(243 2 53 / var(--tw-text-opacity));
@@ -2086,8 +2104,16 @@ video {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 
+  .lg\:flex-col {
+    flex-direction: column;
+  }
+
   .lg\:gap-3 {
     gap: 0.75rem;
+  }
+
+  .lg\:gap-4 {
+    gap: 1rem;
   }
 
   .lg\:rounded-\[15px\] {
@@ -2218,20 +2244,12 @@ video {
     margin-top: -60px;
   }
 
-  .medium\:mb-\[40px\] {
-    margin-bottom: 40px;
+  .medium\:mb-\[70px\] {
+    margin-bottom: 70px;
   }
 
   .medium\:mt-\[80px\] {
     margin-top: 80px;
-  }
-
-  .medium\:mb-\[80px\] {
-    margin-bottom: 80px;
-  }
-
-  .medium\:mb-\[70px\] {
-    margin-bottom: 70px;
   }
 
   .medium\:w-\[150px\] {

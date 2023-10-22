@@ -250,7 +250,7 @@
             <div class="addToCardStickyBox">
                 <div>
                     <div class="flex items-center">
-                        <div class="flex items-center text-textSecondary text-[12px]">
+                        <div class="w-full flex items-center text-textSecondary text-[13px]">
                             <svg class="fill-iconLightColor stroke-iconLightColor stroke-0" width="20"
                                  height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -259,7 +259,7 @@
                             </svg>
                             <span class="pr-1">قیمت محصول :</span>
                         </div>
-                        <div class="flex flex-col justify-center items-center gap-4 p-2">
+                        <div class="w-full"> 
                             @* <div class="flex justify-between items-center gap-3"> *@
                             @*     <span class="line-through text-[12px] text-zinc-400 font-semibold pr-2"> *@
                             @*         43,500 *@
@@ -269,7 +269,7 @@
                             @*         17% *@
                             @*     </span> *@
                             @* </div> *@
-                            <div class="text-zinc-600 text-[16px] font-semibold">
+                            <div class="text-zinc-600 font-semibold">
                                 @{
                                     var dataDictPrice = new ViewDataDictionary(ViewData);
                                     dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";

@@ -5,15 +5,24 @@
 <div id="topHeaderBox" class="topHeaderBox">
 <div id="topHeaderBanner">
     @* href="https://soroush.app/club" *@
-    <a href="/سفارش-صوتی">
-        <picture>
-            <source media="(min-width: 900px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png">
-            </source>
-            <source media="(max-width: 899px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerMobile.png">
-            </source>
-            <img src="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png" alt="soroush"/>
-        </picture>
-    </a>
+    @* <a href="/سفارش-صوتی"> *@
+    @*     <picture> *@
+    @*         <source media="(min-width: 900px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png"> *@
+    @*         </source> *@
+    @*         <source media="(max-width: 899px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerMobile.png"> *@
+    @*         </source> *@
+    @*         <img src="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png" alt="soroush"/> *@
+    @*     </picture> *@
+    @* </a> *@
+     <a href="https://soroush.app/club">
+            <picture>
+                <source media="(min-width: 900px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png">
+                </source>
+                <source media="(max-width: 899px)" srcSet="~/Themes/Emporium/Content/img/banner/topBannerMobile.png">
+                </source>
+                <img src="~/Themes/Emporium/Content/img/banner/topBannerDesktop.png" alt="soroush"/>
+            </picture>
+        </a>
 
 </div>
 
@@ -780,8 +789,8 @@ const displayAllResultMobile = document.getElementById('displayAllResultMobile')
   
 const searchSugDesktopContent = document.getElementById('searchSugDesktopContent')
 const searchSugMobileContent = document.getElementById('searchSugMobileContent')  
-    
 
+const displayAllResultbox = document.querySelectorAll('.displayAllResult-box')     
 
       
    const processChangeDesktop = debounce(() => {
@@ -816,6 +825,8 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
         searchInput.value = searchInput.value.replace(/ك/g, 'ک')
         searchInput.value = searchInput.value.replace(/ي/g, 'ی') 
          // كي ك ي كاله
+         
+        let searchResult = [] 
         let suggestionItem = ''
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
@@ -832,10 +843,9 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
         fetch(`${window.location.origin}/api/catalog/search`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            // console.log('result',result)
-              
+            searchResult = result.Products
+             
             let resultFilter = result.Products.slice(0,10)
-            console.log('resultFilter',resultFilter)
             
             // searchSugDesktop.innerHTML =  searchSuggestion()
             
@@ -869,6 +879,19 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
           .finally(() => {
             searchFormDesktop.classList.remove('loading')
             searchFormMobile.classList.remove('loading')
+            if (searchResult.length === 0){
+                              searchSugDesktopContent.innerHTML = noResult()  
+                              searchSugMobileContent.innerHTML = noResult() 
+                              displayAllResultbox.forEach((el)=>{
+                                el.style.display = 'none'
+                                el.style.display = 'none'    
+                                  })
+                         } else {
+                             displayAllResultbox.forEach((el)=>{
+                                 el.style.display = 'flex'
+                                 el.style.display = 'flex'    
+                                })
+                         }
           })
       }
         // SeName
@@ -889,15 +912,14 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
                   </a>
             `)
         }   
-        // function displayAllResult(element){
-        //     return(`
-        //     <div>
-        //     <a class="displayAllResult bg-[#efefef] flex justify-start text-[13px] font-semibold p-3" href="/search?q=${element}">  
-        //         <span>مشاهده تمام نتایج</span></a>
-        //     </div>
-        //        
-        //     `)
-        // }   
+        function noResult(){
+            return(`
+            <div class="flex flex-col justify-center items-center gap-3 mt-12">
+               <svg width="32" height="32" class="feather feather-alert-circle" fill="none" stroke="#5d616f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+              <span class="text-[14px] text-[#808080]">هیچ محصولی مطابق با معیار های شما یافت نشد</span>
+            </div>
+            `)
+        }   
       
       ///////////////////////////////////////////////////////// Close Suggestion Menu By Click
          document.addEventListener("click", function (event) {
@@ -920,5 +942,19 @@ const searchSugMobileContent = document.getElementById('searchSugMobileContent')
                          searchSuggestionMobile.classList.add('search-suggestion-display')
                       }
                   })
+      /////////////////////////////////////////////////////////  Close SuggestionBox When InputValue Empty
+                  
+            searchInputDesktop.addEventListener("keyup", function (event) {
+                let valueLength = event.target.value.length
+                if (valueLength < 1 ) {
+               searchSuggestionDesktop.classList.remove('search-suggestion-display')
+               }
+            }) 
+             searchInputMobile.addEventListener("keyup", function (event) {
+                let valueLength = event.target.value.length
+               if (valueLength < 1 ) {
+                  searchSuggestionMobile.classList.remove('search-suggestion-display')
+                  }
+             })        
 
 </script>
